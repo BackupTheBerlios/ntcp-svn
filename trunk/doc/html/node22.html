@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002-2-1 (1.70) JA patch-2.0
+patched version by:  Kenshi Muto, Debian Project.
+* modified by:  Shige TAKENO
+LaTeX2HTML 2002-2-1 (1.70),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Overview of operations</TITLE>
+<META NAME="description" CONTENT="Overview of operations">
+<META NAME="keywords" CONTENT="ntcp">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002-2-1 JA patch-2.0">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ntcp.css">
+
+<LINK REL="previous" HREF="node21.html">
+<LINK REL="up" HREF="node20.html">
+<LINK REL="next" HREF="node23.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html356"
+  HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html352"
+  HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html348"
+  HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html354"
+  HREF="node2.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html357"
+  HREF="node23.html">STUNT: Simple Traversal of</A>
+<B> Up:</B> <A NAME="tex2html353"
+  HREF="node20.html">STUN: Simple Traversal of</A>
+<B> Previous:</B> <A NAME="tex2html349"
+  HREF="node21.html">Terminology</A>
+ &nbsp; <B>  <A NAME="tex2html355"
+  HREF="node2.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00612000000000000000">
+Overview of operations</A>
+</H2>
+
+<P>
+To know behind what type of NAT the client is and to discover his public network
+address, it starts the STUN discovery procedure sending the initial 
+<I>Binding Request</I> to server using UDP [mattere nota per TCP]. 
+A <I>Binding Request</I> that arrives to the server may have traversed one or multiple NAT 
+levels, and it source address will be the mapped address created by the NAT closest
+to the server. The server puts this address in a <I>Binding Response</I>
+message and sends it back to the source IP address and port of the request.
+The client compare the local IP and port with these send by the server. If the addresses 
+are the same, between the client and the open Internet there are not NATs boxes. 
+In the case of a mismatching one or more NATS are present.
+
+<P>
+If the NAT is a full-cone, the public IP and port mapped by the NAT are 
+public and any host can use them to communicate with the user behind the NAT.
+But the user is not sure that the NAT is a full-cone and if everybody can 
+join it on this address. For this reason, it's necessary to follow 
+in the STUN discovery procedure.
+
+<P>
+The client sends a second <I>Binding Request</I> from the same IP and port address 
+but to a different IP address, to a second STUN server that reply with the 
+public IP and port address that NAT mapped for this communication. 
+If they are different from those in the first <I>Binding Response</I>, the client knows 
+it is behind a symmetric NAT.
+Otherwise, the client just  knows that the NAT is not a symmetric type and it must to
+continues the discover procedure. 
+It sends a <I>Binding Request</I> with flags that tell to the server to send a response
+from a different IP address and port than the request was received on. 
+If the client receives this response, it knows it is behind a full cone NAT. 
+Otherwise the NAT can be a port restricted cone NAT or just a restricted cone NAT. 
+To discover it, the client ask to STUN server, to sending a <I>Binding Response</I>
+from the same IP address than the request was received on, but from onother port.
+If a responce is received, the client is behind a just restricted NAT.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html356"
+  HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html352"
+  HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html348"
+  HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html354"
+  HREF="node2.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html357"
+  HREF="node23.html">STUNT: Simple Traversal of</A>
+<B> Up:</B> <A NAME="tex2html353"
+  HREF="node20.html">STUN: Simple Traversal of</A>
+<B> Previous:</B> <A NAME="tex2html349"
+  HREF="node21.html">Terminology</A>
+ &nbsp; <B>  <A NAME="tex2html355"
+  HREF="node2.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+Gaballo Luca
+2005-06-22
+</ADDRESS>
+</BODY>
+</HTML>
