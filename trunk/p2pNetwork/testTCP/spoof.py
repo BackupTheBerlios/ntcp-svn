@@ -1,91 +1,105 @@
 import socket
 import sys, time
-
 import signal, os
+
+from twisted.internet import protocol
+from twisted.internet import tcp
+from twisted.internet import reactor
+
 from impacket import ImpactPacket
 from impacket import ImpactDecoder
-
+        
+from twisted.python.runtime import platformType
+if platformType == 'win32':
+    from errno import WSAEWOULDBLOCK as EWOULDBLOCK
+    from errno import WSAEINTR as EINTR
+    from errno import WSAEMSGSIZE as EMSGSIZE
+    from errno import WSAECONNREFUSED as ECONNREFUSED
+    from errno import WSAECONNRESET
+    from errno import EAGAIN
+elif platformType != 'java':
+    from errno import EWOULDBLOCK, EINTR, EMSGSIZE, ECONNREFUSED, EAGAIN
+    
 class Spoofer:
     """Send a spoofed TCP packet
-    USAGE: IP-destination port IP-source SYNno ACKno"""
+    USAGE: IP-destination dport IP-source sport SYNno ACKno"""
 
+    socketType = socket.SOCK_RAW # Overide socket type.
+    addressFamily = socket.AF_INET
+    
     def __init__(self):
-        pass
+        self.protocolNum = socket.getprotobyname('tcp')
+        self.setACK = 0
+        
 
     #=================================================================
     def fakeConnection(self, argv, argc):
-        
-        dhost = argv[1]           # The remote host
-        dport = int(argv[2])      # The same port as used by the server
-        sport = dport             # The source port
-        shost = argv[3]           # The source host
 
-        if argc >= 5:
-            SYN = int(argv[4])
-        if argc == 6:
-            ACK = int(argv[5])
+        self.dhost = argv[1]           # The remote host
+        self.dport = int(argv[2])      # The same port as used by the server
+        self.shost = argv[3]           # The source host
+        self.sport = int(argv[4])      # The source port
+
+        if argc >= 6:
+            self.SYN = int(argv[5])
+        if argc == 7:
+            self.setACK = 1
+            self.ACK = int(argv[6])
+
+        if platformType == 'win32':
+            self.winSpoofing()
+        else:
+            self.unixSpoofing()
             
+    def unixSpoofing(self):
         # Create a new IP packet and set its source and destination addresses.
         ip = ImpactPacket.IP()
-        ip.set_ip_src(shost)
-        ip.set_ip_dst(dhost)
+        ip.set_ip_src(self.shost)
+        ip.set_ip_dst(self.dhost)
+        if  self.setACK != 1:
+            ip.set_ip_ttl(2)
 
         # Create a new TCP
         tcp = ImpactPacket.TCP()
         
         # Set the parameters for the connection
-        tcp.set_th_sport(sport)
-        tcp.set_th_dport(dport)
-        tcp.set_th_seq(SYN)
+        tcp.set_th_sport(self.sport)
+        tcp.set_th_dport(self.dport)
+        tcp.set_th_seq(self.SYN)
         tcp.set_SYN()
-        if argc == 6:
-            tcp.set_th_ack(ACK)
+        if  self.setACK == 1:
+            tcp.set_th_ack(self.ACK)
             tcp.set_ACK()
-        
-        
+                
         # Have the IP packet contain the TCP packet
         ip.contains(tcp)
-
-        # Open a raw socket. Special permissions are usually required.
-        protocol_num = socket.getprotobyname('tcp')
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_RAW, protocol_num)
-        self.s.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
-
         # Calculate its checksum.
 	tcp.calculate_checksum()
 	tcp.auto_checksum = 1
-
-        # Send it to the target host.
-	self.s.sendto(ip.get_packet(), (dhost, dport))
-
-        # Instantiate an IP packets decoder.
-        # As all the packets include their IP header, that decoder only is enough.
-##         decoder = ImpactDecoder.IPDecoder()
-
-##         while 1:
-##             packet = self.s.recvfrom(4096)[0]
-##             # Packet received. Decode and display it.
-##             packet = decoder.decode(packet)
-##             print 'source:', packet.get_ip_src()
-##             #print packet.get_ip_src(), packet.child().get_th_sport()
-##             if isinstance(packet.child(),ImpactPacket.TCP)  and \
-##                    packet.child().get_th_sport() > 50000:
-##                 self._sniffed(packet)
-
-    def _bind(self, shost):
-        HOST = shost    # Symbolic name meaning the local host
-        PORT = 50007              # Arbitrary non-privileged port
-        self.stcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #self.stcp.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
-        self.stcp.bind((HOST, PORT))
         
-    def _sniffed(self, packet):
-        print 'Packet sniffed'
-        print packet
-        print 'SYN:', packet.child().get_SYN()
-        print 'SYNn:', packet.child().get_th_seq()
-        print 'ACK:', packet.child().get_ACK()
-        print 'ACKn:', packet.child().get_th_ack()
+        self.s = self.createInternetSocket()
+        # Send it to the target host.
+	self.s.sendto(ip.get_packet(), (self.dhost, self.dport))
+
+    def winSpoofing(self):
+        print "Send packet with netwox..."
+##         out = os.popen("netwox530 40 -m %s -p %ld -o %ld -C -q %ld -z -r %ld -E 150 -j 128" \
+##                   % (self.dhost, self.dport, self.sport, self.SYN, self.ACK))
+        os.system("netwox530 40 -m %s -p %ld -o %ld -C -q %ld -z -r %ld -E 150 -j 128" \
+                  % (self.dhost, self.dport, self.sport, self.SYN, self.ACK))
+        if out.read() == '':
+            print 'Error: packet not sent!'
+        else:
+            print 'Packet has been sent.'
+
+    def createInternetSocket(self):
+
+        s = socket.socket(self.addressFamily, self.socketType, self.protocolNum)
+        s.setblocking(0)
+        # enable the sending of tcp headers.
+        s.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
+        return s
+    
 
 if __name__ == '__main__':
     p = Spoofer()

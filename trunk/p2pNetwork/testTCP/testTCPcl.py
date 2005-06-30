@@ -6,6 +6,7 @@ from sys import stdout, stdin
 import sys
 import socket
 import time
+import ConfigParser
 
 import p2pNetwork.testTCP.sniffy as sniffer
 import p2pNetwork.testTCP.udpSniffer as udp_sniffer
@@ -31,7 +32,6 @@ class EchoClientFactory(ClientFactory):
 
     
     def startedConnecting(self, connector):
-        print 'Started to connect.'
         self.e = Echo()
     
     def buildProtocol(self, addr):
@@ -46,18 +46,29 @@ class EchoClientFactory(ClientFactory):
         print 'Connection failed. Reason:', reason
         reactor.stop()
 
+# Load configuration
+config = ConfigParser.ConfigParser()
+config.read("test.conf")
+
+myIP=config.get('myConf', 'myIP')
+myPort=int(config.get('myConf', 'myPort'))
+peerIP=config.get('peer', 'peerIP')
+peerPort=int(config.get('peer', 'peerPort'))
+
+
 # Start to listen for UDP connection
 #reactor.listenUDP(9999, udp_sniffer.UDP_factory())
 udp_obj = udp_sniffer.UDP_factory()
 
 # Start to sniff packets (run method in thread)
-argv = ('', 'eth0', 'tcp port 50007')
+argv = ('', 'eth0', 'tcp port %d'%myPort)
 sniffer.sniff(argv, udp_obj)
 
 # Wait a little bit...
-time.sleep(2)
+time.sleep(5)
 
 # Start TCP connection
-print 'Start TCP connection'
-reactor.connectTCP('10.193.167.86', 50007, EchoClientFactory(), 30, ('192.168.1.109', 50007))
+print '\nStart TCP connection (I am on %s:%d)'%(myIP, myPort)
+print ''
+reactor.connectTCP(peerIP, peerPort, EchoClientFactory(), 30, (myIP, myPort))
 reactor.run()

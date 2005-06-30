@@ -24,7 +24,8 @@ class ConnectionBroker(DatagramProtocol):
     def datagramReceived(self, data, addr):
         print "received %r from:" % (data), addr
         self.msg_from_peer += 1
-        self.t[self.msg_from_peer-1] = (addr, int(data))
+        SYN, peerPort, myPort = data.split(':')
+        self.t[self.msg_from_peer-1] = (addr, int(SYN), int(peerPort), int(myPort))
         
         if self.msg_from_peer == 2:
             self.msg_from_peer = 0
@@ -51,8 +52,8 @@ class Broker(Protocol):
             port = 50007
             dhost = table[i][0][0]    # The remote host
             shost = table[(i+1)%2][0][0]    # The source host
-            dport = port              # The same port as used by the server
-            sport = dport             # The source port
+            dport = table[(i+1)%2][2]              # The same port as used by the server
+            sport = table[(i+1)%2][3]            # The source port
             
             SYN = table[(i+1)%2][1]
             ACK = table[i][1]+1

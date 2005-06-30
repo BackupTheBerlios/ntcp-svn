@@ -7,7 +7,7 @@ import struct
 import pcapy
 from pcapy import findalldevs, open_live
 import impacket
-from impacket.ImpactDecoder import EthDecoder, LinuxSLLDecoder
+from impacket.ImpactDecoder import EthDecoder, LinuxSLLDecoder, TCPDecoder
 
 class DecoderThread(Thread):
     """A thread to sniff packets on my machine,
@@ -30,17 +30,19 @@ class DecoderThread(Thread):
     def run(self):
         # Sniff ad infinitum.
         # PacketHandler shall be invoked by pcap for every packet.
-        self.pcap.loop(0, self.packetHandler)
+        self.pcap.loop(1, self.packetHandler)
 
     def packetHandler(self, hdr, data):
         # Use the ImpactDecoder to turn the rawpacket into a hierarchy
         # of ImpactPacket instances.
         # Display the packet in human-readable form.
-        print self.decoder.decode(data)
-        print 'Try to send SYN...'
-        syn = struct.unpack('!L', data[4:8])[0]
-        self.udp_obj.send_SYN_to_ConnectionBroker(syn)
-        #self.stop()
+        try:
+            packet = self.decoder.decode(data)
+            #print 'Try to send SYN...'
+            syn = packet.child().child().get_th_seq()
+            self.udp_obj.send_SYN_to_ConnectionBroker(syn)
+        except:
+            print "Unexpected error:", sys.exc_info()[0], sys.exc_info()[1]
 
 
 def getInterface():
@@ -48,28 +50,35 @@ def getInterface():
     # The current user will be able to listen from all returned interfaces,
     # using open_live to open them.
     ifs = findalldevs()
-    print 'interface:', ifs
+    if sys.platform == 'win32':
+        ifs = ifs[0].encode('utf-16')
+        ifs = ifs.split('\x00')
+        # TODO: listen on any interface
+        return ifs[1]
+
+    # Listen always on 'any' device
+    # In a unix system listen on 'any' interface
+    return 'any'
+
+    # --------------------------------------------------
     # No interfaces available, abort.
-    if 0 == len(ifs):
-        print "You don't have enough permissions to open any interface on this system."
-        sys.exit(1)
+##     if 0 == len(ifs):
+##         print "You don't have enough permissions to open any interface on this system."
+##         sys.exit(1)
 
-    # Only one interface available, use it.
-    elif 1 == len(ifs):
-        print 'Only one interface present, defaulting to it.'
-        return ifs[0]
+##     # Only one interface available, use it.
+##     elif 1 == len(ifs):
+##         print 'Only one interface present, defaulting to it.'
+##         return ifs[0]
+##     # Ask the user to choose an interface from the list.    
+##     count = 0
+##     for iface in ifs:
+##         print '%i - %s' % (count, iface)
+##         count += 1
+##     idx = int(raw_input('Please select an interface: '))
 
-    # Listen always on eth0
-    return ifs[0]
-
-    # Ask the user to choose an interface from the list.
-    count = 0
-    for iface in ifs:
-        print '%i - %s' % (count, iface)
-        count += 1
-    idx = int(raw_input('Please select an interface: '))
-
-    return ifs[idx]
+##     return ifs[idx]
+    # --------------------------------------------------
 
 def sniff(argv, udp_obj):
 
@@ -82,7 +91,7 @@ def sniff(argv, udp_obj):
         sys.exit(0)
     
     dev = getInterface()
-  
+      
     # Open interface for catpuring.
     p = open_live(dev, 1500, 0, 100)
     
