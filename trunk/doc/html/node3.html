@@ -10,8 +10,8 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
   Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
 <HTML>
 <HEAD>
-<TITLE>Solipsis</TITLE>
-<META NAME="description" CONTENT="Solipsis">
+<TITLE>The Problem</TITLE>
+<META NAME="description" CONTENT="The Problem">
 <META NAME="resource-type" CONTENT="document">
 <META NAME="distribution" CONTENT="global">
 
@@ -28,116 +28,105 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 
 <BODY >
 <!--Navigation Panel-->
-<A NAME="tex2html105"
+<A NAME="tex2html106"
   HREF="node4.html">
 <IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
  SRC="file:/usr/share/latex2html/icons/next.png"></A> 
-<A NAME="tex2html101"
+<A NAME="tex2html102"
   HREF="ntcp.html">
 <IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
  SRC="file:/usr/share/latex2html/icons/up.png"></A> 
-<A NAME="tex2html95"
+<A NAME="tex2html96"
   HREF="node2.html">
 <IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
  SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
-<A NAME="tex2html103"
-  HREF="node2.html">
+<A NAME="tex2html104"
+  HREF="node1.html">
 <IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
  SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
 <BR>
-<B> Next:</B> <A NAME="tex2html106"
-  HREF="node4.html">The Problem</A>
-<B> Up:</B> <A NAME="tex2html102"
+<B> Next:</B> <A NAME="tex2html107"
+  HREF="node4.html">Network Address Translation (NAT)</A>
+<B> Up:</B> <A NAME="tex2html103"
   HREF="ntcp.html">Peer-to-Peer Reliable Connectivity Across</A>
-<B> Previous:</B> <A NAME="tex2html96"
-  HREF="node2.html">Contents</A>
- &nbsp; <B>  <A NAME="tex2html104"
-  HREF="node2.html">Contents</A></B> 
+<B> Previous:</B> <A NAME="tex2html97"
+  HREF="node2.html">Solipsis</A>
+ &nbsp; <B>  <A NAME="tex2html105"
+  HREF="node1.html">Contents</A></B> 
 <BR>
 <BR>
 <!--End of Navigation Panel-->
 
-<H1><A NAME="SECTION00200000000000000000">
-Solipsis</A>
+<H1><A NAME="SECTION00300000000000000000">
+The Problem</A>
 </H1>
 
 <P>
-A shared virtual world is a computer-generated space used as a metaphor
-for interactions. Entities, driven by users or by computer, enter
-and leave the world, move from one virtual place to another and interact
-in real-time. The SOLIPSIS system is a network of peers, where peers
-are connected entities sharing a virtual space. It intends to be scalable
-to an unlimited number of users and accessible by any computer connected
-to the Internet. It does not make use of any server and is solely
-based on a network of peers. [<A
- HREF="node37.html#solipsis">1</A>]
+If we are building some peer-to-peer (P2P) applications, we require
+TCP connections between two machines that can connect to the Internet
+from various places (so they don't have a fixed network address) and,
+often, they are behind a Network Address Translation (NAT) box. The
+problem is that computers attached to the Internet via NAT boxes can
+make outbound connection to the public Internet but cannot receive
+inbound connections.
 
 <P>
-In the SOLIPSIS system, each participating computer runs a specifc
-software that holds and controls one or several peers. These peers
-implement the entities of the virtual world and &#34;perceive&#34;
-their surroundings. Peers can be lite pieces of software and Solipsis
-aims to be accessible to low end computers at 56kbs and to mobile
-wireless devices and not only to full featured broadband connected
-engines. Connected peers may exchange data like video, audio, avatars
-movements or any kind of events affecting the representation of the
-virtual world.
+NAT boxes allow several computers, in a private network, to share
+one public IP address and their communication to the public Internet
+pass through the NAT box, that maintains a table of mappings and use
+port translation in order to determine which computer should receive
+the response. This cause many difficulties for a peer-to-peer communication,
+since the peers cannot be reachable at any global valid network address.
+The new Internet address architecture, where there is a global address
+realm and many private address realms interconnected by NATs, make
+it difficult for two nodes on different private networks to communicate
+each other directly.
 
 <P>
-SOLIPSIS is a system intended to create a massively shared computer-
-generated space. This virtual world may welcome entities, lite pieces
-of software running on any computer connected to Internet. The entities,
-driven by users or by computer, enter and leave the world, move from
-one virtual place to another and interact in real- time.
+To make the new services based on P2P, like teleconferencing or on-line
+gaming, completely accessible, it's very import, and urgent, to implement
+a technique that consent to the different protocols to traverse the
+NATs. The objective of this work is to study different approaches
+to pass the NATs and in particular, for each of these, the scalability,
+the mobility, the standard interfaces, and the security. The work
+must give us a possible approach to solve the problem.
 
 <P>
-In comparison with other existing systems for shared virtual world,
-SOLIPSIS is a fully <I>scalable</I> system. That is, the behavior of SOLIPSIS
-is not altered when the number of active entities varies several orders
-of scale. Moreover, SOLIPSIS ensures the coherency of the virtual
-world, in the sense that it guaranties that a virtual scene is identically
-perceived by all entities observing it.
+The next section describes the NAT functionalities and the different
+types of NAT behaviors .
 
 <P>
-The virtual world is the surface of a torus. Each entity has a position
-on the torus. The SOLIPSIS protocol provides all the material for
-communication between entities. Especially, entity characteristics
-and virtual events can be easily transmitted from one entity to another.
-The SOLIPSIS protocol also ensures that the virtual world is still
-unique by guarantying the connexity of the communication graph modeling
-the network of participating nodes. [<A
- HREF="node37.html#id_solipsis">21</A>]
 <HR>
 <!--Navigation Panel-->
-<A NAME="tex2html105"
+<A NAME="tex2html106"
   HREF="node4.html">
 <IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
  SRC="file:/usr/share/latex2html/icons/next.png"></A> 
-<A NAME="tex2html101"
+<A NAME="tex2html102"
   HREF="ntcp.html">
 <IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
  SRC="file:/usr/share/latex2html/icons/up.png"></A> 
-<A NAME="tex2html95"
+<A NAME="tex2html96"
   HREF="node2.html">
 <IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
  SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
-<A NAME="tex2html103"
-  HREF="node2.html">
+<A NAME="tex2html104"
+  HREF="node1.html">
 <IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
  SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
 <BR>
-<B> Next:</B> <A NAME="tex2html106"
-  HREF="node4.html">The Problem</A>
-<B> Up:</B> <A NAME="tex2html102"
+<B> Next:</B> <A NAME="tex2html107"
+  HREF="node4.html">Network Address Translation (NAT)</A>
+<B> Up:</B> <A NAME="tex2html103"
   HREF="ntcp.html">Peer-to-Peer Reliable Connectivity Across</A>
-<B> Previous:</B> <A NAME="tex2html96"
-  HREF="node2.html">Contents</A>
- &nbsp; <B>  <A NAME="tex2html104"
-  HREF="node2.html">Contents</A></B> 
+<B> Previous:</B> <A NAME="tex2html97"
+  HREF="node2.html">Solipsis</A>
+ &nbsp; <B>  <A NAME="tex2html105"
+  HREF="node1.html">Contents</A></B> 
 <!--End of Navigation Panel-->
 <ADDRESS>
 Gaballo Luca
-2005-06-30
+2005-07-05
 </ADDRESS>
 </BODY>
 </HTML>

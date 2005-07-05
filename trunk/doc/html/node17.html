@@ -10,8 +10,8 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
   Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
 <HTML>
 <HEAD>
-<TITLE>NAT: IETF guidelines</TITLE>
-<META NAME="description" CONTENT="NAT: IETF guidelines">
+<TITLE>STUNT: Simple Traversal of UDP Through NATs and TCP too</TITLE>
+<META NAME="description" CONTENT="STUNT: Simple Traversal of UDP Through NATs and TCP too">
 <META NAME="resource-type" CONTENT="document">
 <META NAME="distribution" CONTENT="global">
 
@@ -20,46 +20,107 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 
 <LINK REL="STYLESHEET" HREF="ntcp.css">
 
+<LINK REL="next" HREF="node18.html">
 <LINK REL="previous" HREF="node16.html">
-<LINK REL="up" HREF="node5.html">
+<LINK REL="up" HREF="node15.html">
 <LINK REL="next" HREF="node18.html">
 </HEAD>
 
 <BODY >
 <!--Navigation Panel-->
-<A NAME="tex2html284"
+<A NAME="tex2html301"
   HREF="node18.html">
 <IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
  SRC="file:/usr/share/latex2html/icons/next.png"></A> 
-<A NAME="tex2html280"
-  HREF="node5.html">
+<A NAME="tex2html297"
+  HREF="node15.html">
 <IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
  SRC="file:/usr/share/latex2html/icons/up.png"></A> 
-<A NAME="tex2html276"
+<A NAME="tex2html291"
   HREF="node16.html">
 <IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
  SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
-<A NAME="tex2html282"
-  HREF="node2.html">
+<A NAME="tex2html299"
+  HREF="node1.html">
 <IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
  SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
 <BR>
-<B> Next:</B> <A NAME="tex2html285"
-  HREF="node18.html">Solution requirements</A>
-<B> Up:</B> <A NAME="tex2html281"
-  HREF="node5.html">Network Address Translation (NAT)</A>
-<B> Previous:</B> <A NAME="tex2html277"
-  HREF="node16.html">NAT: security behaviors or</A>
- &nbsp; <B>  <A NAME="tex2html283"
-  HREF="node2.html">Contents</A></B> 
+<B> Next:</B> <A NAME="tex2html302"
+  HREF="node18.html">Hole Punching</A>
+<B> Up:</B> <A NAME="tex2html298"
+  HREF="node15.html">NAT transversal: some approaches</A>
+<B> Previous:</B> <A NAME="tex2html292"
+  HREF="node16.html">STUN: Simple Traversal of</A>
+ &nbsp; <B>  <A NAME="tex2html300"
+  HREF="node1.html">Contents</A></B> 
 <BR>
 <BR>
 <!--End of Navigation Panel-->
 
-<H1><A NAME="SECTION00490000000000000000">
-NAT: IETF guidelines</A>
+<H1><A NAME="SECTION00620000000000000000">
+STUNT: Simple Traversal of UDP Through NATs and TCP too</A>
 </H1>
-<BR><HR>
+Simple Traversal of UDP Through NATs (STUN) has enabled a new
+generation of peer-to-peer applications that can function in the
+presence of Network Address and Port Translators (NATs) devices.  It
+allows applications to discover the presence and type of NAT and
+learn the binding allocated by the NAT without requiring any changes
+to the NATs themselves.  However, STUN is limited to UDP and does not
+work for TCP.  The behavior of NATs when it comes to TCP is more
+complex and cannot be captured with the mechanisms provided by STUN.
+
+<P>
+Lacking TCP support, many peer-to-peer applications fall back onto
+transferring data over UDP.  As a result applications forfeit
+congestion avoidance in the form of Explicit Congestion Notification
+and instead each application must re-engineer TCP friendliness into
+its UDP based protocol.  TCP friendliness often deviates from the
+application's primary goals and is subsequently ignored causing
+congestion problems later.  Another approach is to run an entire
+TCP/IP stack encapsulated inside UDP datagrams.  This approach incurs
+overheads introduced by encapsulation, decapsulation and transmission
+of extra header data.
+
+<P>
+The protocol described here, Simple Traversal of UDP Through NAT and
+TCP too (STUNT), extends STUN allowing applications behind a NAT to
+discover the NATs behaviour for TCP packets and to learn the
+transport address binding allocated by the NAT.  Using STUNT,
+applications can establish raw TCP sessions with other NAT'ed hosts
+without using encapsulation, tunelling, relaying or a userspace
+stack, and without forfeiting any of benefits of using TCP.  Like
+STUN, STUNT requires no changes to NATs and works with a large
+majority of NATs currently present in the network architechture.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html301"
+  HREF="node18.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html297"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html291"
+  HREF="node16.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html299"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html302"
+  HREF="node18.html">Hole Punching</A>
+<B> Up:</B> <A NAME="tex2html298"
+  HREF="node15.html">NAT transversal: some approaches</A>
+<B> Previous:</B> <A NAME="tex2html292"
+  HREF="node16.html">STUN: Simple Traversal of</A>
+ &nbsp; <B>  <A NAME="tex2html300"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
 <ADDRESS>
 Gaballo Luca
 2005-06-30

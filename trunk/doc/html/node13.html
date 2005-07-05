@@ -10,8 +10,8 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
   Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
 <HTML>
 <HEAD>
-<TITLE>NAT Behavioral Requirements</TITLE>
-<META NAME="description" CONTENT="NAT Behavioral Requirements">
+<TITLE>NAT: IETF guidelines</TITLE>
+<META NAME="description" CONTENT="NAT: IETF guidelines">
 <META NAME="resource-type" CONTENT="document">
 <META NAME="distribution" CONTENT="global">
 
@@ -20,64 +20,45 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 
 <LINK REL="STYLESHEET" HREF="ntcp.css">
 
-<LINK REL="next" HREF="node14.html">
 <LINK REL="previous" HREF="node12.html">
-<LINK REL="up" HREF="node5.html">
+<LINK REL="up" HREF="node4.html">
 <LINK REL="next" HREF="node14.html">
 </HEAD>
 
 <BODY >
 <!--Navigation Panel-->
-<A NAME="tex2html238"
+<A NAME="tex2html239"
   HREF="node14.html">
 <IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
  SRC="file:/usr/share/latex2html/icons/next.png"></A> 
-<A NAME="tex2html234"
-  HREF="node5.html">
+<A NAME="tex2html235"
+  HREF="node4.html">
 <IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
  SRC="file:/usr/share/latex2html/icons/up.png"></A> 
-<A NAME="tex2html228"
+<A NAME="tex2html231"
   HREF="node12.html">
 <IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
  SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
-<A NAME="tex2html236"
-  HREF="node2.html">
+<A NAME="tex2html237"
+  HREF="node1.html">
 <IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
  SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
 <BR>
-<B> Next:</B> <A NAME="tex2html239"
-  HREF="node14.html">Address Translation</A>
-<B> Up:</B> <A NAME="tex2html235"
-  HREF="node5.html">Network Address Translation (NAT)</A>
-<B> Previous:</B> <A NAME="tex2html229"
-  HREF="node12.html">Packet Mangling</A>
- &nbsp; <B>  <A NAME="tex2html237"
-  HREF="node2.html">Contents</A></B> 
+<B> Next:</B> <A NAME="tex2html240"
+  HREF="node14.html">Solution requirements</A>
+<B> Up:</B> <A NAME="tex2html236"
+  HREF="node4.html">Network Address Translation (NAT)</A>
+<B> Previous:</B> <A NAME="tex2html232"
+  HREF="node12.html">NAT: security behaviors or</A>
+ &nbsp; <B>  <A NAME="tex2html238"
+  HREF="node1.html">Contents</A></B> 
 <BR>
 <BR>
 <!--End of Navigation Panel-->
 
-<H1><A NAME="SECTION00450000000000000000">
-NAT Behavioral Requirements</A>
+<H1><A NAME="SECTION00490000000000000000">
+NAT: IETF guidelines</A>
 </H1>
-
-<P>
-To understand a NAT traversal connection the concept of <I>session</I>
-is fundamental. A <I>session endpoint</I> for a TCP or UDP session
-is a pair (IP address, port number) and a session is identified by
-two session endpoints. So we can define a session like a 4-tuple (source
-IP, source port, target IP, target port). Address translations performed
-by NAT are session based and would include translation of incoming
-as well as outgoing packets belonging to that session. Session direction
-is identified by the direction of the first packet of that session.
-
-<P>
-There are two principal NAT functions that interferes with a peer-to-peer
-application and thus requires NAT transversal support: address translation 
-and the filtering of the unsolicited traffic. In the next sections these 
-functionalities will be analyzed and a list of the NAT types will be presented.
-
-<P>
 <BR><HR>
 <ADDRESS>
 Gaballo Luca

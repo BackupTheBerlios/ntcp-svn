@@ -8,4 +8,6 @@ redefining command \url
 
 previous meaning of \url will be lost
 
+ntcp.tex is newer than ntcp.aux: Please rerun latex.
+
 Substitution of arg to newlabelxx delayed.

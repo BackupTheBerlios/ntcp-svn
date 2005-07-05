@@ -10,8 +10,8 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
   Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
 <HTML>
 <HEAD>
-<TITLE>The Problem</TITLE>
-<META NAME="description" CONTENT="The Problem">
+<TITLE>Network Address Translation (NAT)</TITLE>
+<META NAME="description" CONTENT="Network Address Translation (NAT)">
 <META NAME="resource-type" CONTENT="document">
 <META NAME="distribution" CONTENT="global">
 
@@ -28,105 +28,264 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 
 <BODY >
 <!--Navigation Panel-->
-<A NAME="tex2html117"
+<A NAME="tex2html118"
   HREF="node5.html">
 <IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
  SRC="file:/usr/share/latex2html/icons/next.png"></A> 
-<A NAME="tex2html113"
+<A NAME="tex2html114"
   HREF="ntcp.html">
 <IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
  SRC="file:/usr/share/latex2html/icons/up.png"></A> 
-<A NAME="tex2html107"
+<A NAME="tex2html108"
   HREF="node3.html">
 <IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
  SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
-<A NAME="tex2html115"
-  HREF="node2.html">
+<A NAME="tex2html116"
+  HREF="node1.html">
 <IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
  SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
 <BR>
-<B> Next:</B> <A NAME="tex2html118"
-  HREF="node5.html">Network Address Translation (NAT)</A>
-<B> Up:</B> <A NAME="tex2html114"
+<B> Next:</B> <A NAME="tex2html119"
+  HREF="node5.html">Solution requirements</A>
+<B> Up:</B> <A NAME="tex2html115"
   HREF="ntcp.html">Peer-to-Peer Reliable Connectivity Across</A>
-<B> Previous:</B> <A NAME="tex2html108"
-  HREF="node3.html">Solipsis</A>
- &nbsp; <B>  <A NAME="tex2html116"
-  HREF="node2.html">Contents</A></B> 
+<B> Previous:</B> <A NAME="tex2html109"
+  HREF="node3.html">The Problem</A>
+ &nbsp; <B>  <A NAME="tex2html117"
+  HREF="node1.html">Contents</A></B> 
 <BR>
 <BR>
 <!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
 
-<H1><A NAME="SECTION00300000000000000000">
-The Problem</A>
+<UL>
+<LI><A NAME="tex2html120"
+  HREF="node4.html#SECTION00410000000000000000">NAT Binding</A>
+<UL>
+<LI><A NAME="tex2html121"
+  HREF="node4.html#SECTION00411000000000000000">Address and Port Mapping</A>
+<LI><A NAME="tex2html122"
+  HREF="node4.html#SECTION00412000000000000000">Port Assignment</A>
+<LI><A NAME="tex2html123"
+  HREF="node4.html#SECTION00413000000000000000">Binding Lifetime</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html124"
+  HREF="node4.html#SECTION00420000000000000000">Filtering of unsolicited traffic</A>
+<LI><A NAME="tex2html125"
+  HREF="node4.html#SECTION00430000000000000000">Hairpinning Behaviour</A>
+<LI><A NAME="tex2html126"
+  HREF="node4.html#SECTION00440000000000000000">Packet Mangling</A>
+<LI><A NAME="tex2html127"
+  HREF="node4.html#SECTION00450000000000000000">NAT Behavioral Requirements</A>
+<LI><A NAME="tex2html128"
+  HREF="node4.html#SECTION00460000000000000000">Address Translation</A>
+<LI><A NAME="tex2html129"
+  HREF="node4.html#SECTION00470000000000000000">NAT types</A>
+<LI><A NAME="tex2html130"
+  HREF="node4.html#SECTION00480000000000000000">NAT: security behaviors or not?</A>
+<LI><A NAME="tex2html131"
+  HREF="node4.html#SECTION00490000000000000000">NAT: IETF guidelines</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00400000000000000000">
+Network Address Translation (NAT)</A>
 </H1>
 
 <P>
-If we are building some peer-to-peer (P2P) applications, we require
-TCP connections between two machines that can connect to the Internet
-from various places (so they don't have a fixed network address) and,
-often, they are behind a Network Address Translation (NAT) box. The
-problem is that computers attached to the Internet via NAT boxes can
-make outbound connection to the public Internet but cannot receive
-inbound connections.
+Network Address Translation is a method by which IP addresses are
+mapped from one address realm to another, providing transparent routing
+to end hosts. The need for address traslation arises 
+when a network's address cannot be used outside the network either 
+it is a not valid public address, or because the address must be kept 
+private from the externel network.
+Address translation allows transparent routing beetween two host 
+in different network by modifying end node addresses en-route and maintaining
+state for these updates [<A
+ HREF="node8.html#rfc_2663">16</A>].
+This chapter attempts to describe the operations of NAT devices 
+and to define the terminology used to identify various kind of NAT and work with them.
 
 <P>
-NAT boxes allow several computers, in a private network, to share
-one public IP address and their communication to the public Internet
-pass through the NAT box, that maintains a table of mappings and use
-port translation in order to determine which computer should receive
-the response. This cause many difficulties for a peer-to-peer communication,
-since the peers cannot be reachable at any global valid network address.
-The new Internet address architecture, where there is a global address
-realm and many private address realms interconnected by NATs, make
-it difficult for two nodes on different private networks to communicate
-each other directly.
+
+<H1><A NAME="SECTION00410000000000000000">
+NAT Binding</A>
+</H1>
+
+<H2><A NAME="SECTION00411000000000000000">
+Address and Port Mapping</A>
+</H2>
+
+<H2><A NAME="SECTION00412000000000000000">
+Port Assignment</A>
+</H2>
+
+<H2><A NAME="SECTION00413000000000000000">
+Binding Lifetime</A>
+</H2>
 
 <P>
-To make the new services based on P2P, like teleconferencing or on-line
-gaming, completely accessible, it's very import, and urgent, to implement
-a technique that consent to the different protocols to traverse the
-NATs. The objective of this work is to study different approaches
-to pass the NATs and in particular, for each of these, the scalability,
-the mobility, the standard interfaces, and the security. The work
-must give us a possible approach to solve the problem.
+
+<H1><A NAME="SECTION00420000000000000000">
+Filtering of unsolicited traffic</A>
+</H1>
 
 <P>
-The next section describes the NAT functionalities and the different
-types of NAT behaviors .
+The filtering function allows the NATs to drop incoming session that
+are deemed unsolicited. The most common filtering policy is to permit
+a communication session to cross the NAT if and only if it was initiated
+from the private network. All packets arriving from the public Internet,
+like an attempt by another peer to establish a connection, are dropped
+because they are not part of an existing communication session, that
+must be previously initiated by a node in the private network.
 
 <P>
+
+<H1><A NAME="SECTION00430000000000000000">
+Hairpinning Behaviour</A>
+</H1>
+
+<P>
+
+<H1><A NAME="SECTION00440000000000000000">
+Packet Mangling</A>
+</H1>
+
+<P>
+
+<H1><A NAME="SECTION00450000000000000000">
+NAT Behavioral Requirements</A>
+</H1>
+
+<P>
+To understand a NAT traversal connection the concept of <I>session</I>
+is fundamental. A <I>session endpoint</I> for a TCP or UDP session
+is a pair (IP address, port number) and a session is identified by
+two session endpoints. So we can define a session like a 4-tuple (source
+IP, source port, target IP, target port). Address translations performed
+by NAT are session based and would include translation of incoming
+as well as outgoing packets belonging to that session. Session direction
+is identified by the direction of the first packet of that session.
+
+<P>
+There are two principal NAT functions that interferes with a peer-to-peer
+application and thus requires NAT transversal support: address translation 
+and the filtering of the unsolicited traffic. In the next sections these 
+functionalities will be analyzed and a list of the NAT types will be presented.
+
+<P>
+
+<H1><A NAME="SECTION00460000000000000000">
+Address Translation</A>
+</H1>
+
+<P>
+In order to enable many private hosts behind the NAT to share the
+use of a smaller number of public IP addresses (often just one) the
+NAT modifies the IP-level and often the transport-level header information
+in packets flowing across. So the users behind a NAT have no unique,
+permanently IP address to use in the public Internet, and can communicate
+only with the temporary public address (IP and port) that the NAT
+assign them dynamically. Establish a communication between two peers
+that reside behind two different NAT (in two different private network)
+is very hard, because neither of them has a permanent and valid public
+IP address that the other can reach at any time, so in order to establish
+a peer-to-peer connection the hosts must rely on the temporary public
+address their NAT assigns them as a result of a prior outgoing client/server
+style communication sessions.
+
+<P>
+Discovering, exchanging, and using these temporary public endpoints
+requires that the two host collaborate through a well-known node on
+the public Internet. There are several protocols that allow applications
+to obtain external communication through the NAT. We will analyze
+them with the objective to find a good technique and implement it.
+
+<P>
+
+<H1><A NAME="SECTION00470000000000000000">
+NAT types</A>
+</H1>
+
+<P>
+There are four different ways NAT boxes implement the mapping and
+filtering, so, using the classification in [<A
+ HREF="node8.html#rfc_3489">12</A>], there
+are four NAT types:
+
+<P>
+
+<OL>
+<LI><I>Full cone</I>: all requests from the same internal IP address and
+port are mapped to the same external IP address and port. Furthermore,
+any external host can send a packet to the internal host, by sending
+a packet to the mapped external address. 
+</LI>
+<LI><I>Restricted cone</I>: all requests from the same internal IP address
+and port are mapped to the same external IP address and port. Unlike
+a full cone NAT, an external host (with IP address X) can send a packet
+to the internal host only if the internal host had previously sent
+a packet to IP address X. 
+</LI>
+<LI><I>Port Restricted cone</I>: a port restricted cone NAT is like a
+restricted cone NAT, but the restriction includes port numbers. Specifically,
+an external host can send a packet, with source IP address X and source
+port P, to the internal host only if the internal host had previously
+sent a packet to IP address X and port P. 
+</LI>
+<LI><I>Symmetric</I>: A symmetric NAT is one where all requests from the
+same internal IP address and port, to a specific destination IP address
+and port, are mapped to the same external IP address and port. If
+the same host sends a packet with the same source address and port,
+but to a different destination, a different mapping is used. Furthermore,
+only the external host that receives a packet can send a UDP packet
+back to the internal host. 
+</LI>
+</OL>
+
+<P>
+
+<H1><A NAME="SECTION00480000000000000000">
+NAT: security behaviors or not?</A>
+</H1>
+
+<H1><A NAME="SECTION00490000000000000000">
+NAT: IETF guidelines</A>
+</H1>
 <HR>
 <!--Navigation Panel-->
-<A NAME="tex2html117"
+<A NAME="tex2html118"
   HREF="node5.html">
 <IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
  SRC="file:/usr/share/latex2html/icons/next.png"></A> 
-<A NAME="tex2html113"
+<A NAME="tex2html114"
   HREF="ntcp.html">
 <IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
  SRC="file:/usr/share/latex2html/icons/up.png"></A> 
-<A NAME="tex2html107"
+<A NAME="tex2html108"
   HREF="node3.html">
 <IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
  SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
-<A NAME="tex2html115"
-  HREF="node2.html">
+<A NAME="tex2html116"
+  HREF="node1.html">
 <IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
  SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
 <BR>
-<B> Next:</B> <A NAME="tex2html118"
-  HREF="node5.html">Network Address Translation (NAT)</A>
-<B> Up:</B> <A NAME="tex2html114"
+<B> Next:</B> <A NAME="tex2html119"
+  HREF="node5.html">Solution requirements</A>
+<B> Up:</B> <A NAME="tex2html115"
   HREF="ntcp.html">Peer-to-Peer Reliable Connectivity Across</A>
-<B> Previous:</B> <A NAME="tex2html108"
-  HREF="node3.html">Solipsis</A>
- &nbsp; <B>  <A NAME="tex2html116"
-  HREF="node2.html">Contents</A></B> 
+<B> Previous:</B> <A NAME="tex2html109"
+  HREF="node3.html">The Problem</A>
+ &nbsp; <B>  <A NAME="tex2html117"
+  HREF="node1.html">Contents</A></B> 
 <!--End of Navigation Panel-->
 <ADDRESS>
 Gaballo Luca
-2005-06-30
+2005-07-05
 </ADDRESS>
 </BODY>
 </HTML>

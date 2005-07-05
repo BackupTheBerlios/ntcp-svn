@@ -10,8 +10,8 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
   Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
 <HTML>
 <HEAD>
-<TITLE>Address Translation</TITLE>
-<META NAME="description" CONTENT="Address Translation">
+<TITLE>Solution requirements</TITLE>
+<META NAME="description" CONTENT="Solution requirements">
 <META NAME="resource-type" CONTENT="document">
 <META NAME="distribution" CONTENT="global">
 
@@ -21,97 +21,65 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <LINK REL="STYLESHEET" HREF="ntcp.css">
 
 <LINK REL="next" HREF="node15.html">
-<LINK REL="previous" HREF="node13.html">
-<LINK REL="up" HREF="node5.html">
+<LINK REL="previous" HREF="node4.html">
+<LINK REL="up" HREF="ntcp.html">
 <LINK REL="next" HREF="node15.html">
 </HEAD>
 
 <BODY >
 <!--Navigation Panel-->
-<A NAME="tex2html250"
+<A NAME="tex2html251"
   HREF="node15.html">
 <IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
  SRC="file:/usr/share/latex2html/icons/next.png"></A> 
-<A NAME="tex2html246"
-  HREF="node5.html">
+<A NAME="tex2html247"
+  HREF="ntcp.html">
 <IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
  SRC="file:/usr/share/latex2html/icons/up.png"></A> 
-<A NAME="tex2html240"
+<A NAME="tex2html241"
   HREF="node13.html">
 <IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
  SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
-<A NAME="tex2html248"
-  HREF="node2.html">
+<A NAME="tex2html249"
+  HREF="node1.html">
 <IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
  SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
 <BR>
-<B> Next:</B> <A NAME="tex2html251"
-  HREF="node15.html">NAT types</A>
-<B> Up:</B> <A NAME="tex2html247"
-  HREF="node5.html">Network Address Translation (NAT)</A>
-<B> Previous:</B> <A NAME="tex2html241"
-  HREF="node13.html">NAT Behavioral Requirements</A>
- &nbsp; <B>  <A NAME="tex2html249"
-  HREF="node2.html">Contents</A></B> 
+<B> Next:</B> <A NAME="tex2html252"
+  HREF="node15.html">NAT transversal: some approaches</A>
+<B> Up:</B> <A NAME="tex2html248"
+  HREF="ntcp.html">Peer-to-Peer Reliable Connectivity Across</A>
+<B> Previous:</B> <A NAME="tex2html242"
+  HREF="node13.html">NAT: IETF guidelines</A>
+ &nbsp; <B>  <A NAME="tex2html250"
+  HREF="node1.html">Contents</A></B> 
 <BR>
 <BR>
 <!--End of Navigation Panel-->
 
-<H1><A NAME="SECTION00460000000000000000">
-Address Translation</A>
+<H1><A NAME="SECTION00500000000000000000">
+Solution requirements</A>
 </H1>
 
 <P>
-In order to enable many private hosts behind the NAT to share the
-use of a smaller number of public IP addresses (often just one) the
-NAT modifies the IP-level and often the transport-level header information
-in packets flowing across. So the users behind a NAT have no unique,
-permanently IP address to use in the public Internet, and can communicate
-only with the temporary public address (IP and port) that the NAT
-assign them dynamically. Establish a communication between two peers
-that reside behind two different NAT (in two different private network)
-is very hard, because neither of them has a permanent and valid public
-IP address that the other can reach at any time, so in order to establish
-a peer-to-peer connection the hosts must rely on the temporary public
-address their NAT assigns them as a result of a prior outgoing client/server
-style communication sessions.
+
+<UL>
+<LI>Scalability: a peer-to-peer application is intended open to a theoretically infinite community. A completely scalable system allows the number of instances to grow several orders of scale without any behavior problem. The solution must satisfy this important requirement.
 
 <P>
-Discovering, exchanging, and using these temporary public endpoints
-requires that the two host collaborate through a well-known node on
-the public Internet. There are several protocols that allow applications
-to obtain external communication through the NAT. We will analyze
-them with the objective to find a good technique and implement it.
+</LI>
+<LI>Standard interface: use standard interfaces for network (e.g. Sockets) allows a simpler implementation and the use of many network packages/libraries.
 
 <P>
-<HR>
-<!--Navigation Panel-->
-<A NAME="tex2html250"
-  HREF="node15.html">
-<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
- SRC="file:/usr/share/latex2html/icons/next.png"></A> 
-<A NAME="tex2html246"
-  HREF="node5.html">
-<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
- SRC="file:/usr/share/latex2html/icons/up.png"></A> 
-<A NAME="tex2html240"
-  HREF="node13.html">
-<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
- SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
-<A NAME="tex2html248"
-  HREF="node2.html">
-<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
- SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
-<BR>
-<B> Next:</B> <A NAME="tex2html251"
-  HREF="node15.html">NAT types</A>
-<B> Up:</B> <A NAME="tex2html247"
-  HREF="node5.html">Network Address Translation (NAT)</A>
-<B> Previous:</B> <A NAME="tex2html241"
-  HREF="node13.html">NAT Behavioral Requirements</A>
- &nbsp; <B>  <A NAME="tex2html249"
-  HREF="node2.html">Contents</A></B> 
-<!--End of Navigation Panel-->
+</LI>
+<LI>Security: ... 
+
+<P>
+</LI>
+<LI>Mobility: communication between peers that move from network to network. SOLIPSIS, like much other P2P applications, is conceived to be implemented on mobile terminals too, like mobile phones or PDA, and the solution must be independent from a particular NAT configuration. We need of an implementation that need for any NAT reconfiguration like the additions of port mappings, allow UDP or turn on UPnP.
+</LI>
+</UL>
+<BR><HR>
 <ADDRESS>
 Gaballo Luca
 2005-06-30
