@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>trunk.p2pNetwork.htcp.punchProtocol</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trunk.p2pNetwork-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        Package&nbsp;trunk ::
+        <a href="trunk.p2pNetwork-module.html">Package&nbsp;p2pNetwork</a> ::
+        <a href="trunk.p2pNetwork.htcp-module.html">Package&nbsp;htcp</a> ::
+        Module&nbsp;punchProtocol
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="../private/trunk.p2pNetwork.htcp.punchProtocol-module.html">show&nbsp;private</a>&nbsp;|&nbsp;hide&nbsp;private]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="trunk.p2pNetwork.htcp.punchProtocol-module.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF MODULE DESCRIPTION =========== -->
+<h2 class="module">Module trunk.p2pNetwork.htcp.punchProtocol</h2>
+
+
+<!-- =========== START OF CLASSES =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Classes</th></tr>
+<tr><td width="15%">
+  <b><a href="trunk.p2pNetwork.htcp.punchProtocol.ConnectionBroker-class.html"><code>ConnectionBroker</code></a></b></td>
+  <td>The code for the server</td></tr>
+<tr><td width="15%">
+  <b><a href="trunk.p2pNetwork.htcp.punchProtocol.PunchPeer-class.html"><code>PunchPeer</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="trunk.p2pNetwork.htcp.punchProtocol.PunchProtocol-class.html"><code>PunchProtocol</code></a></b></td>
+  <td>This class parses and builds hole punching messages.</td></tr>
+</table><br />
+
+
+<!-- =========== START OF FUNCTION SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Function Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="getRandomTID"></a><span class="summary-sig"><span class="summary-sig-name">getRandomTID</span>()</span></code>
+</td></tr>
+</table><br />
+
+
+<!-- =========== START OF VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>list</code></font></td>
+<td><b><a href="trunk.p2pNetwork.htcp.punchProtocol-module.html#DefaultServers"><code>DefaultServers</code></a></b> = <span title="[('localhost', 6060)]"><code>[('localhost',&nbsp;6060)]                   </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>dict</code></font></td>
+<td><b><a href="trunk.p2pNetwork.htcp.punchProtocol-module.html#PunchAttributes"><code>PunchAttributes</code></a></b> = <span title="{1: 'USER-ID', 2: 'PUBLIC-ADDRESSE', 3: 'PRIVATE-ADDRESSE', 4: 'NAT-TYPE', 5: 'REQUESTOR-PUBLIC-ADDRESSE', 6: 'REQUESTOR-PRIVATE-ADDRESSE', 7: 'REQUESTOR-NAT-TYPE', 8: 'ERROR-CODE', 9: 'UNKNOWN-ATTRIBUTES'}"><code>{1:&nbsp;'USER-ID',&nbsp;2:&nbsp;'PUBLIC-ADDRESSE',&nbsp;3<span class="variable-ellipsis">...</span></code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>dict</code></font></td>
+<td><b><a href="trunk.p2pNetwork.htcp.punchProtocol-module.html#PunchTypes"><code>PunchTypes</code></a></b> = <span title="{4097: 'Lookup Request', 4098: 'Registration Request', 4099: 'Registration Response', 4353: 'Lookup Response', 4354: 'Connection to peer', 4369: 'Connection Request', 4370: 'Error Response'}"><code>{4097:&nbsp;'Lookup&nbsp;Request',&nbsp;4098:&nbsp;'Registratio<span class="variable-ellipsis">...</span></code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>dict</code></font></td>
+<td><b><a href="trunk.p2pNetwork.htcp.punchProtocol-module.html#ResponseCodes"><code>ResponseCodes</code></a></b> = <span title="{400: 'Bad Request', 500: 'Server Error', 420: 'Unknown attribute', 600: 'Global Failure', 431: 'Integrity Check Failure'}"><code>{400:&nbsp;'Bad&nbsp;Request',&nbsp;500:&nbsp;'Server&nbsp;Error'<span class="variable-ellipsis">...</span></code>
+</span></td></tr>
+</table><br />
+
+
+<!-- =========== START OF VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="DefaultServers"></a>
+<h3>DefaultServers</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>list</code>
+
+      </dd>
+<span title="[('localhost', 6060)]">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+[('localhost', 6060)]                                                  </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="PunchAttributes"></a>
+<h3>PunchAttributes</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>dict</code>
+
+      </dd>
+<span title="{1: 'USER-ID', 2: 'PUBLIC-ADDRESSE', 3: 'PRIVATE-ADDRESSE', 4: 'NAT-TYPE', 5: 'REQUESTOR-PUBLIC-ADDRESSE', 6: 'REQUESTOR-PRIVATE-ADDRESSE', 7: 'REQUESTOR-NAT-TYPE', 8: 'ERROR-CODE', 9: 'UNKNOWN-ATTRIBUTES'}">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+{1: 'USER-ID',
+ 2: 'PUBLIC-ADDRESSE',
+ 3: 'PRIVATE-ADDRESSE',
+ 4: 'NAT-TYPE',
+ 5: 'REQUESTOR-PUBLIC-ADDRESSE',
+ 6: 'REQUESTOR-PRIVATE-ADDRESSE',
+ 7: 'REQUESTOR-NAT-TYPE',
+ 8: 'ERROR-CODE',
+<span class="variable-ellipsis">...</span>                                                                    </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="PunchTypes"></a>
+<h3>PunchTypes</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>dict</code>
+
+      </dd>
+<span title="{4097: 'Lookup Request', 4098: 'Registration Request', 4099: 'Registration Response', 4353: 'Lookup Response', 4354: 'Connection to peer', 4369: 'Connection Request', 4370: 'Error Response'}">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+{4097: 'Lookup Request',
+ 4098: 'Registration Request',
+ 4099: 'Registration Response',
+ 4353: 'Lookup Response',
+ 4354: 'Connection to peer',
+ 4369: 'Connection Request',
+ 4370: 'Error Response'}                                               </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="ResponseCodes"></a>
+<h3>ResponseCodes</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>dict</code>
+
+      </dd>
+<span title="{400: 'Bad Request', 500: 'Server Error', 420: 'Unknown attribute', 600: 'Global Failure', 431: 'Integrity Check Failure'}">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+{400: 'Bad Request',
+ 420: 'Unknown attribute',
+ 431: 'Integrity Check Failure',
+ 500: 'Server Error',
+ 600: 'Global Failure'}                                                </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trunk.p2pNetwork-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on Thu Jul  7 12:23:18 2005</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

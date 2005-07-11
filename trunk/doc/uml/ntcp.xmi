@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMI xmlns:UML="org.omg/standards/UML" verified="false" timestamp="" xmi.version="1.2" >
+ <XMI.header>
+  <XMI.documentation>
+   <XMI.exporter>umbrello uml modeller http://uml.sf.net</XMI.exporter>
+   <XMI.exporterVersion>1.2.90</XMI.exporterVersion>
+   <XMI.exporterEncoding>UnicodeUTF8</XMI.exporterEncoding>
+  </XMI.documentation>
+  <XMI.model xmi.name="umbrello0JQftc" href="/tmp/kde-gaballo/umbrello0JQftc.tmp" />
+  <XMI.metamodel xmi.name="UML" href="UML.xml" xmi.version="1.3" />
+ </XMI.header>
+ <XMI.content>
+  <UML:Model>
+   <UML:Stereotype visibility="public" xmi.id="29" name="datatype" />
+   <UML:Stereotype visibility="public" xmi.id="117" name="enum" />
+   <UML:Actor visibility="public" xmi.id="9" name="user A" />
+   <UML:UseCase visibility="public" xmi.id="12" name="new_usecase" />
+   <UML:UseCase visibility="public" xmi.id="13" name="STUNT client" />
+   <UML:UseCase visibility="public" xmi.id="15" name="Connection Broker" />
+   <UML:Actor visibility="public" xmi.id="16" name="user B" />
+   <UML:DataType stereotype="29" visibility="public" xmi.id="28" name="string" />
+   <UML:DataType stereotype="29" visibility="public" xmi.id="31" name="int" />
+   <UML:Package visibility="public" xmi.id="99" name="ntcp" >
+    <UML:Class visibility="public" xmi.id="36" name="STUNTClient" >
+     <UML:Operation visibility="public" xmi.id="130" type="void" name="NATdiscover" />
+    </UML:Class>
+    <UML:Class visibility="public" xmi.id="23" name="STUNT" />
+    <UML:Class visibility="public" xmi.id="25" name="NATConfiguration" >
+     <UML:Attribute visibility="public" xmi.id="34" value="" type="string" name="type" />
+    </UML:Class>
+    <UML:Class visibility="private" xmi.id="50" name="NAT" >
+     <UML:Operation visibility="public" xmi.id="67" type="void" name="getPublicAddr" />
+     <UML:Operation visibility="public" xmi.id="69" type="void" name="setPublicAddr" >
+      <UML:Parameter visibility="public" xmi.id="70" value="" type="string" name="ip" />
+      <UML:Parameter visibility="public" xmi.id="71" value="" type="int" name="port" />
+     </UML:Operation>
+     <UML:Operation visibility="public" xmi.id="68" type="void" name="getPrivateAddr" />
+     <UML:Operation visibility="public" xmi.id="72" type="void" name="setPrivateAddr" >
+      <UML:Parameter visibility="public" xmi.id="73" value="" type="string" name="ip" />
+      <UML:Parameter visibility="public" xmi.id="74" value="" type="int" name="port" />
+     </UML:Operation>
+     <UML:Operation visibility="public" xmi.id="75" type="string" name="getType" />
+     <UML:Operation visibility="public" xmi.id="77" type="void" name="setType" >
+      <UML:Parameter visibility="public" xmi.id="78" value="" type="string" name="type" />
+     </UML:Operation>
+     <UML:Attribute visibility="public" xmi.id="52" value="" type="int" name="publicIP" />
+     <UML:Attribute visibility="public" xmi.id="53" value="" type="int" name="publicPort" />
+     <UML:Attribute visibility="public" xmi.id="54" value="" type="int" name="privateIP" />
+     <UML:Attribute visibility="public" xmi.id="55" value="" type="int" name="privatePort" />
+     <UML:Attribute visibility="public" xmi.id="65" value="" type="string" name="type" />
+    </UML:Class>
+    <UML:Class visibility="public" xmi.id="24" name="ConnectionBroker" >
+     <UML:Operation visibility="public" xmi.id="142" type="void" name="registerUser" >
+      <UML:Parameter visibility="public" xmi.id="143" value="" type="User" name="user" />
+     </UML:Operation>
+     <UML:Operation visibility="public" xmi.id="147" type="void" name="lookupRequest" >
+      <UML:Parameter visibility="public" xmi.id="148" value="" type="int" name="uri" />
+     </UML:Operation>
+    </UML:Class>
+    <UML:Class visibility="public" xmi.id="35" name="STUNTServer" />
+    <UML:Class visibility="public" xmi.id="84" name="NATConnectivity" >
+     <UML:Operation visibility="public" xmi.id="92" type="void" name="forceConnection" >
+      <UML:Parameter visibility="public" xmi.id="151" value="" type="Address" name="dstAddr" />
+      <UML:Parameter visibility="public" xmi.id="153" value="" type="Address" name="srcAddr" />
+     </UML:Operation>
+     <UML:Attribute visibility="private" xmi.id="164" value="" type="Address" name="srcAddr" />
+     <UML:Attribute visibility="private" xmi.id="165" value="" type="Address" name="dstAddr" />
+    </UML:Class>
+    <UML:Class visibility="public" xmi.id="56" name="User" >
+     <UML:Operation visibility="public" xmi.id="63" type="void" name="getUserInfo" >
+      <UML:Parameter visibility="public" xmi.id="64" value="" type="int" name="userId" />
+     </UML:Operation>
+     <UML:Operation visibility="public" xmi.id="133" type="void" name="setUserInfo" >
+      <UML:Parameter visibility="public" xmi.id="145" value="" type="NAT" name="nat" />
+     </UML:Operation>
+     <UML:Attribute visibility="public" xmi.id="58" value="" type="int" name="userId" />
+    </UML:Class>
+    <UML:Class visibility="public" xmi.id="109" name="Puncher" >
+     <UML:Operation visibility="public" xmi.id="131" type="void" name="registrationRequest" >
+      <UML:Parameter visibility="public" xmi.id="132" value="" type="User" name="myConf" />
+     </UML:Operation>
+     <UML:Operation visibility="public" xmi.id="247" type="void" name="registrationResponse" />
+     <UML:Operation visibility="public" xmi.id="138" type="void" name="lookupRequest" >
+      <UML:Parameter visibility="public" xmi.id="139" value="" type="int" name="URI" />
+     </UML:Operation>
+     <UML:Operation visibility="public" xmi.id="239" type="void" name="lookupResponse" >
+      <UML:Parameter visibility="public" xmi.id="240" value="" type="Address" name="dstAddr" />
+     </UML:Operation>
+     <UML:Operation visibility="public" xmi.id="235" type="void" name="connectionRequest" >
+      <UML:Parameter visibility="public" xmi.id="236" value="" type="Address" name="remoteAddr" />
+     </UML:Operation>
+    </UML:Class>
+    <UML:Class visibility="public" xmi.id="108" name="ConnectivityBroker" />
+    <UML:Class visibility="public" xmi.id="103" name="sniffy" />
+    <UML:Class visibility="public" xmi.id="104" name="spoofy" />
+    <UML:Class visibility="public" xmi.id="156" name="Address" >
+     <UML:Operation visibility="public" xmi.id="160" type="void" name="setAddress" >
+      <UML:Parameter visibility="public" xmi.id="162" value="" type="string" name="ip" />
+      <UML:Parameter visibility="public" xmi.id="163" value="" type="int" name="port" />
+     </UML:Operation>
+     <UML:Operation visibility="public" xmi.id="161" type="void" name="getAddress" />
+     <UML:Attribute visibility="public" xmi.id="157" value="" type="string" name="ip" />
+     <UML:Attribute visibility="public" xmi.id="158" value="" type="int" name="port" />
+     <UML:Attribute visibility="public" xmi.id="159" value="" type="string" name="hostname" />
+    </UML:Class>
+   </UML:Package>
+   <UML:UseCase visibility="public" xmi.id="168" name="NATConnectivity" />
+   <UML:UseCase visibility="public" xmi.id="169" name="TCPConnection" />
+   <UML:UseCase visibility="public" xmi.id="174" name="Puncher" />
+   <UML:UseCase visibility="public" xmi.id="179" name="STUNT server" />
+   <UML:Association visibility="public" xmi.id="14" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="12" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="13" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="17" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="9" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="13" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="18" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="9" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="15" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="19" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="16" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="13" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="20" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="16" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="15" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Generalization child="35" visibility="public" xmi.id="37" parent="23" />
+   <UML:Generalization child="36" visibility="public" xmi.id="38" parent="23" />
+   <UML:Association visibility="public" xmi.id="39" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="shared" type="36" />
+     <UML:AssociationEndRole visibility="public" type="23" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Generalization child="23" visibility="public" xmi.id="40" parent="35" />
+   <UML:Generalization child="23" visibility="public" xmi.id="41" parent="35" />
+   <UML:Generalization child="35" visibility="public" xmi.id="43" parent="23" />
+   <UML:Generalization child="36" visibility="public" xmi.id="44" parent="23" />
+   <UML:Association visibility="public" xmi.id="57" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="shared" type="24" />
+     <UML:AssociationEndRole visibility="public" type="56" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Generalization child="50" visibility="public" xmi.id="59" parent="56" />
+   <UML:Generalization child="56" visibility="public" xmi.id="60" parent="50" />
+   <UML:Generalization child="25" visibility="public" xmi.id="61" parent="50" />
+   <UML:Association visibility="public" xmi.id="79" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="shared" type="24" multiplicity="0..*" />
+     <UML:AssociationEndRole visibility="public" type="56" multiplicity="1" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Generalization child="56" visibility="public" xmi.id="85" parent="84" />
+   <UML:Generalization child="84" visibility="public" xmi.id="86" parent="56" />
+   <UML:Association visibility="public" xmi.id="105" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="84" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="103" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="107" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="84" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="36" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="110" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="84" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="109" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Generalization child="109" visibility="public" xmi.id="111" parent="108" />
+   <UML:Generalization child="24" visibility="public" xmi.id="112" parent="108" />
+   <UML:Association visibility="public" xmi.id="140" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="56" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="50" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="141" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="24" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="56" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="166" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="84" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="104" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="170" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="9" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="168" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="171" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="9" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="169" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="172" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="169" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="168" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="173" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="168" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="169" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="175" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="168" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="13" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="176" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="168" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="15" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="177" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="168" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="174" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="178" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="174" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="15" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="185" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="168" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="174" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="186" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="168" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="169" />
+    </UML:Association.connection>
+   </UML:Association>
+   <UML:Association visibility="public" xmi.id="213" >
+    <UML:Association.connection>
+     <UML:AssociationEndRole visibility="public" aggregation="none" type="16" />
+     <UML:AssociationEndRole visibility="public" isNavigable="true" type="168" />
+    </UML:Association.connection>
+   </UML:Association>
+  </UML:Model>
+ </XMI.content>
+ <XMI.extensions xmi.extender="umbrello" >
+  <docsettings viewid="181" documentation="" uniqueid="247" />
+  <diagrams>
+   <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="1013" snapy="10" showatts="1" xmi.id="8" documentation="" type="402" showops="1" showpackage="0" name="class diagram" localid="30000" showstereotype="0" showscope="1" snapcsgrid="0" font="Sans,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="864" >
+    <widgets>
+     <classwidget usesdiagramfillcolour="1" width="52" showattsigs="601" usesdiagramusefillcolour="1" x="790" linecolour="none" y="58" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="33" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="23" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <classwidget usesdiagramfillcolour="0" width="211" showattsigs="601" usesdiagramusefillcolour="0" x="89" linecolour="#ff0000" y="192" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="59" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="24" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <classwidget usesdiagramfillcolour="0" width="92" showattsigs="601" usesdiagramusefillcolour="0" x="890" linecolour="#ff0000" y="192" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="33" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="35" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <classwidget usesdiagramfillcolour="0" width="148" showattsigs="601" usesdiagramusefillcolour="0" x="688" linecolour="#ff0000" y="192" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="42" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="36" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <classwidget usesdiagramfillcolour="0" width="281" showattsigs="601" usesdiagramusefillcolour="0" x="54" linecolour="#ff0000" y="548" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="204" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="50" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <classwidget usesdiagramfillcolour="0" width="207" showattsigs="601" usesdiagramusefillcolour="0" x="91" linecolour="#ff0000" y="347" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="68" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="56" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <classwidget usesdiagramfillcolour="0" width="403" showattsigs="601" usesdiagramusefillcolour="0" x="362" linecolour="#ff0000" y="347" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="68" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="84" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <packagewidget usesdiagramfillcolour="0" width="70" usesdiagramusefillcolour="0" x="14" linecolour="#ff0000" y="12" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="46" usefillcolor="1" isinstance="0" xmi.id="99" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <classwidget usesdiagramfillcolour="1" width="44" showattsigs="601" usesdiagramusefillcolour="1" x="474" linecolour="none" y="586" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="33" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="103" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <classwidget usesdiagramfillcolour="1" width="128" showattsigs="601" usesdiagramusefillcolour="1" x="265" linecolour="none" y="66" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="33" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="108" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <classwidget usesdiagramfillcolour="0" width="324" showattsigs="601" usesdiagramusefillcolour="0" x="334" linecolour="#ff0000" y="185" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="110" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="109" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <classwidget usesdiagramfillcolour="0" width="259" showattsigs="601" usesdiagramusefillcolour="0" x="706" linecolour="#ff0000" y="714" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="102" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="156" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+     <classwidget usesdiagramfillcolour="1" width="52" showattsigs="601" usesdiagramusefillcolour="1" x="604" linecolour="none" y="585" showopsigs="601" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="33" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="104" showoperations="1" showpackage="0" showscope="1" showstereotype="0" font="Sans,10,-1,5,75,0,0,0,0,0" />
+    </widgets>
+    <messages/>
+    <associations>
+     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="2" widgetbid="23" widgetaid="35" xmi.id="43" >
+      <linepath>
+       <startpoint startx="936" starty="192" />
+       <endpoint endx="824" endy="91" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="1" widgetbid="23" widgetaid="36" xmi.id="44" >
+      <linepath>
+       <startpoint startx="762" starty="192" />
+       <endpoint endx="807" endy="91" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" widgetbid="56" widgetaid="84" xmi.id="86" >
+      <linepath>
+       <startpoint startx="362" starty="381" />
+       <endpoint endx="298" endy="381" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="3" indexa="1" totalcountb="2" indexb="1" widgetbid="103" widgetaid="84" xmi.id="105" >
+      <linepath>
+       <startpoint startx="496" starty="415" />
+       <endpoint endx="496" endy="586" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="3" indexa="2" totalcountb="2" indexb="1" widgetbid="36" widgetaid="84" xmi.id="107" >
+      <linepath>
+       <startpoint startx="630" starty="347" />
+       <endpoint endx="762" endy="234" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="3" indexa="1" totalcountb="2" indexb="1" widgetbid="109" widgetaid="84" xmi.id="110" >
+      <linepath>
+       <startpoint startx="496" starty="347" />
+       <endpoint endx="496" endy="295" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="2" widgetbid="108" widgetaid="109" xmi.id="111" >
+      <linepath>
+       <startpoint startx="496" starty="185" />
+       <endpoint endx="350" endy="99" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" totalcountb="3" indexb="1" widgetbid="108" widgetaid="24" xmi.id="112" >
+      <linepath>
+       <startpoint startx="194" starty="192" />
+       <endpoint endx="307" endy="99" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" widgetbid="50" widgetaid="56" xmi.id="140" >
+      <linepath>
+       <startpoint startx="194" starty="415" />
+       <endpoint endx="194" endy="548" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" widgetbid="56" widgetaid="24" xmi.id="141" >
+      <linepath>
+       <startpoint startx="194" starty="251" />
+       <endpoint endx="194" endy="347" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="3" indexa="2" visibilityB="200" totalcountb="2" indexb="1" widgetbid="104" widgetaid="84" roleBdoc="" documentation="" roleAdoc="" type="512" changeabilityA="900" changeabilityB="900" visibilityA="200" >
+      <linepath>
+       <startpoint startx="630" starty="415" />
+       <endpoint endx="630" endy="585" />
+      </linepath>
+     </assocwidget>
+    </associations>
+   </diagram>
+   <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="1013" snapy="10" showatts="1" xmi.id="10" documentation="" type="400" showops="1" showpackage="0" name="use case diagram (lookup request)" localid="30000" showstereotype="0" showscope="1" snapcsgrid="0" font="Sans,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="864" >
+    <widgets>
+     <actorwidget usesdiagramfillcolour="0" width="48" usesdiagramusefillcolour="0" x="84" linecolour="#ff0000" y="334" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="62" usefillcolor="1" isinstance="0" xmi.id="9" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <usecasewidget usesdiagramfillcolour="0" width="88" usesdiagramusefillcolour="0" x="452" linecolour="#ff0000" y="153" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="52" usefillcolor="1" isinstance="0" xmi.id="13" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <usecasewidget usesdiagramfillcolour="1" width="117" usesdiagramusefillcolour="1" x="614" linecolour="none" y="311" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="52" usefillcolor="1" isinstance="0" xmi.id="15" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <notewidget usesdiagramfillcolour="1" width="140" usesdiagramusefillcolour="1" x="601" linecolour="none" y="22" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="60" usefillcolor="1" isinstance="0" xmi.id="21" text="Gets informations about the TCP NAT configuration" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <notewidget usesdiagramfillcolour="1" width="224" usesdiagramusefillcolour="1" x="616" linecolour="none" y="481" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="86" usefillcolor="1" isinstance="0" xmi.id="22" text="It communicates the intention to establish a connection to the other user and, eventually, help them to connect" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <usecasewidget usesdiagramfillcolour="1" width="108" usesdiagramusefillcolour="1" x="285" linecolour="none" y="231" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="52" usefillcolor="1" isinstance="0" xmi.id="168" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <usecasewidget usesdiagramfillcolour="1" width="101" usesdiagramusefillcolour="1" x="286" linecolour="none" y="418" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="52" usefillcolor="1" isinstance="0" xmi.id="169" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <usecasewidget usesdiagramfillcolour="1" width="70" usesdiagramusefillcolour="1" x="454" linecolour="none" y="311" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="52" usefillcolor="1" isinstance="0" xmi.id="174" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <usecasewidget usesdiagramfillcolour="1" width="93" usesdiagramusefillcolour="1" x="626" linecolour="none" y="153" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="52" usefillcolor="1" isinstance="0" xmi.id="179" font="Sans,10,-1,5,50,0,0,0,0,0" />
+    </widgets>
+    <messages/>
+    <associations>
+     <assocwidget totalcounta="3" indexa="1" totalcountb="2" indexb="1" widgetbid="168" widgetaid="9" xmi.id="170" >
+      <linepath>
+       <startpoint startx="132" starty="354" />
+       <endpoint endx="285" endy="257" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="3" indexa="2" totalcountb="2" indexb="1" widgetbid="169" widgetaid="9" xmi.id="171" >
+      <linepath>
+       <startpoint startx="132" starty="375" />
+       <endpoint endx="286" endy="444" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" widgetbid="13" widgetaid="168" xmi.id="175" >
+      <linepath>
+       <startpoint startx="339" starty="231" />
+       <endpoint endx="452" endy="179" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" visibilityB="200" totalcountb="2" indexb="1" widgetbid="179" widgetaid="13" roleBdoc="" documentation="" roleAdoc="" type="503" changeabilityA="900" changeabilityB="900" visibilityA="200" >
+      <linepath>
+       <startpoint startx="540" starty="179" />
+       <endpoint endx="626" endy="179" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" visibilityB="200" totalcountb="2" indexb="1" widgetbid="22" widgetaid="15" roleBdoc="" documentation="" roleAdoc="" type="513" changeabilityA="900" changeabilityB="900" visibilityA="200" >
+      <linepath>
+       <startpoint startx="672" starty="363" />
+       <endpoint endx="728" endy="481" />
+       <point x="672" y="427" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" visibilityB="200" totalcountb="2" indexb="1" widgetbid="21" widgetaid="179" roleBdoc="" documentation="" roleAdoc="" type="513" changeabilityA="900" changeabilityB="900" visibilityA="200" >
+      <linepath>
+       <startpoint startx="672" starty="153" />
+       <endpoint endx="671" endy="82" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" widgetbid="174" widgetaid="168" xmi.id="185" >
+      <linepath>
+       <startpoint startx="339" starty="283" />
+       <endpoint endx="454" endy="337" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" visibilityB="200" totalcountb="2" indexb="1" widgetbid="15" widgetaid="174" roleBdoc="" documentation="" roleAdoc="" type="503" changeabilityA="900" changeabilityB="900" visibilityA="200" >
+      <linepath>
+       <startpoint startx="524" starty="337" />
+       <endpoint endx="614" endy="337" />
+      </linepath>
+     </assocwidget>
+    </associations>
+   </diagram>
+   <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="1042" snapy="10" showatts="1" xmi.id="181" documentation="" type="403" showops="1" showpackage="0" name="seq dgrm (register)" localid="29990" showstereotype="0" showscope="1" snapcsgrid="0" font="Sans,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="848" >
+    <widgets>
+     <objectwidget usesdiagramfillcolour="1" width="120" usesdiagramusefillcolour="1" x="58" linecolour="none" y="48" instancename="" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="27" usefillcolor="1" isinstance="0" xmi.id="84" decon="0" localid="29999" multipleinstance="0" drawasactor="0" font="Sans,10,-1,5,50,0,1,0,0,0" />
+     <objectwidget usesdiagramfillcolour="1" width="70" usesdiagramusefillcolour="1" x="264" linecolour="none" y="48" instancename="" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="27" usefillcolor="1" isinstance="0" xmi.id="109" decon="0" localid="29996" multipleinstance="0" drawasactor="0" font="Sans,10,-1,5,50,0,1,0,0,0" />
+     <objectwidget usesdiagramfillcolour="1" width="125" usesdiagramusefillcolour="1" x="447" linecolour="none" y="48" instancename="" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="27" usefillcolor="1" isinstance="0" xmi.id="24" decon="0" localid="29995" multipleinstance="0" drawasactor="0" font="Sans,10,-1,5,50,0,1,0,0,0" />
+     <objectwidget usesdiagramfillcolour="0" width="60" usesdiagramusefillcolour="0" x="0" linecolour="#ff0000" y="18" instancename="" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="0" fillcolour="#ffffc0" height="62" usefillcolor="1" isinstance="0" xmi.id="9" decon="0" localid="29993" multipleinstance="0" drawasactor="1" font="Sans,10,-1,5,50,0,1,0,0,0" />
+     <objectwidget usesdiagramfillcolour="1" width="70" usesdiagramusefillcolour="1" x="688" linecolour="none" y="48" instancename="" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="27" usefillcolor="1" isinstance="0" xmi.id="109" decon="0" localid="29992" multipleinstance="0" drawasactor="0" font="Sans,10,-1,5,50,0,1,0,0,0" />
+     <objectwidget usesdiagramfillcolour="1" width="120" usesdiagramusefillcolour="1" x="840" linecolour="none" y="48" instancename="" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="27" usefillcolor="1" isinstance="0" xmi.id="84" decon="0" localid="29991" multipleinstance="0" drawasactor="0" font="Sans,10,-1,5,50,0,1,0,0,0" />
+     <objectwidget usesdiagramfillcolour="1" width="60" usesdiagramusefillcolour="1" x="954" linecolour="none" y="18" instancename="" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="62" usefillcolor="1" isinstance="0" xmi.id="16" decon="0" localid="29990" multipleinstance="0" drawasactor="1" font="Sans,10,-1,5,50,0,1,0,0,0" />
+    </widgets>
+    <messages>
+     <messagewidget usesdiagramfillcolour="1" width="179" usesdiagramusefillcolour="1" x="119" linecolour="none" y="133" operation="registrationRequest() : void" linewidth="none" usesdiagramlinewidth="1" widgetbid="29996" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29999" textid="191" isinstance="0" xmi.id="192" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="172" usesdiagramusefillcolour="1" x="124" linecolour="none" y="112" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="191" text=": registrationRequest() : void" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="86" usesdiagramusefillcolour="1" x="31" linecolour="none" y="101" operation="" linewidth="none" usesdiagramlinewidth="1" widgetbid="29999" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29993" textid="200" isinstance="0" xmi.id="201" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="8" usesdiagramusefillcolour="1" x="0" linecolour="none" y="80" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="200" text="" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="82" usesdiagramusefillcolour="1" x="901" linecolour="none" y="154" operation="" linewidth="none" usesdiagramlinewidth="1" widgetbid="29991" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29990" textid="202" isinstance="0" xmi.id="203" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="8" usesdiagramusefillcolour="1" x="0" linecolour="none" y="80" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="202" text="" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="175" usesdiagramusefillcolour="1" x="724" linecolour="none" y="189" operation="register() : void" linewidth="none" usesdiagramlinewidth="1" widgetbid="29992" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29991" textid="204" isinstance="0" xmi.id="205" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="103" usesdiagramusefillcolour="1" x="729" linecolour="none" y="168" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="204" text=": register() : void" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="208" usesdiagramusefillcolour="1" x="300" linecolour="none" y="173" operation="registerUser() : void" linewidth="none" usesdiagramlinewidth="1" widgetbid="29995" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29996" textid="214" isinstance="0" xmi.id="215" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="130" usesdiagramusefillcolour="1" x="305" linecolour="none" y="152" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="214" text=": registerUser() : void" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="208" usesdiagramusefillcolour="1" x="300" linecolour="none" y="198" operation="registrationResponse() : void" linewidth="none" usesdiagramlinewidth="1" widgetbid="29996" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29995" textid="216" isinstance="0" xmi.id="217" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="182" usesdiagramusefillcolour="1" x="305" linecolour="none" y="177" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="216" text=": registrationResponse() : void" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="212" usesdiagramusefillcolour="1" x="510" linecolour="none" y="227" operation="registerUser() : void" linewidth="none" usesdiagramlinewidth="1" widgetbid="29995" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29992" textid="218" isinstance="0" xmi.id="219" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="130" usesdiagramusefillcolour="1" x="515" linecolour="none" y="206" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="218" text=": registerUser() : void" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="212" usesdiagramusefillcolour="1" x="510" linecolour="none" y="251" operation="registrationResponse() : void" linewidth="none" usesdiagramlinewidth="1" widgetbid="29992" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29995" textid="220" isinstance="0" xmi.id="221" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="182" usesdiagramusefillcolour="1" x="526" linecolour="none" y="230" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="220" text=": registrationResponse() : void" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="82" usesdiagramusefillcolour="1" x="901" linecolour="none" y="363" operation="" linewidth="none" usesdiagramlinewidth="1" widgetbid="29991" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29990" textid="222" isinstance="0" xmi.id="223" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="8" usesdiagramusefillcolour="1" x="0" linecolour="none" y="80" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="222" text="" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="175" usesdiagramusefillcolour="1" x="724" linecolour="none" y="389" operation="connectionRequest() : void" linewidth="none" usesdiagramlinewidth="1" widgetbid="29992" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29991" textid="225" isinstance="0" xmi.id="226" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="171" usesdiagramusefillcolour="1" x="729" linecolour="none" y="368" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="225" text=": connectionRequest() : void" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="212" usesdiagramusefillcolour="1" x="510" linecolour="none" y="416" operation="lookupRequest() : void" linewidth="none" usesdiagramlinewidth="1" widgetbid="29995" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29992" textid="227" isinstance="0" xmi.id="228" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="146" usesdiagramusefillcolour="1" x="515" linecolour="none" y="395" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="227" text=": lookupRequest() : void" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="212" usesdiagramusefillcolour="1" x="510" linecolour="none" y="460" operation="lookupResponse() : void" linewidth="none" usesdiagramlinewidth="1" widgetbid="29992" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29995" textid="229" isinstance="0" xmi.id="230" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="156" usesdiagramusefillcolour="1" x="515" linecolour="none" y="439" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="229" text=": lookupResponse() : void" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+     <messagewidget usesdiagramfillcolour="1" width="208" usesdiagramusefillcolour="1" x="300" linecolour="none" y="478" operation="connectionRequest() : void" linewidth="none" usesdiagramlinewidth="1" widgetbid="29996" usesdiagramlinecolour="1" fillcolour="none" height="8" usefillcolor="1" seqnum="" widgetaid="29995" textid="231" isinstance="0" xmi.id="232" sequencemessagetype="1001" font="Sans,10,-1,5,50,0,0,0,0,0" >
+      <floatingtext usesdiagramfillcolour="1" width="171" usesdiagramusefillcolour="1" x="305" linecolour="none" y="457" linewidth="none" usesdiagramlinewidth="1" posttext="" usesdiagramlinecolour="1" role="704" fillcolour="none" height="21" usefillcolor="1" pretext="" isinstance="0" xmi.id="231" text=": connectionRequest() : void" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     </messagewidget>
+    </messages>
+    <associations/>
+   </diagram>
+   <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="1013" snapy="10" showatts="1" xmi.id="182" documentation="" type="400" showops="1" showpackage="0" name="use case diagram (connection request)" localid="30000" showstereotype="0" showscope="1" snapcsgrid="0" font="Sans,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="864" >
+    <widgets>
+     <usecasewidget usesdiagramfillcolour="1" width="117" usesdiagramusefillcolour="1" x="63" linecolour="none" y="246" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="52" usefillcolor="1" isinstance="0" xmi.id="15" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <notewidget usesdiagramfillcolour="1" width="224" usesdiagramusefillcolour="1" x="42" linecolour="none" y="406" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="86" usefillcolor="1" isinstance="0" xmi.id="184" text="It communicates the intention to establish a connection to the other user and, eventually, help them to connect" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <usecasewidget usesdiagramfillcolour="1" width="108" usesdiagramusefillcolour="1" x="433" linecolour="none" y="246" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="52" usefillcolor="1" isinstance="0" xmi.id="168" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <usecasewidget usesdiagramfillcolour="1" width="101" usesdiagramusefillcolour="1" x="437" linecolour="none" y="425" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="52" usefillcolor="1" isinstance="0" xmi.id="169" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <usecasewidget usesdiagramfillcolour="1" width="70" usesdiagramusefillcolour="1" x="272" linecolour="none" y="246" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="52" usefillcolor="1" isinstance="0" xmi.id="174" font="Sans,10,-1,5,50,0,0,0,0,0" />
+     <actorwidget usesdiagramfillcolour="1" width="48" usesdiagramusefillcolour="1" x="648" linecolour="none" y="241" linewidth="none" usesdiagramlinewidth="1" usesdiagramlinecolour="1" fillcolour="none" height="62" usefillcolor="1" isinstance="0" xmi.id="16" font="Sans,10,-1,5,50,0,0,0,0,0" />
+    </widgets>
+    <messages/>
+    <associations>
+     <assocwidget totalcounta="2" indexa="1" visibilityB="200" totalcountb="2" indexb="1" widgetbid="15" widgetaid="174" roleBdoc="" documentation="" roleAdoc="" type="503" changeabilityA="900" changeabilityB="900" visibilityA="200" >
+      <linepath>
+       <startpoint startx="272" starty="272" />
+       <endpoint endx="180" endy="272" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" visibilityB="200" totalcountb="2" indexb="1" widgetbid="184" widgetaid="15" roleBdoc="" documentation="" roleAdoc="" type="513" changeabilityA="900" changeabilityB="900" visibilityA="200" >
+      <linepath>
+       <startpoint startx="121" starty="298" />
+       <endpoint endx="154" endy="406" />
+       <point x="121" y="365" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" visibilityB="200" totalcountb="2" indexb="1" widgetbid="174" widgetaid="168" roleBdoc="" documentation="" roleAdoc="" type="503" changeabilityA="900" changeabilityB="900" visibilityA="200" >
+      <linepath>
+       <startpoint startx="433" starty="272" />
+       <endpoint endx="342" endy="272" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" widgetbid="169" widgetaid="168" xmi.id="186" >
+      <linepath>
+       <startpoint startx="487" starty="298" />
+       <endpoint endx="487" endy="425" />
+      </linepath>
+     </assocwidget>
+     <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" widgetbid="168" widgetaid="16" xmi.id="213" >
+      <linepath>
+       <startpoint startx="648" starty="272" />
+       <endpoint endx="541" endy="272" />
+      </linepath>
+     </assocwidget>
+    </associations>
+   </diagram>
+  </diagrams>
+  <listview>
+   <listitem open="1" type="800" id="-1" label="Views" >
+    <listitem open="1" type="801" id="-1" label="Logical View" >
+     <listitem open="0" type="807" id="8" label="class diagram" />
+     <listitem open="0" type="810" id="181" label="seq dgrm (register)" />
+     <listitem open="1" type="818" id="99" >
+      <listitem open="0" type="813" id="156" >
+       <listitem open="0" type="814" id="159" />
+       <listitem open="0" type="814" id="157" />
+       <listitem open="0" type="814" id="158" />
+       <listitem open="0" type="815" id="161" />
+       <listitem open="0" type="815" id="160" />
+      </listitem>
+      <listitem open="0" type="813" id="24" >
+       <listitem open="0" type="815" id="147" />
+       <listitem open="0" type="815" id="142" />
+      </listitem>
+      <listitem open="0" type="813" id="108" />
+      <listitem open="0" type="813" id="50" >
+       <listitem open="0" type="814" id="54" />
+       <listitem open="0" type="814" id="55" />
+       <listitem open="0" type="814" id="52" />
+       <listitem open="0" type="814" id="53" />
+       <listitem open="0" type="814" id="65" />
+       <listitem open="0" type="815" id="68" />
+       <listitem open="0" type="815" id="67" />
+       <listitem open="0" type="815" id="75" />
+       <listitem open="0" type="815" id="72" />
+       <listitem open="0" type="815" id="69" />
+       <listitem open="0" type="815" id="77" />
+      </listitem>
+      <listitem open="0" type="813" id="25" >
+       <listitem open="0" type="814" id="34" />
+      </listitem>
+      <listitem open="0" type="813" id="84" >
+       <listitem open="0" type="814" id="165" />
+       <listitem open="0" type="814" id="164" />
+       <listitem open="0" type="815" id="92" />
+      </listitem>
+      <listitem open="0" type="813" id="109" >
+       <listitem open="0" type="815" id="235" />
+       <listitem open="0" type="815" id="138" />
+       <listitem open="0" type="815" id="239" />
+       <listitem open="0" type="815" id="131" />
+       <listitem open="0" type="815" id="247" />
+      </listitem>
+      <listitem open="0" type="813" id="23" />
+      <listitem open="0" type="813" id="36" >
+       <listitem open="0" type="815" id="130" />
+      </listitem>
+      <listitem open="0" type="813" id="35" />
+      <listitem open="0" type="813" id="56" >
+       <listitem open="0" type="814" id="58" />
+       <listitem open="0" type="815" id="63" />
+       <listitem open="0" type="815" id="133" />
+      </listitem>
+      <listitem open="0" type="813" id="103" />
+      <listitem open="1" type="813" id="104" />
+     </listitem>
+     <listitem open="0" type="830" id="-1" label="Datatypes" >
+      <listitem open="1" type="829" id="31" />
+      <listitem open="1" type="829" id="28" />
+     </listitem>
+    </listitem>
+    <listitem open="1" type="802" id="-1" label="Use Case View" >
+     <listitem open="0" type="805" id="182" label="use case diagram (connection request)" />
+     <listitem open="0" type="805" id="10" label="use case diagram (lookup request)" />
+     <listitem open="1" type="811" id="9" />
+     <listitem open="1" type="811" id="16" />
+     <listitem open="1" type="812" id="15" />
+     <listitem open="1" type="812" id="168" />
+     <listitem open="1" type="812" id="174" />
+     <listitem open="1" type="812" id="13" />
+     <listitem open="1" type="812" id="179" />
+     <listitem open="1" type="812" id="169" />
+     <listitem open="1" type="812" id="12" />
+    </listitem>
+    <listitem open="1" type="821" id="-1" label="Component View" />
+    <listitem open="1" type="827" id="-1" label="Deployment View" />
+   </listitem>
+  </listview>
+  <codegeneration>
+   <codegenerator language="Python" />
+  </codegeneration>
+ </XMI.extensions>
+</XMI>

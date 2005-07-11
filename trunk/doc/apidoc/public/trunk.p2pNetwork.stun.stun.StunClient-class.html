@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>trunk.p2pNetwork.stun.stun.StunClient</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trunk.p2pNetwork-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        Package&nbsp;trunk ::
+        <a href="trunk.p2pNetwork-module.html">Package&nbsp;p2pNetwork</a> ::
+        <a href="trunk.p2pNetwork.stun-module.html">Package&nbsp;stun</a> ::
+        <a href="trunk.p2pNetwork.stun.stun-module.html">Module&nbsp;stun</a> ::
+        Class&nbsp;StunClient
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="../private/trunk.p2pNetwork.stun.stun.StunClient-class.html">show&nbsp;private</a>&nbsp;|&nbsp;hide&nbsp;private]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="trunk.p2pNetwork.stun.stun.StunClient-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Type StunClient</h2>
+
+<pre class="base-tree">
+                          <a href="__builtin__.object-class.html"><code>object</code></a> --+
+                                   |
+<a href="../private/twisted.internet.protocol.AbstractDatagramProtocol-class.html"><code>AbstractDatagramProtocol</code></a> --+       |
+                           |       |
+            <a href="twisted.internet.protocol.DatagramProtocol-class.html"><code>DatagramProtocol</code></a> --+   |
+                               |   |
+                      <a href="__builtin__.object-class.html"><code>object</code></a> --+   |
+                               |   |
+                    <a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html"><code>StunProtocol</code></a> --+
+                                   |
+                                  <b>StunClient</b>
+</pre><br />
+
+<hr/>
+
+The code for the STUN client
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#analyseMessage" class="summary-sig-name"><code>analyseMessage</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>address</span>)</span></code>
+<br />
+Analyse the server's response</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#getConfiguration" class="summary-sig-name"><code>getConfiguration</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Gets a list with the network configuration: (NAT presence, NAT type, 
+private address, public address)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#getErrorCode" class="summary-sig-name"><code>getErrorCode</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+If an error occurred: return the error code</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#getListUnkAttr" class="summary-sig-name"><code>getListUnkAttr</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Return the list of Unknown attributes</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#getNATType" class="summary-sig-name"><code>getNATType</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Returns the NAT's type</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#getPrivateAddress" class="summary-sig-name"><code>getPrivateAddress</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Retruns the client's private address</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#getPublicAddress" class="summary-sig-name"><code>getPublicAddress</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Retruns the client's public address</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#printConfiguration" class="summary-sig-name"><code>printConfiguration</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Print the client's network configuration</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#retransmissionEnded" class="summary-sig-name"><code>retransmissionEnded</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Transaction have failed (called after timeout retrasmissions at 
+9500ms)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#sendRequest" class="summary-sig-name"><code>sendRequest</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>server</span>,
+          <span class=summary-sig-arg>avpairs</span>)</span></code>
+<br />
+Send the initial request to discover network configuration</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#stopTimeout" class="summary-sig-name"><code>stopTimeout</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Stops the active timeout</td></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html"><code>StunProtocol</code></a>:</b>
+      <a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html#__init__"><code>__init__</code></a>, 
+      <a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html#blatServers"><code>blatServers</code></a>, 
+      <a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html#checkMessage"><code>checkMessage</code></a>, 
+      <a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html#datagramReceived"><code>datagramReceived</code></a>, 
+      <a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html#gotMappedAddress"><code>gotMappedAddress</code></a>, 
+      <a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html#parseMessage"><code>parseMessage</code></a>, 
+      <a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html#send"><code>send</code></a>, 
+      <a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html#sendPack"><code>sendPack</code></a>, 
+      <a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html#Stop"><code>Stop</code></a>
+      <br />
+    <b>Inherited from <a href="twisted.internet.protocol.DatagramProtocol-class.html"><code>DatagramProtocol</code></a>:</b>
+      <a href="twisted.internet.protocol.DatagramProtocol-class.html#connectionRefused"><code>connectionRefused</code></a>
+      <br />
+    <b>Inherited from <a href="__builtin__.object-class.html"><code>object</code></a>:</b>
+      <a href="__builtin__.object-class.html#__delattr__"><code>__delattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__getattribute__"><code>__getattribute__</code></a>, 
+      <a href="__builtin__.object-class.html#__hash__"><code>__hash__</code></a>, 
+      <a href="__builtin__.object-class.html#__new__"><code>__new__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce__"><code>__reduce__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce_ex__"><code>__reduce_ex__</code></a>, 
+      <a href="__builtin__.object-class.html#__repr__"><code>__repr__</code></a>, 
+      <a href="__builtin__.object-class.html#__setattr__"><code>__setattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__str__"><code>__str__</code></a>
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF CLASS VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Class Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>int</code></font></td>
+<td><b><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#addressMatch"><code>addressMatch</code></a></b> = <span title="1">1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>list</code></font></td>
+<td><b><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#configuration"><code>configuration</code></a></b> = <span title="['unknown', 'unknown', 'unknown:unknown', 'unknown:unknown', '...']"><code>['unknown',&nbsp;'unknown',&nbsp;'unknown:unknown'<span class="variable-ellipsis">...</span></code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>list</code></font></td>
+<td><b><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#configurationText"><code>configurationText</code></a></b> = <span title="['NAT presence      ', 'NAT type          ', 'My private address', 'My public address ', 'Informations      ']"><code>['NAT&nbsp;presence&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',&nbsp;'NAT&nbsp;type&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable-ellipsis">...</span></code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>str</code></font></td>
+<td><b><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#oldMappedAddress"><code>oldMappedAddress</code></a></b> = <span title="''"><code><span class="variable-quote">'</span><span class="variable-quote">'</span>                                    </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>float</code></font></td>
+<td><b><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#stun_timeout"><code>stun_timeout</code></a></b> = <span title="0.10000000000000001">0.10000000000000001&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>int</code></font></td>
+<td><b><a href="trunk.p2pNetwork.stun.stun.StunClient-class.html#test"><code>test</code></a></b> = <span title="1">1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+  <tr><td colspan="2">
+
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Method Details</th></tr>
+</table>
+
+<a name="analyseMessage"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">analyseMessage</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>address</span>)</span>
+  </h3>
+  Analyse the server's response
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html#analyseMessage"><code>trunk.p2pNetwork.stun.stun.StunProtocol.analyseMessage</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getConfiguration"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getConfiguration</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Gets a list with the network configuration: (NAT presence, NAT type, 
+  private address, public address)
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getErrorCode"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getErrorCode</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  If an error occurred: return the error code
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getListUnkAttr"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getListUnkAttr</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Return the list of Unknown attributes
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getNATType"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getNATType</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Returns the NAT's type
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getPrivateAddress"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getPrivateAddress</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Retruns the client's private address
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getPublicAddress"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getPublicAddress</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Retruns the client's public address
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="printConfiguration"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">printConfiguration</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Print the client's network configuration
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="retransmissionEnded"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">retransmissionEnded</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Transaction have failed (called after timeout retrasmissions at 
+  9500ms)
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sendRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sendRequest</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>server</span>,
+          <span class=sig-arg>avpairs</span>=<span class=sig-default>()</span>)</span>
+  </h3>
+  Send the initial request to discover network configuration
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="stopTimeout"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">stopTimeout</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Stops the active timeout
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="trunk.p2pNetwork.stun.stun.StunProtocol-class.html#stopTimeout"><code>trunk.p2pNetwork.stun.stun.StunProtocol.stopTimeout</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF CLASS VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Class Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="addressMatch"></a>
+<h3>addressMatch</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>int</code>
+
+      </dd>
+<span title="1">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="configuration"></a>
+<h3>configuration</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>list</code>
+
+      </dd>
+<span title="['unknown', 'unknown', 'unknown:unknown', 'unknown:unknown', '...']">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+['unknown', 'unknown', 'unknown:unknown', 'unknown:unknown', '...']    </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="configurationText"></a>
+<h3>configurationText</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>list</code>
+
+      </dd>
+<span title="['NAT presence      ', 'NAT type          ', 'My private address', 'My public address ', 'Informations      ']">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+['NAT presence      ',
+ 'NAT type          ',
+ 'My private address',
+ 'My public address ',
+ 'Informations      ']                                                 </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="oldMappedAddress"></a>
+<h3>oldMappedAddress</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>str</code>
+
+      </dd>
+<span title="''">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+<span class="variable-quote">'</span><span class="variable-quote">'</span>                                                                     </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="stun_timeout"></a>
+<h3>stun_timeout</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>float</code>
+
+      </dd>
+<span title="0.10000000000000001">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+0.10000000000000001&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="test"></a>
+<h3>test</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>int</code>
+
+      </dd>
+<span title="1">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trunk.p2pNetwork-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on Thu Jul  7 12:23:18 2005</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

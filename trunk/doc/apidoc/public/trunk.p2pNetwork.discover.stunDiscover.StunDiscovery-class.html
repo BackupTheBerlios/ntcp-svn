@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>trunk.p2pNetwork.discover.stunDiscover.StunDiscovery</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trunk.p2pNetwork-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        Package&nbsp;trunk ::
+        <a href="trunk.p2pNetwork-module.html">Package&nbsp;p2pNetwork</a> ::
+        <a href="trunk.p2pNetwork.discover-module.html">Package&nbsp;discover</a> ::
+        <a href="trunk.p2pNetwork.discover.stunDiscover-module.html">Module&nbsp;stunDiscover</a> ::
+        Class&nbsp;StunDiscovery
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="../private/trunk.p2pNetwork.discover.stunDiscover.StunDiscovery-class.html">show&nbsp;private</a>&nbsp;|&nbsp;hide&nbsp;private]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="trunk.p2pNetwork.discover.stunDiscover.StunDiscovery-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Type StunDiscovery</h2>
+
+<pre class="base-tree">
+                          <a href="__builtin__.object-class.html"><code>object</code></a> --+    
+                                   |    
+<a href="../private/twisted.internet.protocol.AbstractDatagramProtocol-class.html"><code>AbstractDatagramProtocol</code></a> --+       |    
+                           |       |    
+            <a href="twisted.internet.protocol.DatagramProtocol-class.html"><code>DatagramProtocol</code></a> --+   |    
+                               |   |    
+                      <a href="__builtin__.object-class.html"><code>object</code></a> --+   |    
+                               |   |    
+                    <a href="p2pNetwork.stun.stun.StunProtocol-class.html"><code>StunProtocol</code></a> --+    
+                                   |    
+                          <a href="p2pNetwork.stun.stun.StunClient-class.html"><code>StunClient</code></a> --+
+                                       |
+                                      <b>StunDiscovery</b>
+</pre><br />
+
+<hr/>
+
+Implementation of STUN protocol (client)
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="__init__"></a><span class="summary-sig"><span class="summary-sig-name">__init__</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>servers</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.discover.stunDiscover.StunDiscovery-class.html#connectionMade" class="summary-sig-name"><code>connectionMade</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>addr</span>,
+          <span class=summary-sig-arg>port</span>)</span></code>
+<br />
+Called back when STUN discovered our public address.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="Discover"></a><span class="summary-sig"><span class="summary-sig-name">Discover</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.discover.stunDiscover.StunDiscovery-class.html#gotMappedAddress" class="summary-sig-name"><code>gotMappedAddress</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>addr</span>,
+          <span class=summary-sig-arg>port</span>)</span></code>
+<br />
+Called back when STUN discovered our public address.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.discover.stunDiscover.StunDiscovery-class.html#record" class="summary-sig-name"><code>record</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>config</span>)</span></code>
+<br />
+Registration in the rendezvous server</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.discover.stunDiscover.StunDiscovery-class.html#Start" class="summary-sig-name"><code>Start</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>myPort</span>,
+          <span class=summary-sig-arg>reactor</span>,
+          <span class=summary-sig-arg>deferred</span>)</span></code>
+<br />
+Start listening for STUN replies.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="trunk.p2pNetwork.discover.stunDiscover.StunDiscovery-class.html#Stop" class="summary-sig-name"><code>Stop</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Stop listening.</td></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="p2pNetwork.stun.stun.StunClient-class.html"><code>StunClient</code></a>:</b>
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#analyseMessage"><code>analyseMessage</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#getConfiguration"><code>getConfiguration</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#getErrorCode"><code>getErrorCode</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#getListUnkAttr"><code>getListUnkAttr</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#getNATType"><code>getNATType</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#getPrivateAddress"><code>getPrivateAddress</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#getPublicAddress"><code>getPublicAddress</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#printConfiguration"><code>printConfiguration</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#retransmissionEnded"><code>retransmissionEnded</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#sendRequest"><code>sendRequest</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#stopTimeout"><code>stopTimeout</code></a>
+      <br />
+    <b>Inherited from <a href="p2pNetwork.stun.stun.StunProtocol-class.html"><code>StunProtocol</code></a>:</b>
+      <a href="p2pNetwork.stun.stun.StunProtocol-class.html#blatServers"><code>blatServers</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunProtocol-class.html#checkMessage"><code>checkMessage</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunProtocol-class.html#datagramReceived"><code>datagramReceived</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunProtocol-class.html#parseMessage"><code>parseMessage</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunProtocol-class.html#send"><code>send</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunProtocol-class.html#sendPack"><code>sendPack</code></a>
+      <br />
+    <b>Inherited from <a href="twisted.internet.protocol.DatagramProtocol-class.html"><code>DatagramProtocol</code></a>:</b>
+      <a href="twisted.internet.protocol.DatagramProtocol-class.html#connectionRefused"><code>connectionRefused</code></a>
+      <br />
+    <b>Inherited from <a href="__builtin__.object-class.html"><code>object</code></a>:</b>
+      <a href="__builtin__.object-class.html#__delattr__"><code>__delattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__getattribute__"><code>__getattribute__</code></a>, 
+      <a href="__builtin__.object-class.html#__hash__"><code>__hash__</code></a>, 
+      <a href="__builtin__.object-class.html#__new__"><code>__new__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce__"><code>__reduce__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce_ex__"><code>__reduce_ex__</code></a>, 
+      <a href="__builtin__.object-class.html#__repr__"><code>__repr__</code></a>, 
+      <a href="__builtin__.object-class.html#__setattr__"><code>__setattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__str__"><code>__str__</code></a>
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF CLASS VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Class Variable Summary</th></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="p2pNetwork.stun.stun.StunClient-class.html"><code>StunClient</code></a>:</b>
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#addressMatch"><code>addressMatch</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#configuration"><code>configuration</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#configurationText"><code>configurationText</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#oldMappedAddress"><code>oldMappedAddress</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#stun_timeout"><code>stun_timeout</code></a>, 
+      <a href="p2pNetwork.stun.stun.StunClient-class.html#test"><code>test</code></a>
+      <br />
+
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Method Details</th></tr>
+</table>
+
+<a name="connectionMade"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">connectionMade</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>addr</span>=<span class=sig-default>''</span>,
+          <span class=sig-arg>port</span>=<span class=sig-default>0</span>)</span>
+  </h3>
+  Called back when STUN discovered our public address.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="gotMappedAddress"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">gotMappedAddress</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>addr</span>=<span class=sig-default>''</span>,
+          <span class=sig-arg>port</span>=<span class=sig-default>0</span>)</span>
+  </h3>
+  Called back when STUN discovered our public address.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="p2pNetwork.stun.stun.StunProtocol-class.html#gotMappedAddress"><code>p2pNetwork.stun.stun.StunProtocol.gotMappedAddress</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="record"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">record</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>config</span>)</span>
+  </h3>
+  Registration in the rendezvous server
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="Start"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">Start</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>myPort</span>,
+          <span class=sig-arg>reactor</span>,
+          <span class=sig-arg>deferred</span>)</span>
+  </h3>
+  Start listening for STUN replies.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="Stop"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">Stop</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Stop listening.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="p2pNetwork.stun.stun.StunProtocol-class.html#Stop"><code>p2pNetwork.stun.stun.StunProtocol.Stop</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trunk.p2pNetwork-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on Thu Jul  7 12:23:17 2005</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>
