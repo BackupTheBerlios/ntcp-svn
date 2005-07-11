@@ -10,7 +10,7 @@
 
 
 $key = q/test/;
-$external_latex_labels{$key} = q|10|; 
+$external_latex_labels{$key} = q|11|; 
 $noresave{$key} = "$nosave";
 
 $key = q/fail/;
@@ -34,11 +34,11 @@ $external_latex_labels{$key} = q|5|;
 $noresave{$key} = "$nosave";
 
 $key = q/thread/;
-$external_latex_labels{$key} = q|8|; 
+$external_latex_labels{$key} = q|9|; 
 $noresave{$key} = "$nosave";
 
 $key = q/p2pNetwork/;
-$external_latex_labels{$key} = q|9|; 
+$external_latex_labels{$key} = q|10|; 
 $noresave{$key} = "$nosave";
 
 $key = q/importTCP/;

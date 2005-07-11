@@ -52,38 +52,40 @@ Contents</A>
 <!--Table of Contents-->
 
 <UL>
-<LI><A NAME="tex2html33"
-  HREF="howto.html#SECTION00020000000000000000">Product name and version number</A>
 <LI><A NAME="tex2html34"
-  HREF="howto.html#SECTION00030000000000000000">Company name</A>
+  HREF="howto.html#SECTION00020000000000000000">Product name and version number</A>
 <LI><A NAME="tex2html35"
-  HREF="howto.html#SECTION00040000000000000000">New and special in this release</A>
+  HREF="howto.html#SECTION00030000000000000000">Company name</A>
 <LI><A NAME="tex2html36"
-  HREF="howto.html#SECTION00050000000000000000">Download source code and documentation</A>
+  HREF="howto.html#SECTION00040000000000000000">New and special in this release</A>
 <LI><A NAME="tex2html37"
-  HREF="howto.html#SECTION00060000000000000000">Hardware and software requirements</A>
+  HREF="howto.html#SECTION00050000000000000000">Download source code and documentation</A>
 <LI><A NAME="tex2html38"
+  HREF="howto.html#SECTION00060000000000000000">Hardware and software requirements</A>
+<LI><A NAME="tex2html39"
   HREF="howto.html#SECTION00070000000000000000">Installation instructions, getting started tips, and documentation</A>
 <UL>
-<LI><A NAME="tex2html39"
-  HREF="howto.html#SECTION00071000000000000000">Installation</A>
 <LI><A NAME="tex2html40"
-  HREF="howto.html#SECTION00072000000000000000">Modules' structure</A>
+  HREF="howto.html#SECTION00071000000000000000">Installation</A>
 <LI><A NAME="tex2html41"
-  HREF="howto.html#SECTION00073000000000000000">Getting started</A>
+  HREF="howto.html#SECTION00072000000000000000">Modules' structure</A>
 <LI><A NAME="tex2html42"
-  HREF="howto.html#SECTION00074000000000000000">Configuration files</A>
+  HREF="howto.html#SECTION00073000000000000000">Getting started</A>
 <LI><A NAME="tex2html43"
-  HREF="howto.html#SECTION00075000000000000000">API Documentation</A>
+  HREF="howto.html#SECTION00074000000000000000">Start server and connection broker</A>
+<LI><A NAME="tex2html44"
+  HREF="howto.html#SECTION00075000000000000000">Configuration files</A>
+<LI><A NAME="tex2html45"
+  HREF="howto.html#SECTION00076000000000000000">API Documentation</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html44"
-  HREF="howto.html#SECTION00080000000000000000">Important known problems</A>
-<LI><A NAME="tex2html45"
-  HREF="howto.html#SECTION00090000000000000000">Version history</A>
 <LI><A NAME="tex2html46"
-  HREF="howto.html#SECTION000100000000000000000">Contact information</A>
+  HREF="howto.html#SECTION00080000000000000000">Important known problems</A>
 <LI><A NAME="tex2html47"
+  HREF="howto.html#SECTION00090000000000000000">Version history</A>
+<LI><A NAME="tex2html48"
+  HREF="howto.html#SECTION000100000000000000000">Contact information</A>
+<LI><A NAME="tex2html49"
   HREF="howto.html#SECTION000110000000000000000">Legal information</A>
 </UL>
 <!--End of Table of Contents-->
@@ -388,15 +390,7 @@ Finally, after the registration at the CB, you can start to communicate, in UDP,
 with another endpoint. Call the <I>puncher.connectByURI(peerURI)</I> function
 and pass it the id of the other endpoint you want to connect to.
 <BR>
-<IMG
- WIDTH="567" HEIGHT="162" ALIGN="BOTTOM" BORDER="0"
- SRC="img5.png"
- ALT="\begin{lstlisting}[frame=trbl,caption={Callback function code after CB registrat...
-...h the other peer ''''''
-\par
-puncher.connectByURI(peerURI)
-\par
-\end{lstlisting}">
+
 <BR>
 
 <P>
@@ -450,18 +444,57 @@ with the CB or with the other endpoint and start sniffing in a thread using
 <P>
 commentstyle=
 <BR>
+
+<BR>
+
+<P>
+To choose the connection method (with or without spoofing), you have to set
+the variable <I>withSpoofing</I> (1 for spoofing, 0 otherwise), in <I>testTCP/udpSniffer.py</I>
+file. If you use the spoofing method you have to set the ConnectionBroker address in the configuration file
+like explained in the Configuration files section.
+
+<P>
+commentstyle=
+<BR>
 <IMG
- WIDTH="567" HEIGHT="258" ALIGN="BOTTOM" BORDER="0"
- SRC="img8.png"
- ALT="\begin{lstlisting}[frame=trbl,caption={Start TCP connection},label=thread]{}
-...">
+ WIDTH="567" HEIGHT="181" ALIGN="BOTTOM" BORDER="0"
+ SRC="img9.png"
+ ALT="\begin{lstlisting}[frame=trbl,caption={Choose the connection method},label=threa...
+...
+\par
+def __init__(self):
+...
+self.withSpoofing = 0
+...
+\par
+\end{lstlisting}">
 <BR>
 
 <P>
 
+<H2><A NAME="SECTION00074000000000000000">
+Start server and connection broker</A>
+</H2>
+
+<P>
+For particular settings see the Configuration files section.
+
 <P>
 
-<H2><A NAME="SECTION00074000000000000000">
+<UL>
+<LI>STUN server: start the python file <I>p2pNetwork/stun/server.py</I>
+</LI>
+<LI>UDP Connection Broker: start the python file <I>p2pNetwork/htcp/connectionBroker.py</I>
+</LI>
+<LI>TCP Connection Broker: start the python file <I>p2pNetwork/testTCP/natTravCB.py</I>
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<H2><A NAME="SECTION00075000000000000000">
 Configuration files</A>
 </H2>
 Before to start use the ntcp library, you have to configure 
@@ -475,7 +508,7 @@ commentstyle=
 <BR>
 <IMG
  WIDTH="567" HEIGHT="277" ALIGN="BOTTOM" BORDER="0"
- SRC="img9.png"
+ SRC="img10.png"
  ALT="\begin{lstlisting}[frame=trbl,caption={p2pNetwork.conf},label=p2pNetwork]{}
 [stu...
 ...configuration
@@ -491,7 +524,7 @@ commentstyle=
 <BR>
 <IMG
  WIDTH="567" HEIGHT="372" ALIGN="BOTTOM" BORDER="0"
- SRC="img10.png"
+ SRC="img11.png"
  ALT="\begin{lstlisting}[frame=trbl,caption={test.conf},label=test]{}
 [CB]
 ...">
@@ -501,7 +534,7 @@ commentstyle=
 
 <P>
 
-<H2><A NAME="SECTION00075000000000000000">
+<H2><A NAME="SECTION00076000000000000000">
 API Documentation</A>
 </H2>
 For the complete API documentation see the python documentation
@@ -629,20 +662,22 @@ The translation was initiated by Gaballo Luca on 2005-07-11
   HREF="howto.html#SECTION00073200000000000000">TCP connectivity</A>
 </UL>
 <LI><A NAME="tex2html26"
-  HREF="howto.html#SECTION00074000000000000000">Configuration files</A>
+  HREF="howto.html#SECTION00074000000000000000">Start server and connection broker</A>
 <LI><A NAME="tex2html27"
-  HREF="howto.html#SECTION00075000000000000000">API Documentation</A>
+  HREF="howto.html#SECTION00075000000000000000">Configuration files</A>
+<LI><A NAME="tex2html28"
+  HREF="howto.html#SECTION00076000000000000000">API Documentation</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html28"
-  HREF="howto.html#SECTION00080000000000000000">Important known problems</A>
 <LI><A NAME="tex2html29"
-  HREF="howto.html#SECTION00090000000000000000">Version history</A>
+  HREF="howto.html#SECTION00080000000000000000">Important known problems</A>
 <LI><A NAME="tex2html30"
-  HREF="howto.html#SECTION000100000000000000000">Contact information</A>
+  HREF="howto.html#SECTION00090000000000000000">Version history</A>
 <LI><A NAME="tex2html31"
-  HREF="howto.html#SECTION000110000000000000000">Legal information</A>
+  HREF="howto.html#SECTION000100000000000000000">Contact information</A>
 <LI><A NAME="tex2html32"
+  HREF="howto.html#SECTION000110000000000000000">Legal information</A>
+<LI><A NAME="tex2html33"
   HREF="howto.html#SECTION000120000000000000000">About this document ...</A>
 </UL>
 <!--End of Table of Child-Links-->

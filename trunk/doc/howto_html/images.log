@@ -1,4 +1,4 @@
-This is TeX, Version 3.14159 (Web2C 7.4.5) (format=latex 2005.4.6)  11 JUL 2005 10:14
+This is TeX, Version 3.14159 (Web2C 7.4.5) (format=latex 2005.4.6)  11 JUL 2005 11:28
 **./images.tex
 (./images.tex
 LaTeX2e <2001/06/01>
@@ -118,7 +118,11 @@ Package: inputenc 2001/07/10 v0.99a Input encoding file
 )
 \sizebox=\box29
 \lthtmlwrite=\write4
-(./images.aux (/home/gaballo/stage/doc/apidoc/dependences.aux))
+(./images.aux (/home/gaballo/stage/doc/apidoc/dependences.aux
+
+LaTeX Warning: Label `thread' multiply defined.
+
+))
 \openout1 = `images.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 118.
@@ -242,11 +246,7 @@ l2hSize :lstlisting121:176.6333pt::0.0pt::349.0pt.
 
 Package hyperref Warning: bookmark level for unknown lstlisting defaults to 0.
 
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 283.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 283.
-l2hSize :lstlisting129:188.74443pt::0.0pt::349.0pt.
+l2hSize :lstlisting128:128.74443pt::0.0pt::349.0pt.
 [9
 
 
@@ -254,22 +254,34 @@ l2hSize :lstlisting129:188.74443pt::0.0pt::349.0pt.
 
 Package hyperref Warning: bookmark level for unknown lstlisting defaults to 0.
 
-l2hSize :lstlisting135:248.74443pt::0.0pt::349.0pt.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 299.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 299.
+l2hSize :lstlisting142:188.74443pt::0.0pt::349.0pt.
 [10
+
+
+]
+
+Package hyperref Warning: bookmark level for unknown lstlisting defaults to 0.
+
+l2hSize :lstlisting148:248.74443pt::0.0pt::349.0pt.
+[11
 
 
 ] (./images.aux)
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
  3296 strings out of 95847
  46193 string characters out of 1195949
- 114043 words of memory out of 1000001
+ 114084 words of memory out of 1000001
  6248 multiletter control sequences out of 10000+50000
  3640 words of font info for 14 fonts, out of 500000 for 1000
  14 hyphenation exceptions out of 1000
  26i,6n,42p,195b,855s stack positions out of 1500i,500n,5000p,200000b,5000s
 
-Output written on images.dvi (10 pages, 38616 bytes).
+Output written on images.dvi (11 pages, 41784 bytes).

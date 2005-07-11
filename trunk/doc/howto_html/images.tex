@@ -268,9 +268,25 @@ reactor.run()
 \lthtmlfigureZ
 \lthtmlcheckvsize\clearpage}
 
+{\newpage\clearpage
+\lthtmlfigureA{lstlisting128}%
+\begin{lstlisting}[frame=trbl,caption={Choose the connection method},label=thread]{}
+class UDP_factory(DatagramProtocol):
+  """An UDP service to allow a TCP connection: ..."""
+\par
+def __init__(self):
+    ...
+    self.withSpoofing = 0
+    ...
+\par
+\end{lstlisting}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
 \stepcounter{subsection}
 {\newpage\clearpage
-\lthtmlfigureA{lstlisting129}%
+\lthtmlfigureA{lstlisting142}%
 \begin{lstlisting}[frame=trbl,caption={p2pNetwork.conf},label=p2pNetwork]{}
 [stun]
 # STUN Server configuration
@@ -290,7 +306,7 @@ ConnectionBroker: 10.193.163.246:6060
 \lthtmlcheckvsize\clearpage}
 
 {\newpage\clearpage
-\lthtmlfigureA{lstlisting135}%
+\lthtmlfigureA{lstlisting148}%
 \begin{lstlisting}[frame=trbl,caption={test.conf},label=test]{}
 [CB]
 # Connection Broker

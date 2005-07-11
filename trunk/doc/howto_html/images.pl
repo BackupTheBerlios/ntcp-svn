@@ -14,13 +14,6 @@ d.addErrback(fail)
 \par
 \end{lstlisting}">|; 
 
-$key = q/{lstlisting}[frame=trbl,caption={StartTCPconnection},label=thread]{}#StarttolistpeerPort,EchoClientFactory(),30,(myIP,myPort))reactor.run(){par{{lstlisting};AAT/;
-$cached_env_img{$key} = q|<IMG
- WIDTH="567" HEIGHT="258" ALIGN="BOTTOM" BORDER="0"
- SRC="|."$dir".q|img8.png"
- ALT="\begin{lstlisting}[frame=trbl,caption={Start TCP connection},label=thread]{}
-...">|; 
-
 $key = q/{lstlisting}[frame=trbl,caption={Failurecallbackfunctioncode},label=fail]{}deffail(failure):"""FailinSTUNdiscover"""printfailure{lstlisting};AAT/;
 $cached_env_img{$key} = q|<IMG
  WIDTH="567" HEIGHT="86" ALIGN="BOTTOM" BORDER="0"
@@ -34,7 +27,7 @@ print failure
 $key = q/{lstlisting}[frame=trbl,caption={test.conf},label=test]{}[CB]#ConnectionBrokerCB109myPort:50007{par{[UDPhole]#FortheUDPcommunicationudpPort:9999{lstlisting};AAT/;
 $cached_env_img{$key} = q|<IMG
  WIDTH="567" HEIGHT="372" ALIGN="BOTTOM" BORDER="0"
- SRC="|."$dir".q|img10.png"
+ SRC="|."$dir".q|img11.png"
  ALT="\begin{lstlisting}[frame=trbl,caption={test.conf},label=test]{}
 [CB]
 ...">|; 
@@ -73,7 +66,7 @@ import p2pNetwork.testTCP.udpSniffer as udp_sniffer
 $key = q/{lstlisting}[frame=trbl,caption={p2pNetwork.conf},label=p2pNetwork]{}[stun]#STUNpeerconfiguration[holePunch]ConnectionBroker:10.193.163.246:6060{lstlisting};AAT/;
 $cached_env_img{$key} = q|<IMG
  WIDTH="567" HEIGHT="277" ALIGN="BOTTOM" BORDER="0"
- SRC="|."$dir".q|img9.png"
+ SRC="|."$dir".q|img10.png"
  ALT="\begin{lstlisting}[frame=trbl,caption={p2pNetwork.conf},label=p2pNetwork]{}
 [stu...
 ...configuration
@@ -88,14 +81,17 @@ $cached_env_img{$key} = q|<IMG
  ALT="\begin{lstlisting}[frame=trbl,caption={Load configuration},label=config]{}
 ...">|; 
 
-$key = q/{lstlisting}[frame=trbl,caption={CallbackfunctioncodeafterCBregistration},label=onnectwiththeotherpeer"""{par{puncher.connectByURI(peerURI){par{{lstlisting};AAT/;
+$key = q/{lstlisting}[frame=trbl,caption={Choosetheconnectionmethod},label=thread]{}classtion:..."""{par{def__init__(self):...self.withSpoofing=0...{par{{lstlisting};AAT/;
 $cached_env_img{$key} = q|<IMG
- WIDTH="567" HEIGHT="162" ALIGN="BOTTOM" BORDER="0"
- SRC="|."$dir".q|img5.png"
- ALT="\begin{lstlisting}[frame=trbl,caption={Callback function code after CB registrat...
-...h the other peer ''''''
+ WIDTH="567" HEIGHT="181" ALIGN="BOTTOM" BORDER="0"
+ SRC="|."$dir".q|img9.png"
+ ALT="\begin{lstlisting}[frame=trbl,caption={Choose the connection method},label=threa...
+...
 \par
-puncher.connectByURI(peerURI)
+def __init__(self):
+...
+self.withSpoofing = 0
+...
 \par
 \end{lstlisting}">|; 
 
