@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002-2-1 (1.70) JA patch-2.0
+patched version by:  Kenshi Muto, Debian Project.
+* modified by:  Shige TAKENO
+LaTeX2HTML 2002-2-1 (1.70),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>NAT transversal: some approaches</TITLE>
+<META NAME="description" CONTENT="NAT transversal: some approaches">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002-2-1 JA patch-2.0">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ntcp.css">
+
+<LINK REL="next" HREF="node19.html">
+<LINK REL="previous" HREF="node14.html">
+<LINK REL="up" HREF="ntcp.html">
+<LINK REL="next" HREF="node16.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html263"
+  HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html259"
+  HREF="ntcp.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html253"
+  HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html261"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html264"
+  HREF="node16.html">STUN: Simple Traversal of</A>
+<B> Up:</B> <A NAME="tex2html260"
+  HREF="ntcp.html">Peer-to-Peer Reliable Connectivity Across</A>
+<B> Previous:</B> <A NAME="tex2html254"
+  HREF="node14.html">Solution requirements</A>
+ &nbsp; <B>  <A NAME="tex2html262"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00600000000000000000">
+NAT transversal: some approaches</A>
+</H1>
+
+<P>
+
+<UL>
+<LI>STUN (Simple Traversal of UDP protocol Through NATs): 
+a UDP-based protocol to determine if the machine is NATed and
+if so, via what type of NAT. It isn't a cure-all, it allows incoming
+UDP packets through a subset of existing NAT types (it doesn't enable
+incoming UDP packets through symmetric NATs) [<A
+ HREF="node21.html#rfc_3489">12</A>]
+
+<P>
+</LI>
+<LI>STUNT (Simple Traversal of UDP Through NATs and TCP too):
+extends STUN to include TCP functionality. It is a lightweight protocol
+that allows applications running behind a NAT to determine external
+IP and port-binding properties, packet filtering rules and various
+timeouts associated with TCP connections through the NAT.  Knowing
+these parameters allows applications to establish TCP sessions
+between two NAT'ed hosts.
+
+<P>
+</LI>
+<LI>UPnP: The UPnP architecture offers pervasive peer-to-peer network
+connectivity. The UPnP architecture is a distributed, open networking
+architecture that leverages TCP/IP and the Web to enable seamless
+proximity networking in addition to control and data transfer among
+networked devices. Unfortunately, there are high security problems
+and many NAT boxes turned off it. ... 
+
+<P>
+</LI>
+<LI>IPv6: the new standard that specifies 128 bit IP addresses. It is
+possible that the new longer IPv6 addresses will reduce the need for
+a NAT box. However, as the adoption of the IPv6 addresses is slow,
+the NAT boxes are used to bridge between IPv4 and IPv6 networks. 
+
+<P>
+</LI>
+<LI>NUTSS: a SIP-based approach to UDP and TCP network connectivity that
+proposes to combine NAT traversal, URIs, Tunneling over UDP, SIP and
+STUN. It is a research project at Cornell [<A
+ HREF="node21.html#nutss">5</A>]
+
+<P>
+</LI>
+</UL>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html265"
+  HREF="node16.html">STUN: Simple Traversal of UDP protocol Through NATs</A>
+<UL>
+<LI><A NAME="tex2html266"
+  HREF="node16.html#SECTION00611000000000000000">Terminology</A>
+<LI><A NAME="tex2html267"
+  HREF="node16.html#SECTION00612000000000000000">Overview of operations</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html268"
+  HREF="node17.html">STUNT: Simple Traversal of UDP Through NATs and TCP too</A>
+<LI><A NAME="tex2html269"
+  HREF="node18.html">Hole Punching</A>
+<UL>
+<LI><A NAME="tex2html270"
+  HREF="node18.html#SECTION00631000000000000000">UDP Hole Punching</A>
+<UL>
+<LI><A NAME="tex2html271"
+  HREF="node18.html#SECTION00631010000000000000">Peers behind different NATs</A>
+<LI><A NAME="tex2html272"
+  HREF="node18.html#SECTION00631020000000000000">Peers behind multiple levels of NAT</A>
+<LI><A NAME="tex2html273"
+  HREF="node18.html#SECTION00631030000000000000">Peers behind the same NAT: the hairpin translation</A>
+<LI><A NAME="tex2html274"
+  HREF="node18.html#SECTION00631040000000000000">Create a peer-to-peer UDP session</A>
+</UL>
+<LI><A NAME="tex2html275"
+  HREF="node18.html#SECTION00632000000000000000">TCP Hole Punching</A>
+<UL>
+<LI><A NAME="tex2html276"
+  HREF="node18.html#SECTION00632010000000000000">Create a peer-to-peer TCP session</A>
+</UL></UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html263"
+  HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html259"
+  HREF="ntcp.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html253"
+  HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html261"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html264"
+  HREF="node16.html">STUN: Simple Traversal of</A>
+<B> Up:</B> <A NAME="tex2html260"
+  HREF="ntcp.html">Peer-to-Peer Reliable Connectivity Across</A>
+<B> Previous:</B> <A NAME="tex2html254"
+  HREF="node14.html">Solution requirements</A>
+ &nbsp; <B>  <A NAME="tex2html262"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+Gaballo Luca
+2005-06-30
+</ADDRESS>
+</BODY>
+</HTML>

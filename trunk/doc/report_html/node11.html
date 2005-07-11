@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002-2-1 (1.70) JA patch-2.0
+patched version by:  Kenshi Muto, Debian Project.
+* modified by:  Shige TAKENO
+LaTeX2HTML 2002-2-1 (1.70),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>NAT types</TITLE>
+<META NAME="description" CONTENT="NAT types">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002-2-1 JA patch-2.0">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ntcp.css">
+
+<LINK REL="next" HREF="node12.html">
+<LINK REL="previous" HREF="node10.html">
+<LINK REL="up" HREF="node4.html">
+<LINK REL="next" HREF="node12.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html217"
+  HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html213"
+  HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html207"
+  HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html215"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html218"
+  HREF="node12.html">NAT: security behaviors or</A>
+<B> Up:</B> <A NAME="tex2html214"
+  HREF="node4.html">Network Address Translation (NAT)</A>
+<B> Previous:</B> <A NAME="tex2html208"
+  HREF="node10.html">Address Translation</A>
+ &nbsp; <B>  <A NAME="tex2html216"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00470000000000000000">
+NAT types</A>
+</H1>
+
+<P>
+There are four different ways NAT boxes implement the mapping and
+filtering, so, using the classification in [<A
+ HREF="node21.html#rfc_3489">12</A>], there
+are four NAT types:
+
+<P>
+
+<OL>
+<LI><I>Full cone</I>: all requests from the same internal IP address and
+port are mapped to the same external IP address and port. Furthermore,
+any external host can send a packet to the internal host, by sending
+a packet to the mapped external address. 
+</LI>
+<LI><I>Restricted cone</I>: all requests from the same internal IP address
+and port are mapped to the same external IP address and port. Unlike
+a full cone NAT, an external host (with IP address X) can send a packet
+to the internal host only if the internal host had previously sent
+a packet to IP address X. 
+</LI>
+<LI><I>Port Restricted cone</I>: a port restricted cone NAT is like a
+restricted cone NAT, but the restriction includes port numbers. Specifically,
+an external host can send a packet, with source IP address X and source
+port P, to the internal host only if the internal host had previously
+sent a packet to IP address X and port P. 
+</LI>
+<LI><I>Symmetric</I>: A symmetric NAT is one where all requests from the
+same internal IP address and port, to a specific destination IP address
+and port, are mapped to the same external IP address and port. If
+the same host sends a packet with the same source address and port,
+but to a different destination, a different mapping is used. Furthermore,
+only the external host that receives a packet can send a UDP packet
+back to the internal host. 
+</LI>
+</OL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html217"
+  HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html213"
+  HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html207"
+  HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html215"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html218"
+  HREF="node12.html">NAT: security behaviors or</A>
+<B> Up:</B> <A NAME="tex2html214"
+  HREF="node4.html">Network Address Translation (NAT)</A>
+<B> Previous:</B> <A NAME="tex2html208"
+  HREF="node10.html">Address Translation</A>
+ &nbsp; <B>  <A NAME="tex2html216"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+Gaballo Luca
+2005-06-30
+</ADDRESS>
+</BODY>
+</HTML>

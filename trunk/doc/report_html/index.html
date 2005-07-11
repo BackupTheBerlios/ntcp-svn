@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002-2-1 (1.70) JA patch-2.0
+patched version by:  Kenshi Muto, Debian Project.
+* modified by:  Shige TAKENO
+LaTeX2HTML 2002-2-1 (1.70),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Peer-to-Peer Reliable Connectivity Across
+Network Address Translator
+A Software Approach to Solving NAT Traversal Problem</TITLE>
+<META NAME="description" CONTENT="Peer-to-Peer Reliable Connectivity Across
+Network Address Translator
+A Software Approach to Solving NAT Traversal Problem">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002-2-1 JA patch-2.0">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ntcp.css">
+
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html10"
+  HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev_g.png"> 
+<A NAME="tex2html8"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html11"
+  HREF="node1.html">Contents</A>
+ &nbsp; <B>  <A NAME="tex2html9"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+2004-2005
+
+<BR>
+AJMONE Marco
+<BR>
+DAX Philippe
+<BR>
+GORGES Didier 
+<H1 ALIGN="CENTER">Peer-to-Peer Reliable Connectivity Across
+<BR>
+Network Address Translator
+<BR><FONT SIZE="+2">A Software Approach to Solving NAT Traversal Problem</FONT></H1>
+<DIV>
+
+<P ALIGN="CENTER"><STRONG>GABALLO Luca</STRONG></P>
+</DIV>
+
+<P>
+
+<H4><A NAME="SECTION00000010000000000000">
+Abstract</A>
+</H4>
+
+<P>
+Peer-to-peer applications need direct connection between nodes, and 
+Network Address Translation (NAT) cause well-knows difficulties
+since the peers have no globally valid IP address. Some NAT traversal
+approaches are emerging, but they suffer from several problems. This
+work analyzes the NAT functionalities, the UDP/TCP communication through
+the NATs, documents the different approaches and try to find a good
+solution for the NAT traversal problem. 
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html12"
+  HREF="node1.html">Contents</A>
+<LI><A NAME="tex2html13"
+  HREF="node2.html">Solipsis</A>
+<LI><A NAME="tex2html14"
+  HREF="node3.html">The Problem</A>
+<LI><A NAME="tex2html15"
+  HREF="node4.html">Network Address Translation (NAT)</A>
+<UL>
+<LI><A NAME="tex2html16"
+  HREF="node4.html#SECTION00410000000000000000">NAT Binding</A>
+<UL>
+<LI><A NAME="tex2html17"
+  HREF="node4.html#SECTION00411000000000000000">Address and Port Mapping</A>
+<LI><A NAME="tex2html18"
+  HREF="node4.html#SECTION00412000000000000000">Port Assignment</A>
+<LI><A NAME="tex2html19"
+  HREF="node4.html#SECTION00413000000000000000">Binding Lifetime</A>
+</UL>
+<LI><A NAME="tex2html20"
+  HREF="node4.html#SECTION00420000000000000000">Filtering of unsolicited traffic</A>
+<LI><A NAME="tex2html21"
+  HREF="node4.html#SECTION00430000000000000000">Hairpinning Behaviour</A>
+<LI><A NAME="tex2html22"
+  HREF="node4.html#SECTION00440000000000000000">Packet Mangling</A>
+<LI><A NAME="tex2html23"
+  HREF="node4.html#SECTION00450000000000000000">NAT Behavioral Requirements</A>
+<LI><A NAME="tex2html24"
+  HREF="node4.html#SECTION00460000000000000000">Address Translation</A>
+<LI><A NAME="tex2html25"
+  HREF="node4.html#SECTION00470000000000000000">NAT types</A>
+<LI><A NAME="tex2html26"
+  HREF="node4.html#SECTION00480000000000000000">NAT: security behaviors or not?</A>
+<LI><A NAME="tex2html27"
+  HREF="node4.html#SECTION00490000000000000000">NAT: IETF guidelines</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html28"
+  HREF="node5.html">Solution requirements</A>
+<LI><A NAME="tex2html29"
+  HREF="node6.html">NAT transversal: some approaches</A>
+<UL>
+<LI><A NAME="tex2html30"
+  HREF="node6.html#SECTION00610000000000000000">STUN: Simple Traversal of UDP protocol Through NATs</A>
+<UL>
+<LI><A NAME="tex2html31"
+  HREF="node6.html#SECTION00611000000000000000">Terminology</A>
+<LI><A NAME="tex2html32"
+  HREF="node6.html#SECTION00612000000000000000">Overview of operations</A>
+</UL>
+<LI><A NAME="tex2html33"
+  HREF="node6.html#SECTION00620000000000000000">STUNT: Simple Traversal of UDP Through NATs and TCP too</A>
+<LI><A NAME="tex2html34"
+  HREF="node6.html#SECTION00630000000000000000">Hole Punching</A>
+<UL>
+<LI><A NAME="tex2html35"
+  HREF="node6.html#SECTION00631000000000000000">UDP Hole Punching</A>
+<LI><A NAME="tex2html36"
+  HREF="node6.html#SECTION00632000000000000000">TCP Hole Punching</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html37"
+  HREF="node7.html">Our Approach</A>
+<UL>
+<LI><A NAME="tex2html38"
+  HREF="node7.html#SECTION00710000000000000000">TCP NAT Traversal Protocol</A>
+<UL>
+<LI><A NAME="tex2html39"
+  HREF="node7.html#SECTION00711000000000000000">TCP Traversal with Spoofing (NUTSS like)</A>
+<LI><A NAME="tex2html40"
+  HREF="node7.html#SECTION00712000000000000000">TCP Traversal with Spoofing from well-known machine</A>
+<LI><A NAME="tex2html41"
+  HREF="node7.html#SECTION00713000000000000000">TCP Traversal without Spoofing</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html42"
+  HREF="node8.html">Bibliography</A>
+<LI><A NAME="tex2html43"
+  HREF="node9.html">About this document ...</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR><HR>
+<ADDRESS>
+Gaballo Luca
+2005-07-05
+</ADDRESS>
+</BODY>
+</HTML>

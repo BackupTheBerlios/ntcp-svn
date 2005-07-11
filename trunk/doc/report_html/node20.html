@@ -1,0 +1,239 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002-2-1 (1.70) JA patch-2.0
+patched version by:  Kenshi Muto, Debian Project.
+* modified by:  Shige TAKENO
+LaTeX2HTML 2002-2-1 (1.70),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>TCP NAT Traversal Protocol</TITLE>
+<META NAME="description" CONTENT="TCP NAT Traversal Protocol">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002-2-1 JA patch-2.0">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ntcp.css">
+
+<LINK REL="previous" HREF="node19.html">
+<LINK REL="up" HREF="node19.html">
+<LINK REL="next" HREF="node21.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html344"
+  HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html340"
+  HREF="node19.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html336"
+  HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html342"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html345"
+  HREF="node21.html">Bibliography</A>
+<B> Up:</B> <A NAME="tex2html341"
+  HREF="node19.html">Our Approach</A>
+<B> Previous:</B> <A NAME="tex2html337"
+  HREF="node19.html">Our Approach</A>
+ &nbsp; <B>  <A NAME="tex2html343"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html346"
+  HREF="node20.html#SECTION00711000000000000000">TCP Traversal with Spoofing (NUTSS like)</A>
+<LI><A NAME="tex2html347"
+  HREF="node20.html#SECTION00712000000000000000">TCP Traversal with Spoofing from well-known machine</A>
+<LI><A NAME="tex2html348"
+  HREF="node20.html#SECTION00713000000000000000">TCP Traversal without Spoofing</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00710000000000000000">
+TCP NAT Traversal Protocol</A>
+</H1>
+Various techniques have been developed for traversing NAT/firewall with UDP, 
+because of the difficulty to establish a TCP connection. This difficulty is due 
+to the asymmetric nature of the TCP protocol. In this chapter we will explain 
+different approaches that we have formulated, implemented and tested 
+to arrive to the final solution.
+
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00711000000000000000">
+TCP Traversal with Spoofing (NUTSS like)</A>
+</H2>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME=""></A><A NAME=""></A><A NAME="245"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 6.1:</STRONG>
+
+<BR>
+<STRONG>Figure 6.2:</STRONG>
+</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+<IMG
+  WIDTH="416" HEIGHT="316" ALIGN="BOTTOM" BORDER="0"
+ SRC="./travTCPspoof.jpg"
+ ALT="Image travTCPspoof">
+	
+</DIV>
+<P>
+<DIV ALIGN="CENTER"><IMG
+  WIDTH="388" HEIGHT="356" ALIGN="BOTTOM" BORDER="0"
+ SRC="./travTCPspoofMess.jpg"
+ ALT="Image travTCPspoofMess">
+	
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00712000000000000000">
+TCP Traversal with Spoofing from well-known machine</A>
+</H2>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME=""></A><A NAME=""></A><A NAME="256"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 6.3:</STRONG>
+
+<BR>
+<STRONG>Figure 6.4:</STRONG>
+</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+<IMG
+  WIDTH="388" HEIGHT="244" ALIGN="BOTTOM" BORDER="0"
+ SRC="./travTCPspoofWK1.jpg"
+ ALT="Image travTCPspoofWK1">
+	
+</DIV>
+<P>
+<DIV ALIGN="CENTER"><IMG
+  WIDTH="388" HEIGHT="299" ALIGN="BOTTOM" BORDER="0"
+ SRC="./travTCPspoofWK2.jpg"
+ ALT="Image travTCPspoofWK2">
+	
+</DIV>
+<P>
+<DIV ALIGN="CENTER">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00713000000000000000">
+TCP Traversal without Spoofing</A>
+</H2>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME=""></A><A NAME=""></A><A NAME="267"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 6.5:</STRONG>
+
+<BR>
+<STRONG>Figure 6.6:</STRONG>
+</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+<IMG
+  WIDTH="388" HEIGHT="288" ALIGN="BOTTOM" BORDER="0"
+ SRC="./travTCP1.jpg"
+ ALT="Image travTCP1">
+	
+</DIV>
+<P>
+<DIV ALIGN="CENTER"><IMG
+  WIDTH="388" HEIGHT="245" ALIGN="BOTTOM" BORDER="0"
+ SRC="./travTCP2.jpg"
+ ALT="Image travTCP2">
+	
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME=""></A><A NAME="274"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 6.7:</STRONG>
+</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+<IMG
+  WIDTH="346" HEIGHT="362" ALIGN="BOTTOM" BORDER="0"
+ SRC="./travTCPmess.jpg"
+ ALT="Image travTCPmess">
+	
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+ 
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html344"
+  HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html340"
+  HREF="node19.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html336"
+  HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html342"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html345"
+  HREF="node21.html">Bibliography</A>
+<B> Up:</B> <A NAME="tex2html341"
+  HREF="node19.html">Our Approach</A>
+<B> Previous:</B> <A NAME="tex2html337"
+  HREF="node19.html">Our Approach</A>
+ &nbsp; <B>  <A NAME="tex2html343"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+Gaballo Luca
+2005-06-30
+</ADDRESS>
+</BODY>
+</HTML>

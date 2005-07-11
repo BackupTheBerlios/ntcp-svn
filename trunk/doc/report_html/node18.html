@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002-2-1 (1.70) JA patch-2.0
+patched version by:  Kenshi Muto, Debian Project.
+* modified by:  Shige TAKENO
+LaTeX2HTML 2002-2-1 (1.70),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Hole Punching</TITLE>
+<META NAME="description" CONTENT="Hole Punching">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002-2-1 JA patch-2.0">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ntcp.css">
+
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node19.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html311"
+  HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html307"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html303"
+  HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html309"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html312"
+  HREF="node19.html">Our Approach</A>
+<B> Up:</B> <A NAME="tex2html308"
+  HREF="node15.html">NAT transversal: some approaches</A>
+<B> Previous:</B> <A NAME="tex2html304"
+  HREF="node17.html">STUNT: Simple Traversal of</A>
+ &nbsp; <B>  <A NAME="tex2html310"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html313"
+  HREF="node18.html#SECTION00631000000000000000">UDP Hole Punching</A>
+<UL>
+<LI><A NAME="tex2html314"
+  HREF="node18.html#SECTION00631010000000000000">Peers behind different NATs</A>
+<LI><A NAME="tex2html315"
+  HREF="node18.html#SECTION00631020000000000000">Peers behind multiple levels of NAT</A>
+<LI><A NAME="tex2html316"
+  HREF="node18.html#SECTION00631030000000000000">Peers behind the same NAT: the hairpin translation</A>
+<LI><A NAME="tex2html317"
+  HREF="node18.html#SECTION00631040000000000000">Create a peer-to-peer UDP session</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html318"
+  HREF="node18.html#SECTION00632000000000000000">TCP Hole Punching</A>
+<UL>
+<LI><A NAME="tex2html319"
+  HREF="node18.html#SECTION00632010000000000000">Create a peer-to-peer TCP session</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00630000000000000000">
+Hole Punching</A>
+</H1>
+
+<H2><A NAME="SECTION00631000000000000000">
+UDP Hole Punching</A>
+</H2>
+
+<P>
+This approach enables to establish a direct UDP session between two
+nodes, even when both may lie behind different NATs, with the help
+of a well-known third machine, the <I>connection broker.</I> The connection
+broker must have a public address to allow the NAT'ed peers to contact
+it and helps them to discover the other peer's public address. UDP
+hole punching relies on the properties of common firewalls and NATs
+to allow peer-to-peer applications to <I>punch holes</I> and establish
+direct connection with each other. This technique works good with
+UDP, but we will see that, with some modifications and attentions,
+it can works with TCP too.
+
+<P>
+We will consider three specific scenarios, and how applications can
+be designed to handle both of them gracefully. In the first situation,
+representing the common case, two nodes desiring direct peer-to-peer
+communication reside behind two different NATs. In the second, the
+two peers reside behind multiple levels of NAT and the last scenarios
+shows two clients that reside behind the same NAT, but do not necessarily
+know that they do.
+
+<P>
+
+<H4><A NAME="SECTION00631010000000000000">
+Peers behind different NATs</A>
+</H4>
+
+<P>
+...
+
+<P>
+
+<H4><A NAME="SECTION00631020000000000000">
+Peers behind multiple levels of NAT</A>
+</H4>
+
+<P>
+...
+
+<P>
+
+<H4><A NAME="SECTION00631030000000000000">
+Peers behind the same NAT: the hairpin translation</A>
+</H4>
+
+<P>
+...
+
+<P>
+
+<H4><A NAME="SECTION00631040000000000000">
+Create a peer-to-peer UDP session</A>
+</H4>
+
+<P>
+...
+
+<P>
+
+<H2><A NAME="SECTION00632000000000000000">
+TCP Hole Punching</A>
+</H2>
+
+<P>
+To establish a peer-to-peer TCP session we have to use a more refined
+approach, but this approach is very similar to the UDP hole punching.
+It is more complicated because from a TCP packet the NAT can extracts
+much more informations than from an UDP packet.
+
+<P>
+
+<H4><A NAME="SECTION00632010000000000000">
+Create a peer-to-peer TCP session</A>
+</H4>
+
+<P>
+...
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html311"
+  HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html307"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html303"
+  HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html309"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html312"
+  HREF="node19.html">Our Approach</A>
+<B> Up:</B> <A NAME="tex2html308"
+  HREF="node15.html">NAT transversal: some approaches</A>
+<B> Previous:</B> <A NAME="tex2html304"
+  HREF="node17.html">STUNT: Simple Traversal of</A>
+ &nbsp; <B>  <A NAME="tex2html310"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+Gaballo Luca
+2005-06-30
+</ADDRESS>
+</BODY>
+</HTML>

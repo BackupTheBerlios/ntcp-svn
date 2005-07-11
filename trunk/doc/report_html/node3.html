@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 2002-2-1 (1.70) JA patch-2.0
+patched version by:  Kenshi Muto, Debian Project.
+* modified by:  Shige TAKENO
+LaTeX2HTML 2002-2-1 (1.70),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Problem</TITLE>
+<META NAME="description" CONTENT="The Problem">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="jLaTeX2HTML v2002-2-1 JA patch-2.0">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ntcp.css">
+
+<LINK REL="next" HREF="node4.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="ntcp.html">
+<LINK REL="next" HREF="node4.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html106"
+  HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html102"
+  HREF="ntcp.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html96"
+  HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html104"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html107"
+  HREF="node4.html">Network Address Translation (NAT)</A>
+<B> Up:</B> <A NAME="tex2html103"
+  HREF="ntcp.html">Peer-to-Peer Reliable Connectivity Across</A>
+<B> Previous:</B> <A NAME="tex2html97"
+  HREF="node2.html">Solipsis</A>
+ &nbsp; <B>  <A NAME="tex2html105"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00300000000000000000">
+The Problem</A>
+</H1>
+
+<P>
+If we are building some peer-to-peer (P2P) applications, we require
+TCP connections between two machines that can connect to the Internet
+from various places (so they don't have a fixed network address) and,
+often, they are behind a Network Address Translation (NAT) box. The
+problem is that computers attached to the Internet via NAT boxes can
+make outbound connection to the public Internet but cannot receive
+inbound connections.
+
+<P>
+NAT boxes allow several computers, in a private network, to share
+one public IP address and their communication to the public Internet
+pass through the NAT box, that maintains a table of mappings and use
+port translation in order to determine which computer should receive
+the response. This cause many difficulties for a peer-to-peer communication,
+since the peers cannot be reachable at any global valid network address.
+The new Internet address architecture, where there is a global address
+realm and many private address realms interconnected by NATs, make
+it difficult for two nodes on different private networks to communicate
+each other directly.
+
+<P>
+To make the new services based on P2P, like teleconferencing or on-line
+gaming, completely accessible, it's very import, and urgent, to implement
+a technique that consent to the different protocols to traverse the
+NATs. The objective of this work is to study different approaches
+to pass the NATs and in particular, for each of these, the scalability,
+the mobility, the standard interfaces, and the security. The work
+must give us a possible approach to solve the problem.
+
+<P>
+The next section describes the NAT functionalities and the different
+types of NAT behaviors .
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html106"
+  HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html102"
+  HREF="ntcp.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html96"
+  HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html104"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html107"
+  HREF="node4.html">Network Address Translation (NAT)</A>
+<B> Up:</B> <A NAME="tex2html103"
+  HREF="ntcp.html">Peer-to-Peer Reliable Connectivity Across</A>
+<B> Previous:</B> <A NAME="tex2html97"
+  HREF="node2.html">Solipsis</A>
+ &nbsp; <B>  <A NAME="tex2html105"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+Gaballo Luca
+2005-07-05
+</ADDRESS>
+</BODY>
+</HTML>
