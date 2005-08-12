@@ -2,6 +2,7 @@ import struct, socket, time, logging, random
 import twisted.internet.defer as defer
 
 from ntcp.punch.PuncherProtocol import PuncherProtocol
+from ntcp.punch.ConnectionPunching import ConnectionPunching
 
 # The NAT types: code and decode
 NatTypeCod = {
@@ -20,10 +21,10 @@ NatTypeDec = {
   '00SD' : 'SessionDependent'
    }
 
-class Puncher(PuncherProtocol, object):
+class Puncher(PuncherProtocol, ConnectionPunching, object):
 
   """
-  Commucates with the Super Node Connection Broker to registre himself
+  Communicates with the Super Node Connection Broker to registre himself
   and to establish a connection with a peer behiend a NAT
   :version: 0.2
   :author: Luca Gaballo
@@ -34,8 +35,9 @@ class Puncher(PuncherProtocol, object):
   def __init__(self, reactor):
     super(Puncher, self).__init__()
     self.deferred = defer.Deferred()
-
     self.reactor = reactor
+
+    self.requestor = None
     
     hostname, port = self.p2pConfig.get('holePunch', 'ConnectionBroker').split(':')
     ip = socket.gethostbyname(hostname)
@@ -111,6 +113,7 @@ class Puncher(PuncherProtocol, object):
     @return void :
     """
     self.remoteUri = remoteUri
+    self.requestor = 1
     
     listAttr = ()
     self.publicAddr = natConf.publicAddr
@@ -153,6 +156,7 @@ class Puncher(PuncherProtocol, object):
     @param NAT requestorNatConf : The remote endpoint NAT configuration
     @return void :
     """
+    self.requestor = 0
 
     self.remoteUri = self.avtypeList["REQUESTOR-USER-ID"]
     dummy,family,port,addr = struct.unpack( \
@@ -167,16 +171,6 @@ class Puncher(PuncherProtocol, object):
     # Call the NAT traversal TCP method
     self.natTraversal()
       
-
-  def natTraversal(self):
-    """
-    Implements the right method for NAT traversal TCP
-    """
-    self.log.debug('NAT traversal with:')
-    self.log.debug('\tURI:\t%s'%self.remoteUri)
-    self.log.debug('\tAddress:\t%s:%d'%self.remotePublAddress)
-    self.log.debug('\tNAT type:\t%s'%self.remoteNatType)
-
   def sendMessage(self, toAddr, attributes=()):
     """
     Sets some variables before send the message
