@@ -10,6 +10,7 @@ MsgTypes = {0x1001 : 'Lookup Request',
             0x1201 : 'Keep Alive Request',
             0x1202 : 'Keep Alive Response',
             0x1111 : 'Connection Request',
+            0x1121 : 'Connection Request',
             0x1002 : 'Registration Request',
             0x1003 : 'Registration Response',
             0x1102 : 'Connection to peer',
@@ -114,6 +115,10 @@ class PuncherProtocol(DatagramProtocol):
       # Connection Request
       self.rcvConnectionRequest()
       
+    elif self.mt == 0x1121:
+      # Connection Request
+      self.rcvConnectionResponse()
+      
     elif self.mt == 0x1002:
       # Registration Request
       self.rcvRegistrationRequest()
@@ -150,6 +155,8 @@ class PuncherProtocol(DatagramProtocol):
       self.mt = 0x1202
     elif self.messageType == "Connection Request":
       self.mt = 0x1111
+    elif self.messageType == "Connection Response":
+      self.mt = 0x1121
     elif self.messageType == "Registration Request":
       self.mt = 0x1002
     elif self.messageType == "Registration Response":
@@ -165,7 +172,7 @@ class PuncherProtocol(DatagramProtocol):
     # add any attributes in Payload
     for a,v in avpairs:
 
-      if a == 0x0001 or a == 0x1005 or a == 0x0004:
+      if a == 0x0001 or a == 0x1005 or a == 0x0004 or a == 0x0007:
         # USER-ID, NAT-TYPE
         flength = len(v)
         if flength%4 != 0:
@@ -224,6 +231,12 @@ class PuncherProtocol(DatagramProtocol):
     @return void :
     """
     pass
+
+  def getAddress(self, key):
+    dummy,family,port,ip = struct.unpack( \
+                    '!ccH4s', self.avtypeList[key])
+    return (socket.inet_ntoa(ip), port)
+
 
   def getRandomTID(self):
     # It's not necessary to have a particularly strong TID here

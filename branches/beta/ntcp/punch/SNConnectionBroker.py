@@ -69,7 +69,7 @@ class SNConnectionBroker (PuncherProtocol):
 
     @return void :
     """
-    toAddr = self.fromAddr
+    self.requestor = self.fromAddr
 
     # Load the peer configuration
     key = self.avtypeList['USER-ID']
@@ -80,26 +80,8 @@ class SNConnectionBroker (PuncherProtocol):
       self.log.warn('User not registered!')
       return
 
-    self.sndLookupResponse(peerInfo)
+    #self.sndLookupResponse(peerInfo)
     self.sndConnectionRequest(peerInfo)
-    
-  def sndLookupResponse(self, peerInfo):
-    """
-    Sends a lookup response to the puncher.
-    
-    @param peerInfo : the remote endpoint's information
-    @return void :
-    """   
-    toAddr = self.fromAddr
-    listAttr = ()
-    self.log.debug(peerInfo)
-    listAttr = listAttr + ((0x0001, peerInfo[0]),)  
-    listAttr = listAttr + ((0x0002, self.getPortIpList(peerInfo[1])),)
-    listAttr = listAttr + ((0x0003, self.getPortIpList(peerInfo[2])),)
-    listAttr = listAttr + ((0x0004, peerInfo[3]),)
-    
-    self.messageType = "Lookup Response"    
-    self.sendMessage(toAddr, listAttr)
  
   def sndConnectionRequest(self, peerInfo):
     """
@@ -111,21 +93,59 @@ class SNConnectionBroker (PuncherProtocol):
     toAddr = peerInfo[1] # the peer's address
     listAttr = ()
     
-    if 'REQUESTOR-USER-ID' in self.avtypeList:
-      listAttr = listAttr + ((0x1005, self.avtypeList['REQUESTOR-USER-ID']),)
-    if 'REQUESTOR-PRIVATE-ADDRESSE' in self.avtypeList:
-      dummy,family,port,ip = struct.unpack( \
-                    '!ccH4s', self.avtypeList['REQUESTOR-PRIVATE-ADDRESSE'])
-      addr = (socket.inet_ntoa(ip), port)
-      listAttr = listAttr + ((0x0006, self.getPortIpList(addr)),)
-    if 'NAT-TYPE' in self.avtypeList:
-      listAttr = listAttr + ((0x0004, self.avtypeList['NAT-TYPE']),)
-      
-    listAttr = listAttr + ((0x0005, self.getPortIpList(self.fromAddr)),)
+    listAttr = listAttr + ((0x1005, self.avtypeList['REQUESTOR-USER-ID']),)
+    addr = self.getAddress('REQUESTOR-PUBLIC-ADDRESSE')
+    listAttr = listAttr + ((0x0005, self.getPortIpList(addr)),)
+    addr = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
+    listAttr = listAttr + ((0x0006, self.getPortIpList(addr)),)
+    listAttr = listAttr + ((0x0007, self.avtypeList['REQUESTOR-NAT-TYPE']),)
     
     self.messageType = "Connection Request"   
     self.sendMessage(toAddr, listAttr)
   
+  def rcvConnectionResponse(self):
+    """
+    Sends a Connection Request Message to the remote endpoint.
+    
+    @param peerInfo : the remote endpoint's information
+    @return void 
+    """
+    self.sndLookupResponse()
+    
+  def sndLookupResponse(self):
+    """
+    Sends a lookup response to the puncher.
+    
+    @param peerInfo : the remote endpoint's information
+    @return void :
+    """   
+##     toAddr = self.fromAddr
+##     listAttr = ()
+##     self.log.debug(peerInfo)
+##     listAttr = listAttr + ((0x0001, peerInfo[0]),)  
+##     listAttr = listAttr + ((0x0002, self.getPortIpList(peerInfo[1])),)
+##     listAttr = listAttr + ((0x0003, self.getPortIpList(peerInfo[2])),)
+##     listAttr = listAttr + ((0x0004, peerInfo[3]),)
+    listAttr = ()
+    
+    listAttr = listAttr + ((0x0001, self.avtypeList['USER-ID']),)
+    addr = self.getAddress('PUBLIC-ADDRESSE')
+    print 'publ addr:', addr
+    listAttr = listAttr + ((0x0002, self.getPortIpList(addr)),)
+    addr = self.getAddress('PRIVATE-ADDRESSE')
+    listAttr = listAttr + ((0x0003, self.getPortIpList(addr)),)
+    listAttr = listAttr + ((0x0004, self.avtypeList['NAT-TYPE']),)
+    # Requestor conf
+    listAttr = listAttr + ((0x1005, self.avtypeList['REQUESTOR-USER-ID']),)
+    addr = self.getAddress('REQUESTOR-PUBLIC-ADDRESSE')
+    listAttr = listAttr + ((0x0005, self.getPortIpList(addr)),)
+    addr = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
+    listAttr = listAttr + ((0x0006, self.getPortIpList(addr)),)
+    listAttr = listAttr + ((0x0007, self.avtypeList['REQUESTOR-NAT-TYPE']),)   
+
+    self.messageType = "Lookup Response"    
+    self.sendMessage(self.requestor, listAttr)
+    
   def printActiveConnection(self):
     """
     Prints the active user registrations

@@ -17,23 +17,28 @@ class NATConnectivity(NAT, object):
   log = logging.getLogger("ntcp")
   log.setLevel(logging.DEBUG)
 
-  def __init__(self, reactor):
+  def __init__(self, reactor, factory):
     super(NATConnectivity, self).__init__()
     self.reactor = reactor
+    self.factory = factory
 
-  def forceConnection(self, remoteUri=None, remoteAddr=None, localPort=0):
+  def connectTCP(self, remoteUri,  factory=None, localPort=0, remoteAddr=None):
     """
     Force a connection with another user
     through NATs helped by the SN-ConnectionBroker
 
-    @param string peerUri : The remote endpoint's uri
+    @param string remoteUri : The remote endpoint's uri
+    @param CliantFactory factory : The TCP Client factory
     @return void :
     """
-    publicAddr = self.publicAddrDiscovery(localPort)
-    self.log.debug('The previwed publicAddress mapped by NAT is: %s:%d'%publicAddr)
+    if factory != None:
+      self.factory = factory
+      
+    self.publicAddr = self.publicAddrDiscovery(localPort)
+    self.log.debug('The previwed publicAddress mapped by NAT is: %s:%d'%self.publicAddr)
 
-    if publicAddr != None:
-      self.puncher.sndLookupRequest(remoteUri, self)
+    if self.publicAddr != None:
+      self.puncher.sndLookupRequest(remoteUri, factory)
 
     return self.d
 

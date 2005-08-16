@@ -29,9 +29,9 @@ class NAT:
     self.publicIP = None
     self.publicPort = None
     self.publicAddr = (self.publicIP, self.publicPort)
-    self.privateIP = None
+    self.privateIp = None
     self.privatePort = None
-    self.privateAddr = (self.privateIP, self.privatePort)
+    self.privateAddr = (self.privateIp, self.privatePort)
 
   def natDiscovery(self, uri='xxx'):
     """
@@ -61,8 +61,8 @@ class NAT:
       self.printNatConf()
 
       # Registration to the Connection Broker
-      self.puncher = Puncher(self.reactor)
-      d = self.puncher.sndRegistrationRequest(uri, self)
+      self.puncher = Puncher(self.reactor, self.factory, self)
+      d = self.puncher.sndRegistrationRequest(uri)
       d.addCallback(registrationMade)
       d.addErrback(registrationFail)
 
@@ -93,7 +93,7 @@ class NAT:
 
     # Set the private address too
     self.privatePort = localPort
-    self.privateAddr = (self.privateIP, self.privatePort)
+    self.privateAddr = (self.privateIp, self.privatePort)
 
     # Discover the public address (from NAT config)
     if self.type == 'Independent':

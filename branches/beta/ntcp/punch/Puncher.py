@@ -32,19 +32,23 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
   
   log = logging.getLogger("ntcp")
   
-  def __init__(self, reactor):
+  def __init__(self, reactor, factory, natObj):
     super(Puncher, self).__init__()
     self.deferred = defer.Deferred()
     self.reactor = reactor
 
-    self.requestor = None
-    
+    self.setFactory(factory)
+    self.natObj = natObj
+    self.requestor = 0
+
+    # CB address
     hostname, port = self.p2pConfig.get('holePunch', 'ConnectionBroker').split(':')
     ip = socket.gethostbyname(hostname)
     self.server = (ip, int(port))
     #self.server = ('127.0.0.1', int(port))
-    
-    punchPort = int(self.p2pConfig.get('holePunch', 'punchPort'))
+
+    # UDP listening
+    #punchPort = int(self.p2pConfig.get('holePunch', 'punchPort'))
     punchPort = random.randrange(6900, 6999)
     flag = 1 
     while flag: 
@@ -56,7 +60,7 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
         punchPort = random.randrange(6900, 6999)
         
 
-  def sndRegistrationRequest(self, uri, natConf):
+  def sndRegistrationRequest(self, uri):
     """
     Sends a registration request to the SN Connection Broker
 
@@ -64,16 +68,15 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     @param NAT natConf : The NAT configuration
     @return void :
     """
-    
     listAttr = ()
-    self.publicAddr = (natConf.publicIp, 0)
-    self.privateAddr = (natConf.privateIp, 0)
+    self.publicAddr = (self.natObj.publicIp, 0)
+    self.privateAddr = (self.natObj.privateIp, 0)
     self.uri = uri
     
     listAttr = listAttr + ((0x0001, uri),)
     listAttr = listAttr + ((0x0002, self.getPortIpList(self.publicAddr)),)
     listAttr = listAttr + ((0x0003, self.getPortIpList(self.privateAddr)),)
-    listAttr = listAttr + ((0x0004, NatTypeCod[natConf.type]),)
+    listAttr = listAttr + ((0x0004, NatTypeCod[self.natObj.type]),)
     
     self.messageType = 'Registration Request'
     self.tid = self.getRandomTID()
@@ -94,35 +97,38 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
       self.deferred.callback(None)
 
   def rcvKeepAliveResponse(self):
-    self.log.debug('Received keep alive response...I go to sleep for 20s')
+    # self.log.debug('Received keep alive response...I go to sleep for 20s')
     self.reactor.callLater(20, self.sndKeepAliveRequest)
 
   def sndKeepAliveRequest(self):
     """Sends the keep alive message"""
-    self.log.debug('I am awake... I send a keep alive msg!')
+    # self.log.debug('I am awake... I send a keep alive msg!')
     self.messageType = 'Keep Alive Request'
     self.tid = self.getRandomTID()
     self.sendMessage(self.server)
   
-  def sndLookupRequest(self, remoteUri, natConf):
+  def sndLookupRequest(self, remoteUri, factory):
     """
     Send a lookup request to discover and advise the remote user
     behind a NAT for a TCP connection
 
     @param string uri : The remote node identifier
+    @param NAT natConf : The NAT object
     @return void :
     """
     self.remoteUri = remoteUri
+    self.setFactory(factory)
     self.requestor = 1
     
     listAttr = ()
-    self.publicAddr = natConf.publicAddr
+    # Reload the public address
+    self.publicAddr = self.natObj.publicAddr
     
     listAttr = listAttr + ((0x0001, remoteUri),)
     listAttr = listAttr + ((0x1005, self.uri),)
     listAttr = listAttr + ((0x0005, self.getPortIpList(self.publicAddr)),)
     listAttr = listAttr + ((0x0006, self.getPortIpList(self.privateAddr)),)
-    listAttr = listAttr + ((0x0004, NatTypeCod[natConf.type]),)
+    listAttr = listAttr + ((0x0007, NatTypeCod[self.natObj.type]),)
     
     self.messageType = 'Lookup Request'
     self.tid = self.getRandomTID()
@@ -136,12 +142,8 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     @return void :
     """
 
-    dummy,family,port,addr = struct.unpack( \
-                '!ccH4s', self.avtypeList["PUBLIC-ADDRESSE"])
-    self.remotePublAddress = (socket.inet_ntoa(addr), port)
-    dummy,family,port,addr = struct.unpack( \
-                '!ccH4s', self.avtypeList["PRIVATE-ADDRESSE"])
-    self.remotePrivAddress = (socket.inet_ntoa(addr), port)
+    self.remotePublAddress = self.getAddress('PUBLIC-ADDRESSE')
+    self.remotePrivAddress = self.getAddress('PRIVATE-ADDRESSE')
     self.remoteNatType = self.avtypeList["NAT-TYPE"]
 
     # Call the NAT traversal TCP method
@@ -158,19 +160,39 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     """
     self.requestor = 0
 
-    self.remoteUri = self.avtypeList["REQUESTOR-USER-ID"]
-    dummy,family,port,addr = struct.unpack( \
-                '!ccH4s', self.avtypeList["REQUESTOR-PUBLIC-ADDRESSE"])
-    self.remotePublAddress = (socket.inet_ntoa(addr), port)
-    
-    dummy,family,port,addr = struct.unpack( \
-                    '!ccH4s', self.avtypeList["REQUESTOR-PRIVATE-ADDRESSE"])
-    self.remotePrivAddress = (socket.inet_ntoa(addr), port)
-    self.remoteNatType = self.avtypeList["NAT-TYPE"]
+    self.remoteUri = self.avtypeList["REQUESTOR-USER-ID"]    
+    self.remotePublAddress = self.getAddress('REQUESTOR-PUBLIC-ADDRESSE')
+    self.remotePrivAddress = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
+    self.remoteNatType = self.avtypeList["REQUESTOR-NAT-TYPE"]
 
+    self.sndConnectionResponse()
     # Call the NAT traversal TCP method
     self.natTraversal()
-      
+
+  def sndConnectionResponse(self):
+    """
+    Sends a Connection Response Message to the CB.
+    
+    @return void 
+    """
+    listAttr = ()
+    
+    # My conf
+    self.publicAddr = self.natObj.publicAddrDiscovery()
+    self.privateAddr = self.natObj.privateAddr
+    listAttr = listAttr + ((0x0001, self.uri),)
+    listAttr = listAttr + ((0x0002, self.getPortIpList(self.publicAddr)),)
+    listAttr = listAttr + ((0x0003, self.getPortIpList(self.privateAddr)),)
+    listAttr = listAttr + ((0x0004, NatTypeCod[self.natObj.type]),)
+    # Requestor conf
+    listAttr = listAttr + ((0x1005, self.remoteUri),)
+    listAttr = listAttr + ((0x0005, self.getPortIpList(self.remotePublAddress)),)
+    listAttr = listAttr + ((0x0006, self.getPortIpList(self.remotePrivAddress)),)
+    listAttr = listAttr + ((0x0007, self.remoteNatType),)
+
+    self.messageType = "Connection Response"   
+    self.sendMessage(self.server, listAttr)
+     
   def sendMessage(self, toAddr, attributes=()):
     """
     Sets some variables before send the message

@@ -1,5 +1,6 @@
 import sys, random
 
+from twisted.internet.protocol import Protocol, ClientFactory
 import twisted.internet.defer as defer
 from twisted.internet import reactor
 
@@ -38,14 +39,14 @@ class Simulator(object):
       
 
         # Start to discover the public network address
-        self.ntcp = NATConnectivity(reactor)
+        factory = TcpClientFactory()
+        self.ntcp = NATConnectivity(reactor, factory)
         d = self.ntcp.natDiscovery(self.uri)
         d.addCallback(succeed)
         d.addErrback(fail)
 
     def testConnection(self):
         
-
         def succeed(result):
             pass
         
@@ -55,13 +56,41 @@ class Simulator(object):
       
 
         # Start to discover the public network address
-        remoteAddress = ('10.193.167.246', 7101)
-        localPort = random.randrange(7000, 7100)
-        d = self.ntcp.forceConnection(remoteUri=self.remoteUri, localPort=localPort)
+##         remoteAddress = ('10.193.167.246', 7101)
+##         localPort = random.randrange(7000, 7100)
+        factory = TcpClientFactory()
+        d = self.ntcp.connectTCP(self.remoteUri, factory)
         d.addCallback(succeed)
         d.addErrback(fail)
-        
-        
+
+      
+class TcpConnection(Protocol):
+    """
+    All the Twisted functions for a TCP connection (c/s) 
+    """
+    
+    def dataReceived(self, data):
+        pass
+
+    def connectionMade(self):
+        print 'Connection Made'
+
+class TcpClientFactory(ClientFactory):
+    
+    def startedConnecting(self, connector):
+        print 'Started to connect.'
+    
+    def buildProtocol(self, addr):
+        print 'Connected.'
+        return TcpConnection()
+    
+    def clientConnectionLost(self, connector, reason):
+        print 'Lost connection.  Reason:', reason
+    
+    def clientConnectionFailed(self, connector, reason):
+        print 'Connection failed. Reason:', reason
+
+
 if __name__ == '__main__':
     s = Simulator()
     s.testDiscoveryNat()

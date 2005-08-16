@@ -126,7 +126,11 @@ class StuntClient(StuntProtocol, object):
       self.publicIp = self.resdict['externalAddress'][0]
       self.previousExternalAddress = self.resdict['externalAddress']
       time.sleep(1)
-      self.test(self.serverAddress)
+
+      #-----------------------------------------------------------
+      #self.test(self.serverAddress) # ==> commented for the test
+      self.handleState1b()           # ==> for the test (comment it!!!)
+      #-----------------------------------------------------------
 
   def handleState1b(self):
     #self.transport.loseConnection()
