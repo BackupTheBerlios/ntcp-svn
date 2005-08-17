@@ -11,9 +11,13 @@ class ConnectionPunching(Protocol, ClientFactory):
   the methode to use for the connection and implements it
   """
   
-  def __init__(self, p = None):
+  log = logging.getLogger("ntcp")
+  
+  def __init__(self, _s = None):
       self.factory = None
-      self.p = p
+      self._super = _s
+      self.connected = 0
+      self.attempt = 0
   
   def natTraversal(self):
     """
@@ -29,43 +33,63 @@ class ConnectionPunching(Protocol, ClientFactory):
         # but there can be several NATs
         self.sameLan()
 
-  def sameLan(self):
-      if self.requestor:
-          # connect
-          self.transport = None
-          reactor.connectTCP(self.remotePrivAddress[0], self.remotePrivAddress[1], self)
-      else:
-          # listen
-          self.transport = None
-          reactor.listenTCP(self.natObj.privateAddr[1], self)
-
   def setFactory(self, factory):
       self.factory = factory
       
-# ---------------------------------------------------------- 
+# ----------------------------------------------------------
+# Methods implementation
+# ----------------------------------------------------------
+
+# ----------------------------------------------------------
+  def sameLan(self):
+      self.log.debug('Endpoints in the same LAN:')
+      self.log.debug('try to connect with private address')
+      if self.requestor:
+          if self.attempt <= 3:
+              # connect
+              time.sleep(self.attempt)
+              self.attempt = self.attempt + 1
+              self.transport = None
+              self.peerConn = reactor.connectTCP(\
+                  self.remotePrivAddress[0], self.remotePrivAddress[1], self)
+          else:
+              pass
+      else:
+          # listen
+          self.transport = None
+          time.sleep(5)
+          self.peerConn = reactor.listenTCP(self.natObj.privateAddr[1], self)
+
+# ----------------------------------------------------------
+
+
+
+
+# ----------------------------------------------------------
+# Wrapping of the twisted.internet.protocol classes
 # ----------------------------------------------------------    
   def dataReceived(self, data):
-      self.factory.dataReceived(data)
+      self._super.protocol.dataReceived(data)
       
   def connectionMade(self):
-      self.connectionMade = 1  
-      self.p.connectionMade()
+      self.connected = 1
+      self._super.protocol.transport = self.transport
+      self._super.protocol.connectionMade()
 
   def connectionLost(self, reason):
-      self.factory.clientConnectionLost(None, reason)
-
-  def clientConnectionLost(self, connector, reason):
-      self.factory.clientConnectionLost(connector, reason)
+      #self.factory.clientConnectionLost(None, reason)
+      self._super.factory.clientConnectionLost(None, reason)
       
   def startedConnecting(self, connector):
       self.factory.startedConnecting(connector)
     
   def buildProtocol(self, addr):
-      self.p = self.factory.buildProtocol(addr)
-      return ConnectionPunching(self.p)
-    
-  def clientConnectionLost(self, connector, reason):
-      self.factory.clientConnectionLost(connector, reason)
-    
+      self.protocol = self.factory.buildProtocol(addr)
+      return ConnectionPunching(self)
+        
   def clientConnectionFailed(self, connector, reason):
-      self.factory.clientConnectionFailed(connector, reason)
+      if self.connected == 0:
+          # The connection never started
+          self.natTraversal()
+      else:
+          self.factory.clientConnectionFailed(connector, reason)

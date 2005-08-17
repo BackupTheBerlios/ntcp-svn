@@ -34,6 +34,7 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
   
   def __init__(self, reactor, factory, natObj):
     super(Puncher, self).__init__()
+    ConnectionPunching.__init__(self)
     self.deferred = defer.Deferred()
     self.reactor = reactor
 
@@ -53,7 +54,7 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     flag = 1 
     while flag: 
       try:
-        self.listening = self.reactor.listenUDP(punchPort, self)
+        self.punchListen = self.reactor.listenUDP(punchPort, self)
         flag = 0
       except :
         print 'excepttioooonnn'
@@ -97,12 +98,12 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
       self.deferred.callback(None)
 
   def rcvKeepAliveResponse(self):
-    # self.log.debug('Received keep alive response...I go to sleep for 20s')
+    #self.log.debug('Received keep alive response...I go to sleep for 20s')
     self.reactor.callLater(20, self.sndKeepAliveRequest)
 
   def sndKeepAliveRequest(self):
     """Sends the keep alive message"""
-    # self.log.debug('I am awake... I send a keep alive msg!')
+    #self.log.debug('I am awake... I send a keep alive msg!')
     self.messageType = 'Keep Alive Request'
     self.tid = self.getRandomTID()
     self.sendMessage(self.server)
@@ -200,6 +201,6 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     # TODO: set timeout
     self._pending[self.tid] = (time.time(), toAddr)
     self.createMessage(attributes)
-    self.transport.write(self.pkt, toAddr)
+    self.punchListen.write(self.pkt, toAddr)
 
     

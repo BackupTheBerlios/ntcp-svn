@@ -4,7 +4,7 @@ from twisted.internet.protocol import Protocol, ClientFactory
 import twisted.internet.defer as defer
 from twisted.internet import reactor
 
-from ntcp.connection.NATConnectivity import NATConnectivity 
+from ntcp.connection.NATConnectivity import NatConnectivity 
 
 class Simulator(object):
     """
@@ -40,7 +40,7 @@ class Simulator(object):
 
         # Start to discover the public network address
         factory = TcpClientFactory()
-        self.ntcp = NATConnectivity(reactor, factory)
+        self.ntcp = NatConnectivity(reactor, factory)
         d = self.ntcp.natDiscovery(self.uri)
         d.addCallback(succeed)
         d.addErrback(fail)
@@ -70,10 +70,13 @@ class TcpConnection(Protocol):
     """
     
     def dataReceived(self, data):
-        pass
+        print 'Data received'
+        print data
 
     def connectionMade(self):
-        print 'Connection Made'
+        print 'Connection Made...write data...'
+        self.transport.write("An apple a day keeps the doctor away\r\n") 
+        
 
 class TcpClientFactory(ClientFactory):
     
