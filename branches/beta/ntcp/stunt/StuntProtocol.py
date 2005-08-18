@@ -59,9 +59,13 @@ class StuntProtocol(Protocol):
     self.fromAddr = ('0.0.0.0', 0)
 
     self.messageType = None
+    
     # Load configuration
-    self.config = ConfigParser.ConfigParser()
-    self.config.read("p2pNetwork.conf")
+    import ntcp, os
+    path = os.path.dirname(ntcp.__file__)
+    file =  os.path.join(path, "p2pNetwork.conf")
+    self.p2pConfig = ConfigParser.ConfigParser()
+    self.p2pConfig.read(file)
     
   def dataReceived(self, message):
     """
@@ -71,8 +75,6 @@ class StuntProtocol(Protocol):
     @param Address fromAddr : The remote address
     @return void :
     """
-##     self.peer = (self.transport.getPeer().host, self.transport.getPeer().port)
-##     self.log.debug('Stunt: data received by: %s:%d'%self.peer)
     
     self.parseMessage(message)
     self.analyseMessage()
