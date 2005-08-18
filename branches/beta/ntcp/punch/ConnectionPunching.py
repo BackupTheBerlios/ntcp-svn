@@ -25,13 +25,15 @@ class ConnectionPunching(Protocol, ClientFactory):
     """
     self.log.debug('NAT traversal with:')
     self.log.debug('\tURI:\t%s'%self.remoteUri)
-    self.log.debug('\tAddress:\t%s:%d'%self.remotePublAddress)
+    self.log.debug('\tAddress:\t%s:%d'%self.remotePublicAddress)
     self.log.debug('\tNAT type:\t%s'%self.remoteNatType)
     
-    if self.publicAddr[0] == self.remotePublAddress[0]:
+    if self.publicAddr[0] == self.remotePublicAddress[0]:
         # The two endpoints are in the same LAN
         # but there can be several NATs
         self.sameLan()
+    else:
+        pass
 
   def setFactory(self, factory):
       self.factory = factory
@@ -51,7 +53,7 @@ class ConnectionPunching(Protocol, ClientFactory):
               self.attempt = self.attempt + 1
               self.transport = None
               self.peerConn = reactor.connectTCP(\
-                  self.remotePrivAddress[0], self.remotePrivAddress[1], self)
+                  self.remotePrivateAddress[0], self.remotePrivateAddress[1], self)
           else:
               pass
       else:
@@ -88,7 +90,7 @@ class ConnectionPunching(Protocol, ClientFactory):
       return ConnectionPunching(self)
         
   def clientConnectionFailed(self, connector, reason):
-      if self.connected == 0:
+      if self.connected == 0 and not self.error:
           # The connection never started
           self.natTraversal()
       else:

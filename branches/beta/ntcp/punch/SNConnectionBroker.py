@@ -17,15 +17,14 @@ class SNConnectionBroker (PuncherProtocol):
   log = logging.getLogger("CB")
   log.setLevel(logging.DEBUG)
   
-  # The IP table with: | id (=primary key) | public IP (=primary key)| private IP | NAT type | 
+  # The IP table with:
+  # | id (=primary key) | public IP (=primary key)| private IP | NAT type | 
   peersTable = {}
 
   def rcvRegistrationRequest(self):
     """
     A Registration Request is received. 
 
-    @param string uri : The user identifier
-    @param NAT natConf : The user NAT configuration
     @return void :
     """
     
@@ -76,11 +75,12 @@ class SNConnectionBroker (PuncherProtocol):
     peerInfo = self.getPeerInfo(key)
     if peerInfo == ():
       # TODO: contact other connection broker
-      # TODO: send error to client
+      self.sndErrorResponse(((0x0008, '700'),))
       self.log.warn('User not registered!')
       return
 
-    #self.sndLookupResponse(peerInfo)
+    # Sends a Connection request to the other endpoint
+    # to get information about it
     self.sndConnectionRequest(peerInfo)
  
   def sndConnectionRequest(self, peerInfo):
@@ -116,21 +116,12 @@ class SNConnectionBroker (PuncherProtocol):
     """
     Sends a lookup response to the puncher.
     
-    @param peerInfo : the remote endpoint's information
     @return void :
-    """   
-##     toAddr = self.fromAddr
-##     listAttr = ()
-##     self.log.debug(peerInfo)
-##     listAttr = listAttr + ((0x0001, peerInfo[0]),)  
-##     listAttr = listAttr + ((0x0002, self.getPortIpList(peerInfo[1])),)
-##     listAttr = listAttr + ((0x0003, self.getPortIpList(peerInfo[2])),)
-##     listAttr = listAttr + ((0x0004, peerInfo[3]),)
+    """ 
     listAttr = ()
     
     listAttr = listAttr + ((0x0001, self.avtypeList['USER-ID']),)
     addr = self.getAddress('PUBLIC-ADDRESSE')
-    print 'publ addr:', addr
     listAttr = listAttr + ((0x0002, self.getPortIpList(addr)),)
     addr = self.getAddress('PRIVATE-ADDRESSE')
     listAttr = listAttr + ((0x0003, self.getPortIpList(addr)),)
@@ -167,7 +158,9 @@ class SNConnectionBroker (PuncherProtocol):
         
   def getPeerInfo(self, key):
     """Return the client's infos: search by key.
-    (id, public address, private address, NAT type)"""
+    (id, public address, private address, NAT type)
+    
+    @param key : the user's uri (the key for the users' table)"""
 
     l = (key,)
     if key in self.peersTable:

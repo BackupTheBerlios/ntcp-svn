@@ -41,15 +41,14 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     self.setFactory(factory)
     self.natObj = natObj
     self.requestor = 0
+    self.error = 0
 
     # CB address
     hostname, port = self.p2pConfig.get('holePunch', 'ConnectionBroker').split(':')
     ip = socket.gethostbyname(hostname)
     self.server = (ip, int(port))
-    #self.server = ('127.0.0.1', int(port))
 
     # UDP listening
-    #punchPort = int(self.p2pConfig.get('holePunch', 'punchPort'))
     punchPort = random.randrange(6900, 6999)
     flag = 1 
     while flag: 
@@ -66,7 +65,6 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     Sends a registration request to the SN Connection Broker
 
     @param string uri : The identifier for registration
-    @param NAT natConf : The NAT configuration
     @return void :
     """
     listAttr = ()
@@ -143,8 +141,8 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     @return void :
     """
 
-    self.remotePublAddress = self.getAddress('PUBLIC-ADDRESSE')
-    self.remotePrivAddress = self.getAddress('PRIVATE-ADDRESSE')
+    self.remotePublicAddress = self.getAddress('PUBLIC-ADDRESSE')
+    self.remotePrivateAddress = self.getAddress('PRIVATE-ADDRESSE')
     self.remoteNatType = self.avtypeList["NAT-TYPE"]
 
     # Call the NAT traversal TCP method
@@ -162,8 +160,8 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     self.requestor = 0
 
     self.remoteUri = self.avtypeList["REQUESTOR-USER-ID"]    
-    self.remotePublAddress = self.getAddress('REQUESTOR-PUBLIC-ADDRESSE')
-    self.remotePrivAddress = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
+    self.remotePublicAddress = self.getAddress('REQUESTOR-PUBLIC-ADDRESSE')
+    self.remotePrivateAddress = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
     self.remoteNatType = self.avtypeList["REQUESTOR-NAT-TYPE"]
 
     self.sndConnectionResponse()
@@ -187,8 +185,8 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     listAttr = listAttr + ((0x0004, NatTypeCod[self.natObj.type]),)
     # Requestor conf
     listAttr = listAttr + ((0x1005, self.remoteUri),)
-    listAttr = listAttr + ((0x0005, self.getPortIpList(self.remotePublAddress)),)
-    listAttr = listAttr + ((0x0006, self.getPortIpList(self.remotePrivAddress)),)
+    listAttr = listAttr + ((0x0005, self.getPortIpList(self.remotePublicAddress)),)
+    listAttr = listAttr + ((0x0006, self.getPortIpList(self.remotePrivateAddress)),)
     listAttr = listAttr + ((0x0007, self.remoteNatType),)
 
     self.messageType = "Connection Response"   
@@ -202,5 +200,16 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     self._pending[self.tid] = (time.time(), toAddr)
     self.createMessage(attributes)
     self.punchListen.write(self.pkt, toAddr)
+     
+  def rcvErrorResponse(self):
+    # Extract the class and number
+    error, phrase = self.getErrorCode()
+    if error == 420:
+      _listUnkAttr = self.getListUnkAttr()
+      print (error, phrase, _listUnkAttr)
+    else:
+      self.log.warning('%s: %s'%(error, phrase))   
 
-    
+    # Calls the clientConnectionFailed function to go back to user
+    self.error = 1
+    self.clientConnectionFailed(None, '(%s: %s)'%(error, phrase))

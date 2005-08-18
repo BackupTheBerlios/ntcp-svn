@@ -34,7 +34,8 @@ ErrorCodes = {
    420 : 'Unknown attribute',
    431 : 'Integrity Check Failure',
    500 : 'Server Error',
-   600 : 'Global Failure'
+   600 : 'Global Failure',
+   700 : 'Unknown user'
    }
 
 
@@ -53,8 +54,11 @@ class PuncherProtocol(DatagramProtocol):
     self.fromAddr = ('0.0.0.0', 0)
 
     # Load configuration
+    import ntcp, os
+    path = os.path.dirname(ntcp.__file__)
+    file =  os.path.join(path, "p2pNetwork.conf")
     self.p2pConfig = ConfigParser.ConfigParser()
-    self.p2pConfig.read("p2pNetwork.conf")
+    self.p2pConfig.read(file)
     
   def datagramReceived(self, message, fromAddr):
     """
@@ -65,7 +69,6 @@ class PuncherProtocol(DatagramProtocol):
     @return void :
     """
     self.fromAddr = fromAddr
-    self.stopTimeout()
     self.parseMessage(message)
     self.analyseMessage()
 
@@ -190,7 +193,7 @@ class PuncherProtocol(DatagramProtocol):
         # ERROR-CODE
         err_class = int(v[0])
         number = int(v) - err_class*100
-        phrase = responseCodes[int(v)]
+        phrase = ErrorCodes[int(v)]
         avstr = avstr + struct.pack( \
                     '!hhi%ds' % len(phrase), a, 4 + len(phrase), \
                     (err_class<<8) + number, phrase)
@@ -224,14 +227,6 @@ class PuncherProtocol(DatagramProtocol):
     self.createMessage(attributes)
     self.transport.write(self.pkt, toAddr)
 
-  def stopTimeout(self):
-    """
-    Stops the active timeout
-    
-    @return void :
-    """
-    pass
-
   def getAddress(self, key):
     dummy,family,port,ip = struct.unpack( \
                     '!ccH4s', self.avtypeList[key])
@@ -239,6 +234,7 @@ class PuncherProtocol(DatagramProtocol):
 
 
   def getRandomTID(self):
+    """Returns a random id number"""
     # It's not necessary to have a particularly strong TID here
     import random
     tid = [ chr(random.randint(0,255)) for x in range(16) ]
@@ -249,15 +245,37 @@ class PuncherProtocol(DatagramProtocol):
     """Return a well formatted string with the address"""
     return '%5d%s' % (address[1], socket.inet_aton(address[0]))
 
+  def sndErrorResponse(self, attributes):
+    """Send an error response
+
+    @param attributes: the attributes' list
+    """
+    self.messageType = "Error Response"    
+    self.sendMessage(self.requestor, attributes)
+    
   def rcvErrorResponse(self):
-    print "STUN got an error response:"
+    pass
+
+  def getErrorCode(self):
+    """If an error occurred: return the error code"""
+    
     # Extract the class and number
-    error, phrase = self.getErrorCode()
-    if error == 420:
-      _listUnkAttr = self.getListUnkAttr()
-      print (error, phrase, _listUnkAttr)
-    else:
-      print (error, phrase)
+    error, phrase = struct.unpack('!i%ds' % (len(self.avtypeList["ERROR-CODE"])-4), \
+                                  self.avtypeList["ERROR-CODE"])
+    number = error - ((error>>8)<<8)
+    err_class = ((error - number)>>8)*100
+    return err_class + number, phrase
+
+  def getListUnkAttr(self):
+    """Return the list of Unknown attributes"""
+    
+    _listUnkAttr = ()
+    listUnkAttr = struct.unpack( \
+            '!%dh' % int(len(self.avtypeList["UNKNOWN-ATTRIBUTES"])/2), \
+            self.avtypeList["UNKNOWN-ATTRIBUTES"])
+    for attr in listUnkAttr:
+      _listUnkAttr = _listUnkAttr + ('0x%04x'%attr,)
+    return _listUnkAttr
 
 # TODO: Error Check
 # TODO: functions' interface

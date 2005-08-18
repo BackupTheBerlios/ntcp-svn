@@ -46,7 +46,14 @@ class StuntServer(StuntProtocol, object):
     self.sendMessage()
     self.transport.loseConnection()
 
-
+  def rcvCaptureRequest(self):
+    # Send a SYN packet from different address
+    print "received Capture Request"
+    avtype = 'CHANGE-REQUEST'
+    change = (struct.unpack('!i', self.avtypeList[avtype]))[0]
+    print "Change:", change
+      
+ 
 factory = Factory()
 factory.protocol = StuntServer
 
@@ -54,9 +61,5 @@ port1 =  int(p2pConfig.get('stunt', 'stuntPort'))
 port2 =  int(p2pConfig.get('stunt', 'otherStuntPort'))
 reactor.listenTCP(port1, factory)
 reactor.listenTCP(port2, factory)
-
-## address =  p2pConfig.get('stunt', 'otherStuntIp')
-## port3 = port2 + 1
-## reactor.listenTCP(port3, factory, interface=address)
 
 reactor.run()

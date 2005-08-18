@@ -15,7 +15,7 @@ MsgTypes = {
    0x0003: "Capture Request",
    0x0103: "Capture Response",
    0x0113: "Capture Error Response",
-   0x0123: "Capture AcknowledgeResponse"
+   0x0123: "Capture Acknowledge Response"
 }  
 
 # The Message Attributes types
@@ -44,6 +44,11 @@ ErrorCodes = {
    500 : 'Server Error',
    600 : 'Global Failure'
    }
+
+CHANGE_NONE = struct.pack('!i',0)
+CHANGE_PORT = struct.pack('!i',2)
+CHANGE_IP = struct.pack('!i',4)
+CHANGE_BOTH = struct.pack('!i',6)
 
 class StuntProtocol(Protocol):
   
@@ -110,11 +115,13 @@ class StuntProtocol(Protocol):
             self.resdict['_altStunAddress'] = (addr, port)
           elif address[0] != addr:
             # Someone is rewriting packets on the way back. AAARGH.
-            log.msg('WARNING: packets are being rewritten %r != %r'%
+            self.log.msg('WARNING: packets are being rewritten %r != %r'%
                     (address, (addr,port)), system='stun')
             return
+        elif avtype in ('CHANGE-REQUEST'):
+          pass
         else:
-          log.msg("STUN: unhandled AV %s, val %r"%(avtype,\
+          self.log.msg("STUN: unhandled AV %s, val %r"%(avtype,\
                                                    repr(val)), system='stun')
 
   def parseIfClient(self):
@@ -131,16 +138,29 @@ class StuntProtocol(Protocol):
     self.log.debug('Analyse Message')
     self.log.debug('Received %04x message type'%self.mt)
     if self.mt == 0x0001:
-      # Lookup Request
+      # Binding Request
       self.rcvBindingRequest()
       
     elif self.mt == 0x0101:
-      # Lookup Response
+      # Binding Response
       self.rcvBindingResponse()
       
     elif self.mt == 0x0111:
-      # Connection Request
+      # Binding Error Response
       self.rcvBindingErrorResponse()
+      
+    elif self.mt == 0x0003:
+      # Capture Request
+      print "received Capture Request"
+      self.rcvCaptureRequest()
+      
+    elif self.mt == 0x0103:
+      # Capture Response
+      self.rcvCaptureResponse()
+      
+    elif self.mt == 0x0113:
+      # Capture Error Response
+      self.rcvCaptureErrorResponse()
   
 
   def createMessage(self, attributes=()):
@@ -160,6 +180,14 @@ class StuntProtocol(Protocol):
       self.mt = 0x0101
     elif self.messageType == "Binding Error Response":
       self.mt = 0x0111
+    if self.messageType   == "Capture Request":
+      self.mt = 0x0003
+    elif self.messageType == "Capture Response":
+      self.mt = 0x0103
+    elif self.messageType == "Capture Error Response":
+      self.mt = 0x0113
+    elif self.messageType == "Capture Acknowledge Response":
+      self.mt = 0x0123
     avpairs = avpairs + attributes
 
     avstr = ''
@@ -172,7 +200,8 @@ class StuntProtocol(Protocol):
         avstr = avstr + struct.pack( \
                     '!hhcch4s', a, len(v[5:])+4, '0', '%d' % 0x01, int(v[:5]), v[5:])
       elif a == 0x0003:
-                avstr = avstr + struct.pack('!hhi', a, 4, int(v))
+        # CHANGE-REQUEST
+        avstr = avstr + struct.pack('!hh', a, len(v)) + v
       elif a == 0x0009:
         # ERROR-CODE
         err_class = int(v[0])
