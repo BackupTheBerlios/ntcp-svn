@@ -73,7 +73,14 @@ class StuntClient(StuntProtocol, object):
     self.log.debug('>> Test 1a')
     self.test(self.serverAddress)
     return self.d
-
+  
+  def portDiscovery(self):
+    self.d = defer.Deferred()
+    self.log.debug('>> Test port discovery')
+    self.state = '4'
+    self.test(self.serverAddress)
+    return self.d
+  
   def sndBindingRequest(self):
     self.messageType = 'Binding Request'
     self.sndMessage()
@@ -106,9 +113,6 @@ class StuntClient(StuntProtocol, object):
   def test(self, remoteAddress):
     """Test 1 in STUNT"""
     self.sndBindingRequest()
-##     self.reactor.connectTCP(remoteAddress[0], remoteAddress[1], \
-##                             ClientFactory(self), 30, (self.localIp, self.localPort))
-
     self.connect(remoteAddress, (self.localIp, self.localPort))
   
   def rcvBindingResponse(self):
@@ -120,10 +124,10 @@ class StuntClient(StuntProtocol, object):
       self.handleState2()
     elif self.state == '3':
       self.handleState3()
+    elif self.state == '4':
+      self.handleStateDiscover()
   
   def handleState1a(self):
-    #self.transport.loseConnection()
-    #self.closeSocket()
     if self.resdict['externalAddress'] == (self.localIp, self.localPort):
       self.natType = NatTypeNone
       self.finishedStunt()
@@ -140,25 +144,25 @@ class StuntClient(StuntProtocol, object):
       #-----------------------------------------------------------
 
   def handleState1b(self):
-    #self.transport.loseConnection()
-    #self.closeSocket()
     if self.resdict['externalAddress'] != self.previousExternalAddress:
-      self.natType = _NatType('SessionDependent', _publicIp=self.publicIp, _privateIp=self.privateIp)
+      self.natType = _NatType('SessionDependent', \
+                              _publicIp=self.publicIp, \
+                              _privateIp=self.privateIp)
       #self.startFileringDiscovery()
       self.finishedStunt()
     else:
       self.log.debug('>> Test 2')
       self.state = '2'
-      print  self.resdict['_altStunAddress']
       address = (self.serverAddress[0], self.resdict['_altStunAddress'][1])
       self.test(address)    
 
   def handleState2(self):
-    #self.transport.loseConnection()
-    #self.closeSocket()
     if self.resdict['externalAddress'] != self.previousExternalAddress:
       self.delta = self.resdict['externalAddress'][1] - self.previousExternalAddress[1]
-      self.natType = _NatType('AddressPortDependent', _publicIp=self.publicIp, _privateIp=self.privateIp, _delta=self.delta)
+      self.natType = _NatType('AddressPortDependent', \
+                              _publicIp=self.publicIp, \
+                              _privateIp=self.privateIp, \
+                              _delta=self.delta)
       #self.startFileringDiscovery()
       self.finishedStunt()
     else:
@@ -168,17 +172,23 @@ class StuntClient(StuntProtocol, object):
       self.test(address)    
 
   def handleState3(self):
-    #self.transport.loseConnection()
-    #self.closeSocket()
     if self.resdict['externalAddress'] != self.previousExternalAddress:
       self.delta = self.resdict['externalAddress'][1] - self.previousExternalAddress[1]
-      self.natType = _NatType('AddressDependent', _publicIp=publicIp, _privateIp=privateIp, _delta=self.delta)
+      self.natType = _NatType('AddressDependent', \
+                              _publicIp=publicIp, \
+                              _privateIp=privateIp, \
+                              _delta=self.delta)
       #self.startFileringDiscovery()
       self.finishedStunt()
     else:
-      self.natType = _NatType('Independent', _publicIp=self.publicIp, _privateIp=self.privateIp)
+      self.natType = _NatType('Independent', \
+                              _publicIp=self.publicIp, \
+                              _privateIp=self.privateIp)
       #self.startFileringDiscovery()
       self.finishedStunt()
+
+  def handleStateDiscover(self):
+    self._finishedPortDiscovery(self.resdict['externalAddress'])
       
 # ---------------------------------------------------------------
 
@@ -247,7 +257,8 @@ class StuntClient(StuntProtocol, object):
     self.log.debug('Send message')
     s.send(self.pkt)
     if self.state == '1a' or self.state == '1b' \
-           or self.state == '2' or self.state == '3': 
+           or self.state == '2' or self.state == '3'\
+           or self.state == '4': 
       self.recvMessage(s)
     if self.state == 'f1' or self.state == 'f2' or self.state == 'f3':
       d = threads.deferToThread(self.listen, s)

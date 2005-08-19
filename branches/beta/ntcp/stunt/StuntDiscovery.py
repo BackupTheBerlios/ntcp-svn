@@ -33,14 +33,30 @@ class _NatDiscover(stunt.StuntClient):
         self.log.debug('NatDiscovery finished')
         if not self.d.called:
             self.d.callback(self.natType)
+            
+    def _finishedPortDiscovery(self, address):
+        self.log.debug('Port Discovery finished')
+        if not self.d.called:
+            self.d.callback(address)
 
 
-def NatDiscovery(reactor, params=None):
+def NatDiscovery(reactor, ntcp=None):
     d = defer.Deferred()
     discovery = _NatDiscover(reactor)
 
     # Start listening
-    return discovery.Run()
+    d = discovery.Run()
+
+    if ntcp == None: return d
+    else:
+        # We are in a non-bloking mode
+        ntcp.setNatConf(discovery.natType)
+        ntcp.printNatConf()
 
 def AddressDiscover(reactor):
-    pass
+    d = defer.Deferred()
+    discovery = _NatDiscover(reactor)
+
+    # Start listening
+    return discovery.portDiscovery()
+

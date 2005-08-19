@@ -10,7 +10,7 @@ MsgTypes = {0x1001 : 'Lookup Request',
             0x1201 : 'Keep Alive Request',
             0x1202 : 'Keep Alive Response',
             0x1111 : 'Connection Request',
-            0x1121 : 'Connection Request',
+            0x1121 : 'Connection Response',
             0x1002 : 'Registration Request',
             0x1003 : 'Registration Response',
             0x1102 : 'Connection to peer',
@@ -187,7 +187,8 @@ class PuncherProtocol(DatagramProtocol):
       elif a == 0x0002 or a == 0x0003 or a == 0x0005 or a == 0x0006:
         # XXX-ADDRESS
         avstr = avstr + struct.pack( \
-                    '!hhcch4s', a, len(v[5:])+4, '0', '%d' % 0x01, int(v[:5]), v[5:])
+                    '!hhcch4s', a, len(v[5:])+4, '0', \
+                    '%d' % 0x01, int(v[:5]), v[5:])
 
       elif a == 0x0008:
         # ERROR-CODE
@@ -260,7 +261,8 @@ class PuncherProtocol(DatagramProtocol):
     """If an error occurred: return the error code"""
     
     # Extract the class and number
-    error, phrase = struct.unpack('!i%ds' % (len(self.avtypeList["ERROR-CODE"])-4), \
+    error, phrase = struct.unpack('!i%ds' % \
+                                  (len(self.avtypeList["ERROR-CODE"])-4), \
                                   self.avtypeList["ERROR-CODE"])
     number = error - ((error>>8)<<8)
     err_class = ((error - number)>>8)*100

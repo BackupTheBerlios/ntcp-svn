@@ -1,6 +1,8 @@
-import logging, random
+import logging, random, time
 
 import twisted.internet.defer as defer
+from twisted.internet import threads
+import twisted.python.failure as failure
 
 from ntcp.punch.Puncher import Puncher
 import ntcp.stunt.StuntDiscovery as stunt
@@ -12,7 +14,6 @@ configurationText = ['NAT presence ', \
                      'Binding delta'] 
 
 class NAT:
-
   """
   It's a NAT mirror. It has all the information about a NAT (if there is one).
   It discevers the NAT information (type and mapping)
@@ -22,7 +23,6 @@ class NAT:
   log = logging.getLogger("ntcp")
   
   def __init__(self):
-    self.d = defer.Deferred()
     # The nat configuration
     self.type = None
     self.delta = None
@@ -33,52 +33,64 @@ class NAT:
     self.privatePort = None
     self.privateAddr = (self.privateIp, self.privatePort)
 
-  def natDiscovery(self, uri='xxx'):
+  def natDiscovery(self, bloking = 1):
     """
     Discover NAT presence and information about.
-    In case of NAT presence it registers himself to his SN Connection Broker
 
+    @param bloking: if 0 makes NAT discovery in non bloking mode (default 1)
     @return void :
     """
-    d = self.d
+    if bloking:
+      return self._natDiscoveryDefer()
+    else:
+      return self._natDiscoveryThread()
 
-    def registrationMade(result):
-      """ Registration to the SN Connection Broker has be done """
-      if not d.called:
-        d.callback()
+  def _natDiscoveryDefer(self):
+    """Makes NAT discovery in bloking mode
 
-    def registrationFail(failure):
-      """ Fail in registration to the Super Node """
-      self.log.error(' in registration to CB: %s'%failure.getErrorMessage())
+    @return defer: 
+    """
+    d = defer.Deferred()
+    d2 = defer.Deferred()
    
     def succeed(natConfig):
-      """
-      The STUN/STUNT discovery has be done.
-      Registration to the SN Connection Broker
-      """
-      self.log.debug(natConfig)
+      """The STUN/STUNT discovery has be done."""
       self.setNatConf(natConfig)
       self.printNatConf()
-
-      # Registration to the Connection Broker
-      self.puncher = Puncher(self.reactor, self.factory, self)
-      d = self.puncher.sndRegistrationRequest(uri)
-      d.addCallback(registrationMade)
-      d.addErrback(registrationFail)
-
+      d2.callback((self.publicIp, 0))
+      return d2
               
     def fail(failure):
       d = defer.Deferred()
       d.errback(failure)
-      return d
       
     # Start to discover the public network address and NAT configuration
     d = stunt.NatDiscovery(self.reactor)
     d.addCallback(succeed)
-    d.addErrback(fail)   
+    d.addErrback(fail) 
 
-    return d
+    return d2
 
+  def _natDiscoveryThread(self):
+    """Makes NAT discovery in non-bloking mode
+    start the discovery process in a thread
+
+    @return void:
+    """
+    d = defer.Deferred()
+   
+    def succeed(natConfig):
+      """The STUN/STUNT discovery has be done."""
+      print "STUNT discovery found address!"
+      self.setNatConf(natConfig)
+      self.printNatConf()
+              
+    def fail(failure):
+      print "STUNT failed:", failure.getErrorMessage()
+      
+    # Start to discover the public network address and NAT configuration
+    self.reactor.callInThread(stunt.NatDiscovery, self.reactor, self)
+    
   def publicAddrDiscovery(self, localPort=0):
     """
     Discover the mapping for the tuple (int IP, int port, ext IP, ext port)
@@ -86,8 +98,9 @@ class NAT:
     @param int localPort : The connection local port (default any)
     @return tuple publicAddress : The previewed mapped address on the NAT
     """
-#    @param tuple remoteAddr : The connection's remote address (IP, port)
-
+    d = defer.Deferred()
+    d2 = defer.Deferred()
+    
     if localPort == 0:
       localPort = random.randrange(49152, 65535)
 
@@ -95,26 +108,40 @@ class NAT:
     self.privatePort = localPort
     self.privateAddr = (self.privateIp, self.privatePort)
 
-    # Discover the public address (from NAT config)
-    if self.type == 'Independent':
-      self.publicPort = localPort
-      self.publicAddr = (self.publicIp, localPort)
-      return self.publicAddr
-    if self.type == 'AddressDependent':
-      self.publicPort = localPort
-      self.publicAddr = (self.publicIp, localPort)
-      return self.publicAddr
-    if self.type == 'AddressPortDependent':
-      self.publicPort = localPort
-      self.publicAddr = (self.publicIp, localPort)
-      return self.publicAddr
-    if self.type == 'SessionDependent':
-      return None
+    def discovery_fail(failure):
+      d = defer.Deferred()
+      d.errback(failure)
+        
+    def discover_succeed(publicAddress):
+      print 'Port discovery', publicAddress
+      self.publicIp = publicAddress[0]
+      # Discover the public address (from NAT config)
+      if self.type == 'Independent':
+        self.publicPort = publicAddress[1]
 
+      if self.type == 'AddressDependent':
+        self.publicPort = publicAddress[1] + self.delta
+        
+      if self.type == 'AddressPortDependent':
+        self.publicPort = publicAddress[1] + self.delta
+        
+      if self.type == 'SessionDependent':
+        self.publicPort = publicAddress[1] + self.delta
+        
+      publicAddr = (self.publicIp, self.publicPort)
+
+      d2.callback(publicAddr)
+
+    d = stunt.AddressDiscover(self.reactor)
+    d.addCallback(discover_succeed)
+    d.addErrback(discovery_fail)
+
+    return d2
+      
 
   def setNatConf(self, natConfig):
     """
-    sets the NAT's configuration
+    Sets the NAT's configuration
 
     @param NatConf : the NAT configuration tuple 
     @return void :
@@ -130,51 +157,94 @@ class NAT:
     
     @return void :
     """
-    print "\n*------------------------------------------------------*"
-    print "Configuration:\n"
+    print "*------------------------------------------------------*"
+    print "NTCP Configuration:\n"
     print "\t", configurationText[1], "\t", self.type
     print "\t", configurationText[2], "\t", self.privateIp
     print "\t", configurationText[3], "\t", self.publicIp
     print "*------------------------------------------------------*"
     
 
-
-
 class NatConnectivity(NAT, object):
 
   """
-  Interface with the application. Discover NAT information (type and mapping) and force a connection through NATs with the Super Node Connection Broker's help.
-  :version:
-  :author:
+  Interface with the application.
+  Discover NAT information (type and mapping) and force a connection
+  through NATs with the Super Node Connection Broker's help
+  or by a directly UDP connection with the remote endpoint.
   """
   
   logging.basicConfig()
   log = logging.getLogger("ntcp")
   log.setLevel(logging.DEBUG)
 
-  def __init__(self, reactor, factory):
+  def __init__(self, reactor, udpListener=None):
     super(NatConnectivity, self).__init__()
     self.reactor = reactor
-    self.factory = factory
+    self._puncher = None # the puncher to establish the connection
+    self.udpListener = udpListener # A listener for UDP communication
 
-  def connectTCP(self, remoteUri,  factory=None, localPort=0, remoteAddr=None):
+  def datagramReceived(self, message, fromAddr):
+    """A link to the internal datagramReceived function"""
+    self._puncher.datagramReceived(message, fromAddr)
+
+  def registrationToCB(self, uri, factory=None):
+    """Make a registration to CB
+
+    @param uri: the user's URI
+    @param factory: the factory to menage a TCP connection (default=None)
     """
-    Force a connection with another user
-    through NATs helped by the SN-ConnectionBroker
+    d = defer.Deferred()
+    self._puncher = Puncher(self.reactor, self, self.udpListener)
+    
+    if factory != None:
+      # Sets the factory for TCP connection
+      self.setFactory(factory)
+
+    d = self._puncher.sndRegistrationRequest(uri)
+    return d
+    
+
+  def connectTCP(self, remoteUri=None, remoteAddress=None,\
+                 factory=None, localPort=0):
+    """
+    Force a connection with another user through NATs
+    helped by the SN-ConnectionBroker
 
     @param string remoteUri : The remote endpoint's uri
     @param CliantFactory factory : The TCP Client factory
     @return void :
     """
-    if factory != None:
-      self.factory = factory
+    d = defer.Deferred()
+    
+    if self._puncher == None:
+      self._puncher = Puncher(self.reactor, self)
+
+    if self.getFactory() == None and factory == None:
+      # Error
+      d.errback(failure.DefaultException('You have to specify a factory'))
+    elif factory != None:
+      self.setFactory(factory)
       
-    self.publicAddr = self.publicAddrDiscovery(localPort)
-    self.log.debug('The previwed publicAddress mapped by NAT is: %s:%d'%self.publicAddr)
+    def discovery_fail(failure):
+      d = defer.Deferred()
+      d.errback(failure)
+      
+    def discover_succeed(publicAddress):
+      self.publicAddr = publicAddress
+      print 'discover succeed', publicAddress
+      if self.publicAddr != None:
+        d = self._puncher.sndConnectionRequest(remoteUri, remoteAddress)
+      else:
+        self.d.errback('The NAT doesn\'t allow inbound TCP connection')
+      
+    d = self.publicAddrDiscovery(localPort)
+    d.addCallback(discover_succeed)
+    d.addErrback(discovery_fail)
 
-    if self.publicAddr != None:
-      self.puncher.sndLookupRequest(remoteUri, factory)
-
-    return self.d
-
-
+  def setFactory(self, factory):
+    """Sets a factory for TCP connection"""
+    self._puncher.setFactory(factory)
+  def getFactory(self):
+    """Gets the TCP factory"""
+    return self._puncher.getFactory()

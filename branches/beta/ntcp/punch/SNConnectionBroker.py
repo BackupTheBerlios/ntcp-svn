@@ -62,7 +62,7 @@ class SNConnectionBroker (PuncherProtocol):
     self.messageType = 'Keep Alive Response'
     self.sendMessage(self.fromAddr)
 
-  def rcvLookupRequest(self):
+  def rcvConnectionRequest(self):
     """
     A lookup request is received. 
 
@@ -110,9 +110,9 @@ class SNConnectionBroker (PuncherProtocol):
     @param peerInfo : the remote endpoint's information
     @return void 
     """
-    self.sndLookupResponse()
+    self.sndConnectionResponse()
     
-  def sndLookupResponse(self):
+  def sndConnectionResponse(self):
     """
     Sends a lookup response to the puncher.
     
@@ -134,7 +134,7 @@ class SNConnectionBroker (PuncherProtocol):
     listAttr = listAttr + ((0x0006, self.getPortIpList(addr)),)
     listAttr = listAttr + ((0x0007, self.avtypeList['REQUESTOR-NAT-TYPE']),)   
 
-    self.messageType = "Lookup Response"    
+    self.messageType = "Connection Response"    
     self.sendMessage(self.requestor, listAttr)
     
   def printActiveConnection(self):

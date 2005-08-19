@@ -18,26 +18,29 @@ class ConnectionPunching(Protocol, ClientFactory):
       self._super = _s
       self.connected = 0
       self.attempt = 0
+      self.sameLanAttempt = 1
   
   def natTraversal(self):
     """
     Chooses the right method for NAT traversal TCP
     """
     self.log.debug('NAT traversal with:')
-    self.log.debug('\tURI:\t%s'%self.remoteUri)
+    if self.remoteUri != None:
+        self.log.debug('\tURI:\t\t%s'%self.remoteUri)
     self.log.debug('\tAddress:\t%s:%d'%self.remotePublicAddress)
     self.log.debug('\tNAT type:\t%s'%self.remoteNatType)
     
-    if self.publicAddr[0] == self.remotePublicAddress[0]:
+    if self.publicAddr[0] == self.remotePublicAddress[0] and self.sameLanAttempt:
         # The two endpoints are in the same LAN
         # but there can be several NATs
         self.sameLan()
     else:
-        pass
+        self.log.debug('Other method to be implemented')
 
   def setFactory(self, factory):
       self.factory = factory
-      
+  def getFactory(self):
+      return self.factory     
 # ----------------------------------------------------------
 # Methods implementation
 # ----------------------------------------------------------
@@ -55,12 +58,13 @@ class ConnectionPunching(Protocol, ClientFactory):
               self.peerConn = reactor.connectTCP(\
                   self.remotePrivateAddress[0], self.remotePrivateAddress[1], self)
           else:
-              pass
+              self.sameLanAttempt = 0
+              self.natTraversal()
       else:
           # listen
           self.transport = None
-          time.sleep(5)
           self.peerConn = reactor.listenTCP(self.natObj.privateAddr[1], self)
+          
 
 # ----------------------------------------------------------
 
