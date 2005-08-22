@@ -16,7 +16,7 @@ configurationText = ['NAT presence ', \
 class NAT:
   """
   It's a NAT mirror. It has all the information about a NAT (if there is one).
-  It discevers the NAT information (type and mapping)
+  It discovers the NAT information (type and mapping)
   :version: 0.2
   :author: Luca Gaballo
   """
@@ -113,7 +113,7 @@ class NAT:
       d.errback(failure)
         
     def discover_succeed(publicAddress):
-      print 'Port discovery', publicAddress
+      print 'Address and Port discovered', publicAddress
       self.publicIp = publicAddress[0]
       # Discover the public address (from NAT config)
       if self.type == 'Independent':
@@ -151,6 +151,9 @@ class NAT:
     self.publicIp = natConfig.publicIp
     self.privateIp = natConfig.privateIp
 
+    # Upload the NAT configuration link in puncher
+    self._puncher.setNatObj(self)
+
   def printNatConf(self):
     """
     Prints the NAT's configuration
@@ -183,6 +186,7 @@ class NatConnectivity(NAT, object):
     self.reactor = reactor
     self._puncher = None # the puncher to establish the connection
     self.udpListener = udpListener # A listener for UDP communication
+    self._puncher = Puncher(self.reactor, self, self.udpListener)
 
   def datagramReceived(self, message, fromAddr):
     """A link to the internal datagramReceived function"""
@@ -195,7 +199,7 @@ class NatConnectivity(NAT, object):
     @param factory: the factory to menage a TCP connection (default=None)
     """
     d = defer.Deferred()
-    self._puncher = Puncher(self.reactor, self, self.udpListener)
+    #self._puncher = Puncher(self.reactor, self, self.udpListener)
     
     if factory != None:
       # Sets the factory for TCP connection
@@ -209,10 +213,12 @@ class NatConnectivity(NAT, object):
                  factory=None, localPort=0):
     """
     Force a connection with another user through NATs
-    helped by the SN-ConnectionBroker
+    helped by the ConnectionBroker
 
     @param string remoteUri : The remote endpoint's uri
+    @param tuple remoteAddress : The remote endpoint's address
     @param CliantFactory factory : The TCP Client factory
+    @param int localPort : The local port for TCP connection (default any)
     @return void :
     """
     d = defer.Deferred()
@@ -232,7 +238,6 @@ class NatConnectivity(NAT, object):
       
     def discover_succeed(publicAddress):
       self.publicAddr = publicAddress
-      print 'discover succeed', publicAddress
       if self.publicAddr != None:
         d = self._puncher.sndConnectionRequest(remoteUri, remoteAddress)
       else:

@@ -55,6 +55,8 @@ class ConnectionPunching(Protocol, ClientFactory):
               time.sleep(self.attempt)
               self.attempt = self.attempt + 1
               self.transport = None
+              print 'Same LAN: Try to connect to:', \
+                    self.remotePrivateAddress[0], self.remotePrivateAddress[1]
               self.peerConn = reactor.connectTCP(\
                   self.remotePrivateAddress[0], self.remotePrivateAddress[1], self)
           else:
@@ -62,6 +64,7 @@ class ConnectionPunching(Protocol, ClientFactory):
               self.natTraversal()
       else:
           # listen
+          print 'Same LAN: listen on:', self.natObj.privateAddr[1]
           self.transport = None
           self.peerConn = reactor.listenTCP(self.natObj.privateAddr[1], self)
           

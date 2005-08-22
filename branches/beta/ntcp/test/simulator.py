@@ -48,19 +48,20 @@ class Simulator(DatagramProtocol, object):
             d.addCallback(registrationSucceed)
             d.addErrback(fail)
         
-        # UDP listening
-        punchPort = random.randrange(6900, 6999)
-        flag = 1 
-        while flag: 
-            try:
-                listener = reactor.listenUDP(punchPort, self)
-                flag = 0
-            except :
-                punchPort = random.randrange(6900, 6999)
+##         # UDP listening
+##         punchPort = random.randrange(6900, 6999)
+##         flag = 1 
+##         while flag: 
+##             try:
+##                 listener = reactor.listenUDP(punchPort, self)
+##                 flag = 0
+##             except :
+##                 punchPort = random.randrange(6900, 6999)
      
-        print 'Hole punching port: %d'%punchPort
-        # Start to discover the public network address
-        self.ntcp = NatConnectivity(reactor, listener)
+##         print 'Hole punching port: %d'%punchPort
+##         # Start to discover the public network address
+##         self.ntcp = NatConnectivity(reactor, listener)
+        self.ntcp = NatConnectivity(reactor)
         d = self.ntcp.natDiscovery()
         d.addCallback(discoverySucceed)
         d.addErrback(fail)
