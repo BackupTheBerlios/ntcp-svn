@@ -117,24 +117,27 @@ class NAT:
       self.publicIp = publicAddress[0]
       # Discover the public address (from NAT config)
       if self.type == 'Independent':
-        self.publicPort = publicAddress[1]
+        self.publicPort = publicAddress[1] - 1
 
       if self.type == 'AddressDependent':
-        self.publicPort = publicAddress[1] + self.delta
+        self.publicPort = publicAddress[1] - 1 + self.delta
         
       if self.type == 'AddressPortDependent':
-        self.publicPort = publicAddress[1] + self.delta
+        self.publicPort = publicAddress[1] - 1 + self.delta
         
       if self.type == 'SessionDependent':
-        self.publicPort = publicAddress[1] + self.delta
+        self.publicPort = publicAddress[1] - 1 + self.delta
         
       publicAddr = (self.publicIp, self.publicPort)
 
       d2.callback(publicAddr)
 
-    d = stunt.AddressDiscover(self.reactor)
-    d.addCallback(discover_succeed)
-    d.addErrback(discovery_fail)
+    if self.type == 'None':
+      d2.callback((self.publicIp, localPort))
+    else:      
+      d = stunt.AddressDiscover(self.reactor, localPort+1)
+      d.addCallback(discover_succeed)
+      d.addErrback(discovery_fail)
 
     return d2
       
@@ -165,6 +168,7 @@ class NAT:
     print "\t", configurationText[1], "\t", self.type
     print "\t", configurationText[2], "\t", self.privateIp
     print "\t", configurationText[3], "\t", self.publicIp
+    print "\t", configurationText[4], "\t", self.delta
     print "*------------------------------------------------------*"
     
 
@@ -208,6 +212,10 @@ class NatConnectivity(NAT, object):
     d = self._puncher.sndRegistrationRequest(uri)
     return d
     
+  def holePunching(self, uri):
+    """
+    """
+    self._puncher.sndLookupRequest(remoteUri=uri)
 
   def connectTCP(self, remoteUri=None, remoteAddress=None,\
                  factory=None, localPort=0):

@@ -32,9 +32,6 @@ class _NatType:
   def __repr__(self):
     return '<NatType %s>'%(self.type)
 
-
-NatTypeNone = _NatType('None')
-
 class StuntClient(StuntProtocol, object):
   
   log = logging.getLogger("ntcp")
@@ -46,13 +43,15 @@ class StuntClient(StuntProtocol, object):
   def __init__(self, servers=DefaultServers):
     super(StuntClient, self).__init__()
     self.deferred = defer.Deferred()
-    self.localPort = random.randrange(7000, 7100)
+    self.localPort = 0
     self.localIp = socket.gethostbyname(socket.gethostname())
     self.privateIp = self.localIp
     self.state = '1a'
     self.natType = None
-    self.servers = [(socket.gethostbyname(host), port)
-                    for host, port in servers]
+    for host, port in servers:
+      try:
+        self.servers = [(socket.gethostbyname(host), port)]
+      except: pass
     self.serverAddress = servers[0]
 
   def connectionMade(self):
@@ -71,10 +70,12 @@ class StuntClient(StuntProtocol, object):
   
   def startDiscovery(self):
     self.log.debug('>> Test 1a')
+    self.localPort = random.randrange(49152, 65535)
     self.test(self.serverAddress)
     return self.d
   
-  def portDiscovery(self):
+  def portDiscovery(self, port):
+    self.localPort = port
     self.d = defer.Deferred()
     self.log.debug('>> Test port discovery')
     self.state = '4'
@@ -129,7 +130,9 @@ class StuntClient(StuntProtocol, object):
   
   def handleState1a(self):
     if self.resdict['externalAddress'] == (self.localIp, self.localPort):
-      self.natType = NatTypeNone
+      self.natType = _NatType('None', \
+                              _publicIp=self.localIp, \
+                              _privateIp=self.localIp)
       self.finishedStunt()
     else:
       self.log.debug('>> Test 1b')
@@ -145,6 +148,8 @@ class StuntClient(StuntProtocol, object):
 
   def handleState1b(self):
     if self.resdict['externalAddress'] != self.previousExternalAddress:
+      self.delta = self.resdict['externalAddress'][1] - \
+                   self.previousExternalAddress[1]
       self.natType = _NatType('SessionDependent', \
                               _publicIp=self.publicIp, \
                               _privateIp=self.privateIp)
@@ -158,7 +163,8 @@ class StuntClient(StuntProtocol, object):
 
   def handleState2(self):
     if self.resdict['externalAddress'] != self.previousExternalAddress:
-      self.delta = self.resdict['externalAddress'][1] - self.previousExternalAddress[1]
+      self.delta = self.resdict['externalAddress'][1] - \
+                   self.previousExternalAddress[1]
       self.natType = _NatType('AddressPortDependent', \
                               _publicIp=self.publicIp, \
                               _privateIp=self.privateIp, \
@@ -289,7 +295,6 @@ class StuntClient(StuntProtocol, object):
     conn, addr = s.accept()
     conn.close()
     self.closeSocket(s)
-    print 'closed'
 
     return (conn, addr)
         

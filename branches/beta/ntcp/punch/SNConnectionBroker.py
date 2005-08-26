@@ -134,8 +134,90 @@ class SNConnectionBroker (PuncherProtocol):
     listAttr = listAttr + ((0x0006, self.getPortIpList(addr)),)
     listAttr = listAttr + ((0x0007, self.avtypeList['REQUESTOR-NAT-TYPE']),)   
 
+    print 'send Connection Response to:', self.requestor
     self.messageType = "Connection Response"    
     self.sendMessage(self.requestor, listAttr)
+
+# ---
+
+  def rcvLookupRequest(self):
+    """
+    A connection response is received (from CB or endpoint)
+    Now can try to connect
+
+    @return void :
+    """
+    self.requestor = self.fromAddr
+
+    # Load the peer configuration
+    key = self.avtypeList['USER-ID']
+    peerInfo = self.getPeerInfo(key)
+    if peerInfo == ():
+      # TODO: contact other connection broker
+      self.sndErrorResponse(((0x0008, '700'),))
+      self.log.warn('User not registered!')
+      return
+ 
+    # Send a Lookup Request message
+    self.sndLookupRequest(peerInfo)
+    # Send a Lookup Response message
+    self.sndLookupResponse(peerInfo)
+    
+  def sndLookupRequest(self, peerInfo):
+    """
+    Send a connection request to discover and advise the remote user
+    behind a NAT for a TCP connection.
+    If the remote address is supplied, the request is sended directly
+    to remote endpoint, otherwise the CB is contacted.
+
+    @param string uri : The remote node identifier (connection throught CB)
+    @param Address remoteAddress : The remote endpoint's address (directly connection)
+    @return void :
+    """
+    toAddr = peerInfo[1] # the peer's address
+    listAttr = ()
+    
+    listAttr = listAttr + ((0x1005, self.avtypeList['REQUESTOR-USER-ID']),)
+    #addr = self.getAddress('REQUESTOR-PUBLIC-ADDRESSE')
+    addr = self.fromAddr
+    listAttr = listAttr + ((0x0005, self.getPortIpList(addr)),)
+    addr = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
+    listAttr = listAttr + ((0x0006, self.getPortIpList(addr)),)
+    listAttr = listAttr + ((0x0007, self.avtypeList['REQUESTOR-NAT-TYPE']),)
+    
+    self.messageType = "Lookup Request"   
+    self.sendMessage(toAddr, listAttr)
+    
+  def sndLookupResponse(self, peerInfo):
+    """
+    A connection response is received (from CB or endpoint)
+    Now can try to connect
+
+    @return void :
+    """
+    listAttr = ()
+    
+    listAttr = listAttr + ((0x0001, self.avtypeList['USER-ID']),)
+    #addr = self.getAddress('PUBLIC-ADDRESSE')
+    addr = peerInfo[1]
+    listAttr = listAttr + ((0x0002, self.getPortIpList(addr)),)
+    #addr = self.getAddress('PRIVATE-ADDRESSE')
+    addr = peerInfo[2]
+    listAttr = listAttr + ((0x0003, self.getPortIpList(addr)),)
+    listAttr = listAttr + ((0x0004, peerInfo[3]),)
+##     # Requestor conf
+##     listAttr = listAttr + ((0x1005, self.avtypeList['REQUESTOR-USER-ID']),)
+##     addr = self.getAddress('REQUESTOR-PUBLIC-ADDRESSE')
+##     listAttr = listAttr + ((0x0005, self.getPortIpList(addr)),)
+##     addr = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
+##     listAttr = listAttr + ((0x0006, self.getPortIpList(addr)),)
+##     listAttr = listAttr + ((0x0007, self.avtypeList['REQUESTOR-NAT-TYPE']),)  
+    
+
+    self.messageType = "Lookup Response"    
+    self.sendMessage(self.requestor, listAttr)
+# ---
+
     
   def printActiveConnection(self):
     """

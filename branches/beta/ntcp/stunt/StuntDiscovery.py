@@ -53,10 +53,10 @@ def NatDiscovery(reactor, ntcp=None):
         ntcp.setNatConf(discovery.natType)
         ntcp.printNatConf()
 
-def AddressDiscover(reactor):
+def AddressDiscover(reactor, port):
     d = defer.Deferred()
     discovery = _NatDiscover(reactor)
 
     # Start listening
-    return discovery.portDiscovery()
+    return discovery.portDiscovery(port)
 

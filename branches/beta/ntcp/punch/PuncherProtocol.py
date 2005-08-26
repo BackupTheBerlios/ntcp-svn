@@ -13,7 +13,7 @@ MsgTypes = {0x1001 : 'Lookup Request',
             0x1121 : 'Connection Response',
             0x1002 : 'Registration Request',
             0x1003 : 'Registration Response',
-            0x1102 : 'Connection to peer',
+            0x1102 : 'Hole Punching',
             0x1112 : 'Error Response'}
 
 # The Message Attributes types
@@ -131,8 +131,8 @@ class PuncherProtocol(DatagramProtocol):
       self.rcvRegistrationResponse()
       
     elif self.mt == 0x1102:
-      # Connection to peer
-      self.rcvConnectionRequest()
+      # Hole Punching
+      self.rcvHolePunching()
       
     elif self.mt == 0x1112:
       # Error Response
@@ -164,7 +164,7 @@ class PuncherProtocol(DatagramProtocol):
       self.mt = 0x1002
     elif self.messageType == "Registration Response":
       self.mt = 0x1003
-    elif self.messageType == "Connection to peer":
+    elif self.messageType == "Hole Punching":
       self.mt = 0x1102
     elif self.messageType == "Error Response":
       self.mt = 0x1112

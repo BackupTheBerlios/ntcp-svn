@@ -40,6 +40,7 @@ class Simulator(DatagramProtocol, object):
         def registrationSucceed(result):
             print 'Registration to the SN Connection Broker has be done'
             if len(sys.argv) > 2:
+                #self.ntcp.holePunching(self.remote)
                 self.testConnection()
 
         def discoverySucceed(result):
@@ -77,9 +78,9 @@ class Simulator(DatagramProtocol, object):
             print 'ERROR in NAT Traversal TCP:', failure.getErrorMessage()
       
         factory = TcpClientFactory()
-        self.remote = ('192.168.1.203', int(self.remote))
-        self.ntcp.connectTCP(remoteAddress=self.remote, factory=factory)
-        #d = self.ntcp.connectTCP(remoteUri=self.remote, factory=factory)
+        #self.remote = ('192.168.1.203', int(self.remote))
+        #self.ntcp.connectTCP(remoteAddress=self.remote, factory=factory)
+        self.ntcp.connectTCP(remoteUri=self.remote, factory=factory)
         #d.addCallback(succeed)
         #d.addErrback(fail)
 
@@ -101,10 +102,9 @@ class TcpConnection(Protocol):
 class TcpClientFactory(ClientFactory):
     
     def startedConnecting(self, connector):
-        print 'Started to connect.'
+        pass
     
     def buildProtocol(self, addr):
-        print 'Connected.'
         return TcpConnection()
     
     def clientConnectionLost(self, connector, reason):

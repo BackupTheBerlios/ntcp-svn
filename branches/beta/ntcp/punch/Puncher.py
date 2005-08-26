@@ -34,6 +34,14 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
   log = logging.getLogger("ntcp")
   
   def __init__(self, reactor, natObj, udpListener=None):
+    """
+    Initialises the puncher object to implement
+    the hole punching protocol in the endpoint side
+
+    @param reactor: the application's reactor
+    @param ntcp.connection.NatConnectivity natObj: the object with NAT information
+    @param udpListener: an UDP listener (default None - if None a new one is created)
+    """
     super(Puncher, self).__init__()
     ConnectionPunching.__init__(self)
     self.deferred = defer.Deferred()
@@ -42,12 +50,7 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
       self.punchListen = udpListener
     else:
       self.startListen()
-
     self.setNatObj(natObj) # The NAT configuration
-    self.initVar()
-
-  def initVar(self):
-    """Initialize all variables"""
     self.uri = None
     self.remoteUri = None
     self.requestor = 0 # 1 if I'm the requestor, 0 otherwise
@@ -65,19 +68,18 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
 
   def startListen(self):
     """Start to listen on a UDP port"""
-    # UDP listening
-    #punchPort = random.randrange(6900, 6999)
-    punchPort = 6950
+    # UDP listening: try to listen on a port
+    punchPort = random.randrange(6900, 6999)
     flag = 1 
-    while flag: 
+    while flag:
+      # Loop until finds a free port 
       try:
         self.punchListen = self.reactor.listenUDP(punchPort, self)
         self.log.debug('Hole punching listen on port: %d'%punchPort)
         flag = 0
       except :
-        #punchPort = random.randrange(6900, 6999)
         print 'Exception:', sys.exc_info()[0]
-        punchPort = 6955
+        punchPort = random.randrange(6900, 6999)
         
 
   def sndRegistrationRequest(self, uri):
@@ -91,7 +93,8 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     self.publicAddr = (self.natObj.publicIp, 0)
     self.privateAddr = (self.natObj.privateIp, 0)
     self.uri = uri
-    
+
+    # Prepare the message's attributes
     listAttr = listAttr + ((0x0001, uri),)
     listAttr = listAttr + ((0x0002, self.getPortIpList(self.publicAddr)),)
     listAttr = listAttr + ((0x0003, self.getPortIpList(self.privateAddr)),)
@@ -117,7 +120,7 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
       self.deferred.callback(None)
 
   def rcvKeepAliveResponse(self):
-    """A message from CB broker is received to keep the NAT hole up"""
+    """A message from CB broker is received to keep the NAT hole active"""
     #self.log.debug('Received keep alive response...I go to sleep for 20s')
     self.reactor.callLater(20, self.sndKeepAliveRequest)
 
@@ -158,6 +161,7 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     # Reload the private address
     self.privateAddr = self.natObj.privateAddr
 
+    # Prepare the message's attributes
     if remoteUri != None:
       listAttr = listAttr + ((0x0001, remoteUri),)
     if self.uri != None:
@@ -224,6 +228,7 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
       
     def discover_succeed(publicAddress):
       listAttr = ()
+      # Prepare the message's attributes
       # My conf
       self.publicAddr = publicAddress
       self.privateAddr = self.natObj.privateAddr
@@ -239,6 +244,7 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
       listAttr = listAttr + ((0x0006, self.getPortIpList(self.remotePrivateAddress)),)
       listAttr = listAttr + ((0x0007, self.remoteNatType),)
 
+      print 'send Connection Response to:', self.fromAddr
       self.messageType = "Connection Response"   
       self.sendMessage(self.fromAddr, listAttr)
 
@@ -246,10 +252,90 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     d.addCallback(discover_succeed)
     d.addErrback(discovery_fail)
 
-     
+# --
+  def sndLookupRequest(self, remoteUri=None, remoteAddress=None):
+    """
+    Send a connection request to discover and advise the remote user
+    behind a NAT for a TCP connection.
+    If the remote address is supplied, the request is sended directly
+    to remote endpoint, otherwise the CB is contacted.
+
+    @param string uri : The remote node identifier (connection throught CB)
+    @param Address remoteAddress : The remote endpoint's address (directly connection)
+    @return void :
+    """
+    d = defer.Deferred()
+    self.toAddress = self.cbAddress #Connection througth the CB
+    
+    listAttr = ()
+    self.publicAddr = (self.natObj.publicIp, 0)
+    self.privateAddr = (self.natObj.privateIp, 0)
+
+    # Prepare the message's attributes
+    listAttr = listAttr + ((0x0001, remoteUri),)
+    if self.uri != None:
+      listAttr = listAttr + ((0x1005, self.uri),)
+    listAttr = listAttr + ((0x0005, self.getPortIpList(self.publicAddr)),)
+    listAttr = listAttr + ((0x0006, self.getPortIpList(self.privateAddr)),)
+    listAttr = listAttr + ((0x0007, NatTypeCod[self.natObj.type]),)
+    
+    self.messageType = 'Lookup Request'
+    self.tid = self.getRandomTID()
+    self.sendMessage(self.toAddress, listAttr)
+    return d
+
+  def rcvLookupRequest(self):
+    """
+    A connection response is received (from CB or endpoint)
+    Now can try to connect
+
+    @return void :
+    """
+    print 'Received Lookup Request'
+    # Set remote configuration
+    if "REQUESTOR-USER-ID" in self.avtypeList:
+      self.remoteUri = self.avtypeList["REQUESTOR-USER-ID"]    
+    self.remotePublicAddress = self.getAddress('REQUESTOR-PUBLIC-ADDRESSE')
+    self.remotePrivateAddress = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
+    self.remoteNatType = self.avtypeList["REQUESTOR-NAT-TYPE"]
+
+    # Send an Hole Punching message
+    self.sndHolePunching()
+    
+  def rcvLookupResponse(self):
+    """
+    A connection response is received (from CB or endpoint)
+    Now can try to connect
+
+    @return void :
+    """
+    print 'Received Lookup Response'
+    # Set remote configuration
+    self.remotePublicAddress = self.getAddress('PUBLIC-ADDRESSE')
+    self.remotePrivateAddress = self.getAddress('PRIVATE-ADDRESSE')
+    self.remoteNatType = self.avtypeList["NAT-TYPE"]
+
+    # Send an Hole Punching message
+    self.sndHolePunching()
+
+  def sndHolePunching(self):
+    self.toAddress = self.remotePublicAddress #Hole punching to endpoint
+    print 'Received Hole Punching'
+        
+    self.messageType = 'Hole Punching'
+    self.tid = self.getRandomTID()
+    self.sendMessage(self.toAddress)
+
+  def rcvHolePunching(self):
+    print 'Hole punching: received message from:', self.fromAddr
+    
+# --
   def sendMessage(self, toAddr, attributes=()):
     """
     Packs the message and sends it
+
+    @param tuple toAddr: the destination address
+    @param list attributes: the message's attriubutes
     """
     # TODO: set timeout
     self._pending[self.tid] = (time.time(), toAddr)
@@ -257,6 +343,7 @@ class Puncher(PuncherProtocol, ConnectionPunching, object):
     self.punchListen.write(self.pkt, toAddr)
      
   def rcvErrorResponse(self):
+    """If an Error Response is received, analises it"""
     # Extract the class and number
     error, phrase = self.getErrorCode()
     if error == 420:
