@@ -93,7 +93,8 @@ class SNConnectionBroker (PuncherProtocol):
     toAddr = peerInfo[1] # the peer's address
     listAttr = ()
     
-    listAttr = listAttr + ((0x1005, self.avtypeList['REQUESTOR-USER-ID']),)
+    if "REQUESTOR-USER-ID" in self.avtypeList:
+      listAttr = listAttr + ((0x1005, self.avtypeList['REQUESTOR-USER-ID']),)
     addr = self.getAddress('REQUESTOR-PUBLIC-ADDRESSE')
     listAttr = listAttr + ((0x0005, self.getPortIpList(addr)),)
     addr = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
@@ -127,7 +128,8 @@ class SNConnectionBroker (PuncherProtocol):
     listAttr = listAttr + ((0x0003, self.getPortIpList(addr)),)
     listAttr = listAttr + ((0x0004, self.avtypeList['NAT-TYPE']),)
     # Requestor conf
-    listAttr = listAttr + ((0x1005, self.avtypeList['REQUESTOR-USER-ID']),)
+    if "REQUESTOR-USER-ID" in self.avtypeList:
+      listAttr = listAttr + ((0x1005, self.avtypeList['REQUESTOR-USER-ID']),)
     addr = self.getAddress('REQUESTOR-PUBLIC-ADDRESSE')
     listAttr = listAttr + ((0x0005, self.getPortIpList(addr)),)
     addr = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
@@ -138,7 +140,63 @@ class SNConnectionBroker (PuncherProtocol):
     self.messageType = "Connection Response"    
     self.sendMessage(self.requestor, listAttr)
 
-# ---
+# -- Connnection (end)
+
+# -- Configuration
+
+  def rcvConfigurationRequest(self):
+    """
+    A Configuration request is received. 
+
+    @return void :
+    """
+    print 'rcv configuration req'
+    self.requestor = self.fromAddr
+
+    # Load the peer configuration
+    key = self.avtypeList['USER-ID']
+    peerInfo = self.getPeerInfo(key)
+    if peerInfo == ():
+      # TODO: contact other connection broker
+      self.sndErrorResponse(((0x0008, '700'),))
+      self.log.warn('User not registered!')
+      return
+
+    # Sends a Connection request to the other endpoint
+    # to get information about it
+    self.sndConfigurationResponse(peerInfo)
+
+  def sndConfigurationResponse(self, peerInfo):
+    """
+    Sends a Configuration Response Message to the remote endpoint.
+    
+    @param peerInfo : the remote endpoint's information
+    @return void 
+    """
+    print 'snd configuration resp'
+    toAddr = self.requestor # the peer's address
+    listAttr = ()
+    
+    listAttr = listAttr + ((0x0001, self.avtypeList['USER-ID']),)
+    listAttr = listAttr + ((0x0002, self.getPortIpList(peerInfo[1])),)
+    listAttr = listAttr + ((0x0003, self.getPortIpList(peerInfo[2])),)
+    listAttr = listAttr + ((0x0004, peerInfo[3]),)
+    # Requestor conf    
+    if "REQUESTOR-USER-ID" in self.avtypeList:
+      listAttr = listAttr + ((0x1005, self.avtypeList['REQUESTOR-USER-ID']),)
+    addr = self.requestor
+    listAttr = listAttr + ((0x0005, self.getPortIpList(addr)),)
+    if "REQUESTOR-PRIVATE-ADDRESSE" in self.avtypeList:
+      addr = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
+      listAttr = listAttr + ((0x0006, self.getPortIpList(addr)),)
+    listAttr = listAttr + ((0x0007, self.avtypeList['REQUESTOR-NAT-TYPE']),)
+    
+    self.messageType = "Configuration Response"   
+    self.sendMessage(toAddr, listAttr)
+ 
+# -- Configuration (end)
+
+# --- Lookup
 
   def rcvLookupRequest(self):
     """
@@ -228,7 +286,7 @@ class SNConnectionBroker (PuncherProtocol):
     print '*-----------------------------------------------------------------------*'
     print '* Active connections                                                    *'
     for peer in self.peersTable:
-      print "| %12s | %22s | %22s | %4s |" % \
+      print "| %12s | \n\t\\--> | %22s | %22s | %4s |" % \
             (peer, self.peersTable[peer][0], \
              self.peersTable[peer][1], \
              self.peersTable[peer][2])                       

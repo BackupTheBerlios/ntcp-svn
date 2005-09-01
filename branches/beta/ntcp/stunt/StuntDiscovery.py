@@ -40,18 +40,17 @@ class _NatDiscover(stunt.StuntClient):
             self.d.callback(address)
 
 
-def NatDiscovery(reactor, ntcp=None):
+def NatDiscovery(reactor, succeed=None):
     d = defer.Deferred()
     discovery = _NatDiscover(reactor)
 
     # Start listening
     d = discovery.Run()
 
-    if ntcp == None: return d
+    if succeed == None: return d
     else:
         # We are in a non-bloking mode
-        ntcp.setNatConf(discovery.natType)
-        ntcp.printNatConf()
+        succeed(discovery.natType)
 
 def AddressDiscover(reactor, port):
     d = defer.Deferred()

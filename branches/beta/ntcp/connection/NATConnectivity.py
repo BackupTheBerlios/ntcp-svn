@@ -195,12 +195,34 @@ class NatConnectivity(NAT, object):
   def datagramReceived(self, message, fromAddr):
     """A link to the internal datagramReceived function"""
     self._puncher.datagramReceived(message, fromAddr)
+    
+  def holePunching(self, uri):
+    """
+    """
+    self._puncher.sndLookupRequest(remoteUri=uri)
 
-  def registrationToCB(self, uri, factory=None):
-    """Make a registration to CB
+  def setFactory(self, factory):
+    """Sets a factory for TCP connection
 
-    @param uri: the user's URI
-    @param factory: the factory to menage a TCP connection (default=None)
+    @param factory - a twisted.internet.protocol.*Factory instance 
+    """
+    self._puncher.setFactory(factory)
+  def getFactory(self):
+    """Gets the TCP factory
+    
+    @return: factory - a twisted.internet.protocol.ServerFactory instance
+    """
+    return self._puncher.getFactory()
+  
+  def listenTCP(self, port=0, factory=None, backlog=5, interface='',  uri=None):
+    """Make a registration to CB and listen for incoming connection request
+
+    @param port: a port number on which to listen, default to 0 (any) (only default implemented)
+    @param factory: a twisted.internet.protocol.ServerFactory instance 
+    @param backlog: size of the listen queue (not implemented)
+    @param interface: the hostname to bind to, defaults to '' (all) (not implemented)
+    @param uri: the user's URI for registration to Connection Broker
+    return: void
     """
     d = defer.Deferred()
     #self._puncher = Puncher(self.reactor, self, self.udpListener)
@@ -212,24 +234,30 @@ class NatConnectivity(NAT, object):
     d = self._puncher.sndRegistrationRequest(uri)
     return d
     
-  def holePunching(self, uri):
-    """
-    """
-    self._puncher.sndLookupRequest(remoteUri=uri)
-
-  def connectTCP(self, remoteUri=None, remoteAddress=None,\
-                 factory=None, localPort=0):
+  def connectTCP(self, host=None, remoteUri=None, \
+                 port=0, factory=None, \
+                 timeout=30, bindAddress=None, \
+                 myUri=None):
     """
     Force a connection with another user through NATs
-    helped by the ConnectionBroker
+    helped by the ConnectionBroker.
+    It needs at least one between 'host' and 'remoteUri'
 
-    @param string remoteUri : The remote endpoint's uri
-    @param tuple remoteAddress : The remote endpoint's address
-    @param CliantFactory factory : The TCP Client factory
-    @param int localPort : The local port for TCP connection (default any)
-    @return void :
+    @param host: a host name, default None
+    @param remoteUri : The remote endpoint's uri, default None
+    @param port: a port number, default to 0 (any)
+    @param factory: a twisted.internet.protocol.ClientFactory instance 
+    @param timeout: number of seconds to wait before assuming the connection has failed.  (not implemented)
+    @param bindAddress: a (host, port) tuple of local address to bind to, or None. (not implemented)
+    @param myUri : The uri for future incoming connection request
+
+    @return :  An object implementing IConnector.
+    This connector will call various callbacks on the factory
+    when a connection is made,failed, or lost
+    - see ClientFactory docs for details.
     """
     d = defer.Deferred()
+    d_conn = defer.Deferred()
     
     if self._puncher == None:
       self._puncher = Puncher(self.reactor, self)
@@ -239,6 +267,18 @@ class NatConnectivity(NAT, object):
       d.errback(failure.DefaultException('You have to specify a factory'))
     elif factory != None:
       self.setFactory(factory)
+
+    def fail(failure):
+      """ Error in NAT Traversal TCP """
+      print 'ERROR in NAT Traversal (registration):', failure.getErrorMessage()
+  
+    def connection_succeed(result):
+      print 'connection succeed:', result
+      d_conn.callback(result)
+      
+    def connection_fail(failure):
+      d = defer.Deferred()
+      d.errback(failure)
       
     def discovery_fail(failure):
       d = defer.Deferred()
@@ -247,17 +287,31 @@ class NatConnectivity(NAT, object):
     def discover_succeed(publicAddress):
       self.publicAddr = publicAddress
       if self.publicAddr != None:
-        d = self._puncher.sndConnectionRequest(remoteUri, remoteAddress)
+        d = defer.Deferred()
+        d = self._puncher.sndConnectionRequest(remoteUri, host)
+        d.addCallback(connection_succeed)
+        d.addErrback(connection_fail)
+
+        print self._puncher.peerConn
       else:
         self.d.errback('The NAT doesn\'t allow inbound TCP connection')
-      
-    d = self.publicAddrDiscovery(localPort)
-    d.addCallback(discover_succeed)
-    d.addErrback(discovery_fail)
 
-  def setFactory(self, factory):
-    """Sets a factory for TCP connection"""
-    self._puncher.setFactory(factory)
-  def getFactory(self):
-    """Gets the TCP factory"""
-    return self._puncher.getFactory()
+    def registrationSucceed(result):
+      print 'Registration to the SN Connection Broker has be done'
+    
+      # Discovery external address
+      d = self.publicAddrDiscovery(port)
+      d.addCallback(discover_succeed)
+      d.addErrback(discovery_fail)
+      
+    # Registration to Connection Broker for incoming connection
+    if myUri != None:
+      d = self._puncher.sndRegistrationRequest(myUri)
+      d.addCallback(registrationSucceed)
+      d.addErrback(fail)
+    else:
+      d = self.publicAddrDiscovery(port)
+      d.addCallback(discover_succeed)
+      d.addErrback(discovery_fail)
+      
+    return d_conn

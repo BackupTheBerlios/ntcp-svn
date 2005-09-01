@@ -4,7 +4,7 @@ from twisted.internet.protocol import Protocol, ClientFactory, DatagramProtocol
 import twisted.internet.defer as defer
 from twisted.internet import reactor
 
-from ntcp.connection.NATConnectivity import NatConnectivity 
+from ntcp.NatConnectivity import NatConnectivity 
 
 class Simulator(DatagramProtocol, object):
     """
@@ -39,16 +39,18 @@ class Simulator(DatagramProtocol, object):
             
         def registrationSucceed(result):
             print 'Registration to the SN Connection Broker has be done'
-            if len(sys.argv) > 2:
-                #self.ntcp.holePunching(self.remote)
-                self.testConnection()
 
         def discoverySucceed(result):
             factory = TcpClientFactory()
-            d = self.ntcp.registrationToCB(self.uri, factory)
-            d.addCallback(registrationSucceed)
-            d.addErrback(fail)
-        
+            if len(sys.argv) == 2:
+                d = self.ntcp.listenTCP(factory=factory, myUri=self.uri).defer
+                d.addCallback(registrationSucceed)
+                d.addErrback(fail)
+            elif len(sys.argv) > 2:
+                self.testConnection()
+                
+# ------------------------------------------------------------------
+# For UDP listener
 ##         # UDP listening
 ##         punchPort = random.randrange(6900, 6999)
 ##         flag = 1 
@@ -62,27 +64,40 @@ class Simulator(DatagramProtocol, object):
 ##         print 'Hole punching port: %d'%punchPort
 ##         # Start to discover the public network address
 ##         self.ntcp = NatConnectivity(reactor, listener)
+# ------------------------------------------------------------------  
         self.ntcp = NatConnectivity(reactor)
-        d = self.ntcp.natDiscovery()
+        d = self.ntcp.natDiscovery(0)
+        # -----------------------------------------------------------  
+        # run the nat discovery procedure in a non-bloking mode (0)
+        #ntcp.natDiscovery(0)
+        # -----------------------------------------------------------
         d.addCallback(discoverySucceed)
         d.addErrback(fail)
 
 
     def testConnection(self):
         
-        def succeed(result):
-            pass
-        
         def fail(failure):
             """ Error in NAT Traversal TCP """
             print 'ERROR in NAT Traversal TCP:', failure.getErrorMessage()
-      
-        factory = TcpClientFactory()
-        #self.remote = ('192.168.1.203', int(self.remote))
-        #self.ntcp.connectTCP(remoteAddress=self.remote, factory=factory)
-        self.ntcp.connectTCP(remoteUri=self.remote, factory=factory)
-        #d.addCallback(succeed)
-        #d.addErrback(fail)
+            
+        def succeed(result):
+            connector = result
+            print 'ccc', connector
+            
+        def conf_succeed(result):
+            if result[0] != None and result[1] != None:
+                factory = TcpClientFactory()
+                # self.remote = ('192.168.1.203', int(self.remote))
+                # self.ntcp.connectTCP(remoteAddress=self.remote, factory=factory)
+                d = self.ntcp.connectTCP(remoteUri=self.remote, factory=factory, myUri=self.uri)
+                d.addCallback(succeed)
+                d.addErrback(fail)
+                          
+        d = self.ntcp.getP2PConfiguration(remoteUri=self.remote)
+        d.addCallback(conf_succeed)
+        d.addErrback(fail)
+        
 
       
 class TcpConnection(Protocol):

@@ -11,6 +11,8 @@ MsgTypes = {0x1001 : 'Lookup Request',
             0x1202 : 'Keep Alive Response',
             0x1111 : 'Connection Request',
             0x1121 : 'Connection Response',
+            0x1131 : 'Configuration Request',
+            0x1132 : 'Configuration Response',
             0x1002 : 'Registration Request',
             0x1003 : 'Registration Response',
             0x1102 : 'Hole Punching',
@@ -119,8 +121,16 @@ class PuncherProtocol(DatagramProtocol):
       self.rcvConnectionRequest()
       
     elif self.mt == 0x1121:
-      # Connection Request
+      # Connection Response
       self.rcvConnectionResponse()
+      
+    elif self.mt == 0x1131:
+      # Configuration Request
+      self.rcvConfigurationRequest()
+      
+    elif self.mt == 0x1132:
+      # Configuration Response
+      self.rcvConfigurationResponse()
       
     elif self.mt == 0x1002:
       # Registration Request
@@ -160,6 +170,10 @@ class PuncherProtocol(DatagramProtocol):
       self.mt = 0x1111
     elif self.messageType == "Connection Response":
       self.mt = 0x1121
+    elif self.messageType == "Configuration Request":
+      self.mt = 0x1131
+    elif self.messageType == "Configuration Response":
+      self.mt = 0x1132
     elif self.messageType == "Registration Request":
       self.mt = 0x1002
     elif self.messageType == "Registration Response":
