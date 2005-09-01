@@ -23,7 +23,7 @@ NatTypeDec = {
   '00SD' : 'SessionDependent'
    }
 
-class Puncher(PuncherProtocol, ConnectionPunching, IConnector, object):
+class Puncher(PuncherProtocol, IConnector, object):
 
   """
   Communicates with the Super Node Connection Broker to registre himself
@@ -44,7 +44,7 @@ class Puncher(PuncherProtocol, ConnectionPunching, IConnector, object):
     @param udpListener: an UDP listener (default None - if None a new one is created)
     """
     super(Puncher, self).__init__()
-    ConnectionPunching.__init__(self)
+    # ConnectionPunching.__init__(self)
     self.deferred = defer.Deferred()
     self.d = defer.Deferred()
     self.reactor = reactor
@@ -62,6 +62,8 @@ class Puncher(PuncherProtocol, ConnectionPunching, IConnector, object):
     self.registered = 0
     self.error = 0
     self.state = None
+    self.c_factory = None
+    self.s_factory = None
     
     
     # CB address
@@ -137,9 +139,13 @@ class Puncher(PuncherProtocol, ConnectionPunching, IConnector, object):
   def sndKeepAliveRequest(self):
     """Sends the keep alive message"""
     #self.log.debug('I am awake... I send a keep alive msg!')
+    listAttr = ()
+    # Prepare the message's attributes
+    listAttr = listAttr + ((0x0001, self.uri),)
+
     self.messageType = 'Keep Alive Request'
     self.tid = self.getRandomTID()
-    self.sendMessage(self.cbAddress)
+    self.sendMessage(self.cbAddress, listAttr)
   
   def sndConnectionRequest(self, remoteUri=None, remoteAddress=None):
     """
@@ -201,7 +207,8 @@ class Puncher(PuncherProtocol, ConnectionPunching, IConnector, object):
     self.remoteNatType = self.avtypeList["NAT-TYPE"]
 
     # Call the NAT traversal TCP method to try to connect
-    self.natTraversal()
+    self.connection = ConnectionPunching(punch=self)
+    self.connection.natTraversal(self.s_factory) 
 
   def rcvConnectionRequest(self):
     """
@@ -223,7 +230,8 @@ class Puncher(PuncherProtocol, ConnectionPunching, IConnector, object):
     # Send a connection response 
     self.sndConnectionResponse()
     # Call the NAT traversal TCP method to try to connect
-    self.natTraversal()
+    self.connection = ConnectionPunching(punch=self)
+    self.connection.natTraversal(self.c_factory) 
 
   def sndConnectionResponse(self):
     """
@@ -500,3 +508,13 @@ class Puncher(PuncherProtocol, ConnectionPunching, IConnector, object):
         self.conf_d.errback(failure.DefaultException('%d:%s'%(error, phrase)))
     else:
       self.clientConnectionFailed(self, '(%s: %s)'%(error, phrase))
+
+  def setServerFactory(self, factory):
+      self.s_factory = factory
+  def getServerFactory(self):
+      return self.s_factory
+
+  def setClientFactory(self, factory):
+      self.c_factory = factory
+  def getClientFactory(self):
+      return self.c_factory

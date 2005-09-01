@@ -18,7 +18,10 @@ class TcpConnection(Protocol):
     def connectionLost(self, reason):
         print 'Lost connection.  Reason:', reason
 
-class TcpClientFactory(ClientFactory):
+    def startedConnecting(self, connector):
+        pass
+    
+class TcpFactory(ClientFactory):
     
     def startedConnecting(self, connector):
         pass

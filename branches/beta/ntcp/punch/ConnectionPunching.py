@@ -14,7 +14,7 @@ class ConnectionPunching(Protocol, ClientFactory):
   
   log = logging.getLogger("ntcp")
   
-  def __init__(self, _s = None):      
+  def __init__(self, punch = None, _s = None):      
       self.factory = None
       self._super = _s
       self.method = None
@@ -24,29 +24,31 @@ class ConnectionPunching(Protocol, ClientFactory):
       self.p2pnatAttempt = 1
       self.stunt2Attempt = 1
       self.peerConn = None #  An object implementing IConnector.
+
+      self.punch = punch
   
-  def natTraversal(self):
+  def natTraversal(self, factory):
     """
     Chooses the right method for NAT traversal TCP
     """
+    self.factory = factory
+    self.requestor = self.punch.requestor
     print 'natTraversal'
 ##     self.log.debug('NAT traversal with:')
 ##     if self.remoteUri != None:
-##         self.log.debug('\tURI:\t\t%s'%self.remoteUri)
-##     self.log.debug('\tAddress:\t%s:%d'%self.remotePublicAddress)
-##     self.log.debug('\tNAT type:\t%s'%self.remoteNatType)
+##         self.log.debug('\tURI:\t\t%s'%self.punch.remoteUri)
+##     self.log.debug('\tAddress:\t%s:%d'%self.punch.remotePublicAddress)
+##     self.log.debug('\tNAT type:\t%s'%self.punch.remoteNatType)
     
     self.attempt = 0
-    #self.method = 'stunt2'
-    #self.stunt2()
     
-    if self.publicAddr[0] == self.remotePublicAddress[0] \
+    if self.punch.publicAddr[0] == self.punch.remotePublicAddress[0] \
            and self.sameLanAttempt:
         # The two endpoints are in the same LAN
         # but there can be several NATs
         self.method = 'sameLan'
         self.sameLan()
-    elif self.remoteNatType == 'None' or self.natObj.type == 'None':
+    elif self.punch.remoteNatType == 'None' or self.punch.natObj.type == 'None':
         self.oneNat()            
     else:
         self.method = 'stunt2'
@@ -74,18 +76,18 @@ class ConnectionPunching(Protocol, ClientFactory):
       if self.requestor:
           self.transport = None
           print 'Same LAN: Try to connect...'
-          self.peerConn = self.reactor.connectTCP(\
-                  self.remotePrivateAddress[0], \
-                  self.remotePrivateAddress[1], self)
+          self.peerConn = self.punch.reactor.connectTCP(\
+                  self.punch.remotePrivateAddress[0], \
+                  self.punch.remotePrivateAddress[1], self)
           self.log.debug('ppp:%s'%self.peerConn)
       else:
           # listen
-          print 'Same LAN: listen on:', self.natObj.privateAddr[1]
+          print 'Same LAN: listen on:', self.punch.natObj.privateAddr[1]
           self.transport = None
-          self.peerConn = self.reactor.listenTCP(\
-              self.natObj.privateAddr[1], self)
+          self.peerConn = self.punch.reactor.listenTCP(\
+              self.punch.natObj.privateAddr[1], self)
           self.sameLanAttempt = 0
-          self.timeout = self.reactor.callLater(\
+          self.timeout = self.punch.reactor.callLater(\
               6, self._sameLan_clientConnectionFailed)
           
   def _sameLan_clientConnectionFailed(self):
@@ -105,21 +107,22 @@ class ConnectionPunching(Protocol, ClientFactory):
   def oneNat(self):
       """
       """
-      self.log.debug('One endpoint is not NATed')
-      if self.natObj.type != 'None':
+      #self.log.debug('One endpoint is not NATed')
+      print 'One endpoint is not NATed'
+      if self.punch.natObj.type != 'None':
           self.transport = None
-          self.peerConn = self.reactor.connectTCP(\
-                  self.remotePrivateAddress[0], \
-                  self.remotePrivateAddress[1], self)
+          self.peerConn = self.punch.reactor.connectTCP(\
+                  self.punch.remotePrivateAddress[0], \
+                  self.punch.remotePrivateAddress[1], self)
       else:
           # listen
-          print 'One NAT: listen on:', self.natObj.privateAddr[1]
+          print 'One NAT: listen on:', self.punch.natObj.privateAddr[1]
           self.transport = None
-          self.peerConn = self.reactor.listenTCP(\
-              self.natObj.privateAddr[1], self)
+          self.peerConn = self.punch.reactor.listenTCP(\
+              self.punch.natObj.privateAddr[1], self)
            
   def _oneNat_clientConnectionFailed(self):
-      if self.natObj.type != 'None':
+      if self.punch.natObj.type != 'None':
           if self.attempt <= 3:
               # connect
               time.sleep(self.attempt)
@@ -132,26 +135,31 @@ class ConnectionPunching(Protocol, ClientFactory):
           pass
 
   def stunt2(self):
-      self.log.debug('Try to connect with STUNT\#2 method')
+      #self.log.debug('Try to connect with STUNT\#2 method')
+      print 'Try to connect with STUNT\#2 method'
       if self.requestor:
-          print 'Requestor -> from:', self.privateAddr, \
-                'to:', self.remotePublicAddress
-          self.transport = None
-          self.peerConn = self.reactor.connectTCP(\
-                  self.remotePublicAddress[0], \
-                  self.remotePublicAddress[1], \
+        # Here I try just several client connection
+        print 'Requestor -> from:', self.punch.privateAddr, \
+              'to:', self.punch.remotePublicAddress
+        self.transport = None
+        self.peerConn = self.punch.reactor.connectTCP(\
+                  self.punch.remotePublicAddress[0], \
+                  self.punch.remotePublicAddress[1], \
                   self, \
-                  bindAddress=self.privateAddr)
+                  timeout = 1, \
+                  bindAddress=self.punch.privateAddr)
       else:
-          print 'Contacted -> from:', self.privateAddr, \
-                'to:', self.remotePublicAddress[0], self.remotePrivateAddress[1]
-          #self.transport = None
-          self.peerConn = self.reactor.connectTCP(\
-              self.remotePublicAddress[0], \
-              self.remotePublicAddress[1], \
+        # Here I try with an initial client connection
+        # that fail --> try to listen
+        print 'Contacted -> from:', self.punch.privateAddr, \
+              'to:', self.punch.remotePublicAddress[0], self.punch.remotePrivateAddress[1]
+        # self.transport = None
+        self.peerConn = self.punch.reactor.connectTCP(\
+              self.punch.remotePublicAddress[0], \
+              self.punch.remotePublicAddress[1], \
               self, \
               timeout = 1, \
-              bindAddress = self.privateAddr)
+              bindAddress = self.punch.privateAddr)
 
   def stunt2_inv(self):
       self.method = 'stunt2_inv' # Fail: call the next method
@@ -163,6 +171,10 @@ class ConnectionPunching(Protocol, ClientFactory):
       self.stunt2()
           
   def _stunt2_clientConnectionFailed(self):
+      # If exist, stop timeout
+      try: self.timeout.cancel()
+      except: pass
+      
       if self.requestor:
           if self.attempt < 3:
               # connect
@@ -177,14 +189,14 @@ class ConnectionPunching(Protocol, ClientFactory):
                   self.p2pnat()
       else:
           # listen
-          self.log.debug('Listen on %s:%d'%self.natObj.privateAddr)
-          self.peerConn = self.reactor.listenTCP(\
-              self.natObj.privateAddr[1], self)
+          self.log.debug('Listen on %s:%d'%self.punch.natObj.privateAddr)
+          self.peerConn = self.punch.reactor.listenTCP(\
+              self.punch.natObj.privateAddr[1], self)
           if self.method == 'stunt2':
-              self.timeout = self.reactor.callLater(3, self.stunt2_inv)
+              self.timeout = self.punch.reactor.callLater(3, self.stunt2_inv)
           elif self.method == 'stunt2_inv':
               self.attempt = 0
-              self.timeout = self.reactor.callLater(2, self.p2pnat)
+              self.timeout = self.punch.reactor.callLater(2, self.p2pnat)
 
       
 
@@ -192,17 +204,17 @@ class ConnectionPunching(Protocol, ClientFactory):
       try: self.peerConn.loseConnection()
       except: pass
       self.method = 'p2pnat' # Fail: call the next method
-      if self.attempt < 1000:
+      if self.attempt < 10:
           # connect
           self.attempt = self.attempt + 1
           #self.log.debug('Try to connect with P2PNAT method %d'%self.attempt)
-          print 'P2PNAT: From:', self.privateAddr, \
-                'to:', self.remotePrivateAddress
-          self.peerConn = self.reactor.connectTCP(\
-                  self.remotePrivateAddress[0], \
-                  self.remotePrivateAddress[1], \
+          print 'P2PNAT: From:', self.punch.privateAddr, \
+                'to:', self.punch.remotePrivateAddress
+          self.peerConn = self.punch.reactor.connectTCP(\
+                  self.punch.remotePrivateAddress[0], \
+                  self.punch.remotePrivateAddress[1], \
                   self, \
-                  bindAddress=self.privateAddr)    
+                  bindAddress=self.punch.privateAddr)    
 
 # ----------------------------------------------------------
 
@@ -240,7 +252,7 @@ class ConnectionPunching(Protocol, ClientFactory):
       return ConnectionPunching(self)
         
   def clientConnectionFailed(self, connector, reason):
-      self.log.debug('[%s]'%reason)
+      print '[%s]'%reason
       if self.connected == 0 and not self.error:
           if self.method == 'sameLan':
               self._sameLan_clientConnectionFailed()

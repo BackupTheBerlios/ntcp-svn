@@ -41,11 +41,11 @@ class NatConnectivity(NatManager, object):
         """
         self._puncher.sndLookupRequest(remoteUri=uri)
 
-    def setFactory(self, factory):
+    def setServerFactory(self, factory):
         """Sets a factory for TCP connection
         @param factory - a twisted.internet.protocol.*Factory instance 
         """
-        self._puncher.setFactory(factory)
+        self._puncher.setServerFactory(factory)
     def getFactory(self):
         """Gets the TCP factory
         @return: factory - a twisted.internet.protocol.ServerFactory instance
@@ -79,7 +79,7 @@ class NatConnectivity(NatManager, object):
     
         if factory != None:
             # Sets the factory for TCP connection
-            self.setFactory(factory)
+            self.setServerFactory(factory)
 
         d = self._puncher.sndRegistrationRequest(myUri)
         return NtcpFactory(d)
@@ -125,11 +125,11 @@ class NatConnectivity(NatManager, object):
         if self._puncher == None:
             self._puncher = Puncher(self.reactor, self)
 
-        if self.getFactory() == None and factory == None:
+        if self._puncher.getClientFactory() == None and factory == None:
             # Error
             d.errback(failure.DefaultException('You have to specify a factory'))
         elif factory != None:
-            self.setFactory(factory)
+            self._puncher.setClientFactory(factory)
 
         def fail(failure):
             """ Error in NAT Traversal TCP """
@@ -166,7 +166,6 @@ class NatConnectivity(NatManager, object):
             d.addErrback(discovery_fail)
             
         # Registration to Connection Broker for incoming connection
-        print myUri, self._puncher.registered
         if myUri != None and not self._puncher.registered:
             print 'register...'
             d = self._puncher.sndRegistrationRequest(myUri)

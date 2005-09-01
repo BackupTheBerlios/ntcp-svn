@@ -3,7 +3,7 @@ import struct, socket, time, logging
 from twisted.internet import reactor
 from ntcp.punch.PuncherProtocol import PuncherProtocol
 
-class SNConnectionBroker (PuncherProtocol):
+class SNConnectionBroker (PuncherProtocol, object):
 
   """
   The Super Node Connection Broker.
@@ -20,6 +20,11 @@ class SNConnectionBroker (PuncherProtocol):
   # The IP table with:
   # | id (=primary key) | public IP (=primary key)| private IP | NAT type | 
   peersTable = {}
+
+  def __init__(self):
+    super(SNConnectionBroker, self).__init__()
+    reactor.callLater(60, self.refreshTable)
+    
 
   def rcvRegistrationRequest(self):
     """
@@ -55,6 +60,8 @@ class SNConnectionBroker (PuncherProtocol):
     self.sendMessage(publAddr, listAttr)
 
   def rcvKeepAliveRequest(self):
+    userId = self.avtypeList['USER-ID']
+    self.peersTable[userId] = (self.peersTable[userId][:3] + (time.time(),))
     self.sndKeepAliveResponse()
 
   def sndKeepAliveResponse(self):
@@ -79,6 +86,9 @@ class SNConnectionBroker (PuncherProtocol):
       self.log.warn('User not registered!')
       return
 
+    self.log.debug('Received Connection Request:')
+    self.log.debug('from: %s'%self.avtypeList['REQUESTOR-USER-ID'])
+    self.log.debug('to: %s'%key)
     # Sends a Connection request to the other endpoint
     # to get information about it
     self.sndConnectionRequest(peerInfo)
@@ -276,25 +286,9 @@ class SNConnectionBroker (PuncherProtocol):
     self.sendMessage(self.requestor, listAttr)
 # ---
 
-    
-  def printActiveConnection(self):
-    """
-    Prints the active user registrations
-
-    @return void :
-    """
-    print '*-----------------------------------------------------------------------*'
-    print '* Active connections                                                    *'
-    for peer in self.peersTable:
-      print "| %12s | \n\t\\--> | %22s | %22s | %4s |" % \
-            (peer, self.peersTable[peer][0], \
-             self.peersTable[peer][1], \
-             self.peersTable[peer][2])                       
-    print '*-----------------------------------------------------------------------*'
-
   def registrePeer(self, (userId, publicIP, privateIp, natInfo)):
     """Records the customer in the customer table"""
-    self.peersTable[userId] = (publicIP, privateIp, natInfo)
+    self.peersTable[userId] = (publicIP, privateIp, natInfo, time.time())
         
   def getPeerInfo(self, key):
     """Return the client's infos: search by key.
@@ -309,5 +303,38 @@ class SNConnectionBroker (PuncherProtocol):
       return l
     return ()
 
+  def refreshTable(self):
+    """
+    Refresh the peerTable
+    """
+    deleted = 0
+    dead_list = ()
+    for peer in self.peersTable:
+      if (time.time() - self.peersTable[peer][3]) > 60:
+        dead_list += (peer,) 
+        deleted = 1
+    for peer in dead_list:
+        del self.peersTable[peer]
+    if deleted:
+      self.printActiveConnection()
+    reactor.callLater(60, self.refreshTable)
+  
+  def printActiveConnection(self):
+    """
+    Prints the active user registrations
+
+    @return void :
+    """
+    try:
+      print '*-----------------------------------------------------------------------*'
+      print '* Active connections                                                    *'
+      for peer in self.peersTable:
+        print "| %12s | \n\t\\--> | %22s | %22s | %4s |" % \
+              (peer, self.peersTable[peer][0], \
+               self.peersTable[peer][1], \
+               self.peersTable[peer][2])                       
+      print '*-----------------------------------------------------------------------*'
+    except:
+      pass
 reactor.listenUDP(6060, SNConnectionBroker())
 reactor.run()
