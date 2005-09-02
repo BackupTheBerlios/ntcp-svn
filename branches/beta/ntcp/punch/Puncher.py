@@ -64,7 +64,8 @@ class Puncher(PuncherProtocol, IConnector, object):
     self.state = None
     self.c_factory = None
     self.s_factory = None
-    
+    self.dedicatedConnector = ()
+    self.numConnector = 0
     
     # CB address
     hostname, port = self.p2pConfig.get(\
@@ -207,8 +208,9 @@ class Puncher(PuncherProtocol, IConnector, object):
     self.remoteNatType = self.avtypeList["NAT-TYPE"]
 
     # Call the NAT traversal TCP method to try to connect
-    self.connection = ConnectionPunching(punch=self)
-    self.connection.natTraversal(self.s_factory) 
+##     self.connection = ConnectionPunching(punch=self)
+##     self.connection.natTraversal(factory=self.c_factory)
+    self.getDedicatedConnector().natTraversal(factory=self.c_factory) 
 
   def rcvConnectionRequest(self):
     """
@@ -229,9 +231,6 @@ class Puncher(PuncherProtocol, IConnector, object):
 
     # Send a connection response 
     self.sndConnectionResponse()
-    # Call the NAT traversal TCP method to try to connect
-    self.connection = ConnectionPunching(punch=self)
-    self.connection.natTraversal(self.c_factory) 
 
   def sndConnectionResponse(self):
     """
@@ -267,6 +266,11 @@ class Puncher(PuncherProtocol, IConnector, object):
       print 'send Connection Response to:', self.fromAddr
       self.messageType = "Connection Response"   
       self.sendMessage(self.fromAddr, listAttr)
+      
+      # Call the NAT traversal TCP method to try to connect
+##     self.connection = ConnectionPunching(punch=self)
+##     self.connection.natTraversal(factory=self.s_factory)
+      self.getDedicatedConnector().natTraversal(factory=self.s_factory)
 
       return d
 
@@ -507,14 +511,28 @@ class Puncher(PuncherProtocol, IConnector, object):
       else:
         self.conf_d.errback(failure.DefaultException('%d:%s'%(error, phrase)))
     else:
-      self.clientConnectionFailed(self, '(%s: %s)'%(error, phrase))
+      self.c_factory.clientConnectionFailed(self, '(%s: %s)'%(error, phrase))
+# --
 
+  def getDedicatedConnector(self):
+    self.numConnector += 1
+    self.connector = ConnectionPunching(punch=self)
+    self.dedicatedConnector += (self.connector,)
+    return self.dedicatedConnector[self.numConnector-1]
+    
+    self.connection.natTraversal(factory=self.s_factory) 
+    
+  
   def setServerFactory(self, factory):
-      self.s_factory = factory
+    self.s_factory = factory
+    return
+  
   def getServerFactory(self):
-      return self.s_factory
+    return self.s_factory
 
   def setClientFactory(self, factory):
-      self.c_factory = factory
+    self.c_factory = factory
+    return
+
   def getClientFactory(self):
-      return self.c_factory
+    return self.c_factory

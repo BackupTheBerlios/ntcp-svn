@@ -46,6 +46,8 @@ class NatConnectivity(NatManager, object):
         @param factory - a twisted.internet.protocol.*Factory instance 
         """
         self._puncher.setServerFactory(factory)
+        self._puncher.s_factory = factory
+        
     def getFactory(self):
         """Gets the TCP factory
         @return: factory - a twisted.internet.protocol.ServerFactory instance
@@ -130,16 +132,18 @@ class NatConnectivity(NatManager, object):
             d.errback(failure.DefaultException('You have to specify a factory'))
         elif factory != None:
             self._puncher.setClientFactory(factory)
+            self._puncher.c_factory = factory
 
         def fail(failure):
             """ Error in NAT Traversal TCP """
-            print 'ERROR in NAT Traversal (registration):', failure.getErrorMessage()
+            print 'ERROR in NAT Traversal (registration):', failure#.getErrorMessage()
 
         def connection_succeed(result):
             print 'connection succeed:', result
             d_conn.callback(result)
 
         def connection_fail(failure):
+            print 'connection fail'
             d = defer.Deferred()
             d.errback(failure)
 
@@ -147,8 +151,9 @@ class NatConnectivity(NatManager, object):
             d = defer.Deferred()
             d.errback(failure)
 
-        def discover_succeed(publicAddress):
+        def discovery_succeed(publicAddress):
             self.publicAddr = publicAddress
+            print 'Address discovered:', publicAddress
             if self.publicAddr != None:
                 d = defer.Deferred()
                 d = self._puncher.sndConnectionRequest(remoteUri, remoteAddress)
@@ -162,7 +167,7 @@ class NatConnectivity(NatManager, object):
             
             # Discovery external address
             d = self.publicAddrDiscovery(localPort)
-            d.addCallback(discover_succeed)
+            d.addCallback(discovery_succeed)
             d.addErrback(discovery_fail)
             
         # Registration to Connection Broker for incoming connection
@@ -173,7 +178,7 @@ class NatConnectivity(NatManager, object):
             d.addErrback(fail)
         else:
             d = self.publicAddrDiscovery(localPort)
-            d.addCallback(discover_succeed)
+            d.addCallback(discovery_succeed)
             d.addErrback(discovery_fail)
             
         return d_conn
