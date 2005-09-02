@@ -143,7 +143,7 @@ class NatConnectivity(NatManager, object):
             d_conn.callback(result)
 
         def connection_fail(failure):
-            print 'connection fail'
+            print 'connection fail', failure
             d = defer.Deferred()
             d.errback(failure)
 

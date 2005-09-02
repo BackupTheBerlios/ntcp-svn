@@ -160,6 +160,7 @@ class Puncher(PuncherProtocol, IConnector, object):
     @return void :
     """
 
+    self.d_conn = defer.Deferred()
     self.state = 'connection'
     if remoteAddress != None:
       self.host = self.remoteAddress
@@ -193,7 +194,7 @@ class Puncher(PuncherProtocol, IConnector, object):
     self.tid = self.getRandomTID()
     self.sendMessage(self.toAddress, listAttr)
 
-    return self.d
+    return self.d_conn
 
   def rcvConnectionResponse(self):
     """
@@ -519,9 +520,7 @@ class Puncher(PuncherProtocol, IConnector, object):
     self.connector = ConnectionPunching(punch=self)
     self.dedicatedConnector += (self.connector,)
     return self.dedicatedConnector[self.numConnector-1]
-    
-    self.connection.natTraversal(factory=self.s_factory) 
-    
+        
   
   def setServerFactory(self, factory):
     self.s_factory = factory

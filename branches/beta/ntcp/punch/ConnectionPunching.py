@@ -2,8 +2,9 @@ import struct, socket, time, logging, random, os
 
 from twisted.internet.protocol import Protocol, Factory, ClientFactory
 import twisted.internet.defer as defer
+import twisted.python.failure as failure
 from twisted.internet import reactor
-
+from twisted.internet import threads
 
 class ConnectionPunching(Protocol, ClientFactory, object):
   """
@@ -24,9 +25,10 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       self.sameLanAttempt = 1
       self.p2pnatAttempt = 1
       self.stunt2Attempt = 1
-      self.t = 10
+      self.t = 5
       self.peerConn = None #  An object implementing IConnector.
       self.timeout = None
+      self.error = 0
 
       try:
         if punch != None and punch.natObj:
@@ -35,7 +37,9 @@ class ConnectionPunching(Protocol, ClientFactory, object):
 
   def init_puncher_var(self, punch):
     if punch != None:
+      self.punch = punch
       self.reactor = punch.reactor
+      self.cbAddress = punch.cbAddress
       
       self.remoteUri = punch.remoteUri
       self.remotePublicAddress = punch.remotePublicAddress
@@ -49,6 +53,7 @@ class ConnectionPunching(Protocol, ClientFactory, object):
 
       self.requestor = punch.requestor
       self.d = punch.d
+      self.d_conn = punch.d_conn
       self.error = punch.error
   
   def natTraversal(self, factory=None):
@@ -60,6 +65,7 @@ class ConnectionPunching(Protocol, ClientFactory, object):
     
     self.attempt = 0
     
+    self.stunt1()
     if self.publicAddress[0] == self.remotePublicAddress[0] \
            and self.sameLanAttempt:
         # The two endpoints are in the same LAN
@@ -252,10 +258,38 @@ class ConnectionPunching(Protocol, ClientFactory, object):
           if self.attempt == 1:
             self.timeout = reactor.callLater(self.t, self.stopConnect)
       else:
-        self.ntcp_fail()
+        #self.ntcp_fail()
+        self.stunt1()
+
+  def stunt1(self):
+    """Try with spoofing"""
+    import ntcp.punch.UdpSniffy as udp_sniffer
+    import ntcp.punch.rawsniff as sniffer
+
+    # Start to listen for UDP communication
+    udp_obj = udp_sniffer.UDP_factory(self)
+                                      
+    # Start to sniff packets (run method in thread)
+    argv = ('', 'eth0', 'tcp port %d'%self.privateAddress[1])
+    #reactor.callInThread(sniffer.sniff(argv, udp_obj))
+    threads.deferToThread(sniffer.sniff(argv, udp_obj))
+    print 'connect'
+    self.reactor.connectTCP(\
+                  self.remotePublicAddress[0], \
+                  self.remotePublicAddress[1], \
+                  self, \
+                  timeout = 30, \
+                  bindAddress=self.privateAddress)
+    
+
+
 
   def ntcp_fail(self):
     print 'NTCP: failed to connect with:', self.remotePublicAddress
+    self.factory.clientConnectionFailed(self.punch, \
+                                        'NTCP: failed to connect with: %s:%d'%self.remotePublicAddress)
+##     print self
+##     self._super.d_conn.errback(failure.DefaultException('NTCP: failed to connect with: %s:%d'%self.remotePublicAddress))
 
 # ----------------------------------------------------------
 
