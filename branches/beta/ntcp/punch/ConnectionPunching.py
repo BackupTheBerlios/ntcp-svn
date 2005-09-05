@@ -29,6 +29,7 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       self.peerConn = None #  An object implementing IConnector.
       self.timeout = None
       self.error = 0
+      self.stunt = 0
 
       try:
         if punch != None and punch.natObj:
@@ -39,6 +40,7 @@ class ConnectionPunching(Protocol, ClientFactory, object):
     if punch != None:
       self.punch = punch
       self.reactor = punch.reactor
+      self.punchListen = punch.punchListen
       self.cbAddress = punch.cbAddress
       
       self.remoteUri = punch.remoteUri
@@ -47,8 +49,8 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       self.remoteNatType = punch.remoteNatType
       
       #self.remoteUri = punch.remoteUri
-      self.publicAddress = punch.natObj.publicAddr
-      self.privateAddress = punch.natObj.privateAddr
+      self.publicAddress = punch.publicAddr
+      self.privateAddress = punch.privateAddr
       self.natType = punch.natObj.type
 
       self.requestor = punch.requestor
@@ -64,8 +66,10 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       self.factory = factory
     
     self.attempt = 0
-    
-    self.stunt1()
+
+##     self.stunt1()
+##     return
+  
     if self.publicAddress[0] == self.remotePublicAddress[0] \
            and self.sameLanAttempt:
         # The two endpoints are in the same LAN
@@ -250,7 +254,7 @@ class ConnectionPunching(Protocol, ClientFactory, object):
           delay = random.random()
           self.peerConn = self.reactor.connectTCP(\
                   self.remotePublicAddress[0], \
-                  self.remotePublicAddress[1], \
+                  self.remotePublicAddress[1]+1, \
                   self, \
                   timeout = 1+delay, \
                   bindAddress=self.privateAddress)   
@@ -263,22 +267,26 @@ class ConnectionPunching(Protocol, ClientFactory, object):
 
   def stunt1(self):
     """Try with spoofing"""
+    self.method = 'stunt1'
     import ntcp.punch.UdpSniffy as udp_sniffer
-    import ntcp.punch.rawsniff as sniffer
+    import ntcp.punch.sniffy as sniffer
 
     # Start to listen for UDP communication
     udp_obj = udp_sniffer.UDP_factory(self)
-                                      
+                                          
+    self.remotePublicAddress = (self.remotePublicAddress[0], self.remotePublicAddress[1]-1)
+    self.publicAddress = (self.publicAddress[0], self.publicAddress[1]-1)
+    self.privateAddress = (self.privateAddress[0], self.privateAddress[1]-1)
+    print 'STUNT1: from:', self.privateAddress, \
+              'to:', self.remotePublicAddress
     # Start to sniff packets (run method in thread)
-    argv = ('', 'eth0', 'tcp port %d'%self.privateAddress[1])
-    #reactor.callInThread(sniffer.sniff(argv, udp_obj))
-    threads.deferToThread(sniffer.sniff(argv, udp_obj))
-    print 'connect'
+    argv = ('', 'eth0', 'tcp port %d and ip dst host %s'%(self.privateAddress[1], self.remotePublicAddress[0]))
+    self.reactor.callInThread(sniffer.sniff, argv, udp_obj)
+    time.sleep(1)
     self.reactor.connectTCP(\
                   self.remotePublicAddress[0], \
                   self.remotePublicAddress[1], \
                   self, \
-                  timeout = 30, \
                   bindAddress=self.privateAddress)
     
 
@@ -323,6 +331,7 @@ class ConnectionPunching(Protocol, ClientFactory, object):
     self.factory.startedConnecting(connector)
     
   def buildProtocol(self, addr):
+    print 'build protocol'
     self.protocol = self.factory.buildProtocol(addr)
     return ConnectionPunching(self, _s=self)
         
@@ -337,6 +346,12 @@ class ConnectionPunching(Protocol, ClientFactory, object):
         self._stunt2_clientConnectionFailed()
       elif self.method == 'p2pnat':
         self.p2pnat()
+      elif self.method == 'stunt1':
+        print '%s'%reason
+        self.stunt += 1
+        if self.stunt == 1:
+          self.stunt1()
+        
     else:
       self.factory.clientConnectionFailed(connector, reason)
 

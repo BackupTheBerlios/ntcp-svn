@@ -4,7 +4,10 @@ from twisted.internet.protocol import Protocol, ClientFactory, DatagramProtocol
 import twisted.internet.defer as defer
 from twisted.internet import reactor
 
-from ntcp.NatConnectivity import NatConnectivity 
+from ntcp.NatConnectivity import NatConnectivity
+
+from ntcp.test.TcpFactory import TcpFactory   
+from ntcp.test.TcpFactory import TcpConnection
 
 class Simulator(DatagramProtocol, object):
     """
@@ -28,6 +31,7 @@ class Simulator(DatagramProtocol, object):
         d = defer.Deferred()
         self.uri = ' '
         self.remoteUri = ' '
+        self.remote = ' '
         if len(sys.argv) > 1:
             self.uri = sys.argv[1]
         if len(sys.argv) > 2:
@@ -41,7 +45,8 @@ class Simulator(DatagramProtocol, object):
             print 'Registration to the SN Connection Broker has be done'
 
         def discoverySucceed(result):
-            factory = TcpClientFactory()
+            #factory = TcpClientFactory()
+            factory = TcpFactory(reactor, self)
             if len(sys.argv) == 2:
                 d = self.ntcp.listenTCP(factory=factory, myUri=self.uri).defer
                 d.addCallback(registrationSucceed)
@@ -87,7 +92,8 @@ class Simulator(DatagramProtocol, object):
             
         def conf_succeed(result):
             if result[0] != None and result[1] != None:
-                factory = TcpClientFactory()
+                #factory = TcpClientFactory()
+                factory = TcpFactory(reactor)
                 # self.remote = ('192.168.1.203', int(self.remote))
                 # self.ntcp.connectTCP(remoteAddress=self.remote, factory=factory)
                 d = self.ntcp.connectTCP(remoteUri=self.remote, factory=factory, myUri=self.uri)

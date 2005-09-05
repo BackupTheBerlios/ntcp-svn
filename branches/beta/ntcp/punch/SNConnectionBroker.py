@@ -24,6 +24,7 @@ class SNConnectionBroker (PuncherProtocol, object):
   def __init__(self):
     super(SNConnectionBroker, self).__init__()
     reactor.callLater(60, self.refreshTable)
+    self.spoofyTable = {}
     
 
   def rcvRegistrationRequest(self):
@@ -284,8 +285,18 @@ class SNConnectionBroker (PuncherProtocol, object):
 
     self.messageType = "Lookup Response"    
     self.sendMessage(self.requestor, listAttr)
+
 # ---
 
+# --- Forcing Tcp Request
+  def rcvForcingTcpRequest(self):
+    from ntcp.punch.Spoofy import Spoofy
+
+    spoofy = Spoofy(self)
+    spoofy.rcvForcingTcpRequest()
+    
+# --- /Forcing Tcp Request
+  
   def registrePeer(self, (userId, publicIP, privateIp, natInfo)):
     """Records the customer in the customer table"""
     self.peersTable[userId] = (publicIP, privateIp, natInfo, time.time())

@@ -15,6 +15,7 @@ MsgTypes = {0x1001 : 'Lookup Request',
             0x1132 : 'Configuration Response',
             0x1002 : 'Registration Request',
             0x1003 : 'Registration Response',
+            0x1301 : 'Forcing TCP Request',
             0x1102 : 'Hole Punching',
             0x1112 : 'Error Response'}
 
@@ -28,7 +29,9 @@ MsgAttributes = { 0x0001 : 'USER-ID',
                   0x0006 : 'REQUESTOR-PRIVATE-ADDRESSE',
                   0x0007 : 'REQUESTOR-NAT-TYPE',
                   0x0008 : 'ERROR-CODE', 
-                  0x0009 : 'UNKNOWN-ATTRIBUTES'   }
+                  0x0009 : 'UNKNOWN-ATTRIBUTES',
+                  0x1001 : 'SYN',
+                  }
 
 # The Error Code
 ErrorCodes = {
@@ -140,6 +143,10 @@ class PuncherProtocol(DatagramProtocol):
       # Registration Response
       self.rcvRegistrationResponse()
       
+    elif self.mt == 0x1301:
+      # Forcing TCP Request
+      self.rcvForcingTcpRequest()
+      
     elif self.mt == 0x1102:
       # Hole Punching
       self.rcvHolePunching()
@@ -178,6 +185,8 @@ class PuncherProtocol(DatagramProtocol):
       self.mt = 0x1002
     elif self.messageType == "Registration Response":
       self.mt = 0x1003
+    elif self.messageType == "Forcing TCP Request":
+      self.mt = 0x1301
     elif self.messageType == "Hole Punching":
       self.mt = 0x1102
     elif self.messageType == "Error Response":
@@ -218,6 +227,10 @@ class PuncherProtocol(DatagramProtocol):
         avstr = avstr + struct.pack('!hh', a, len(v)*2)
         for unkAttr in v:
           avstr = avstr + struct.pack('!h', unkAttr)
+
+      elif a == 0x1001:
+        # SYN
+        avstr = avstr + struct.pack('!hhL', a, 4, v)
             
     pktlen = len(avstr)
     if pktlen > 65535:
