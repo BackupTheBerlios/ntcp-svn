@@ -162,6 +162,7 @@ class Puncher(PuncherProtocol, IConnector, object):
 
     self.d_conn = defer.Deferred()
     self.state = 'connection'
+    self.error = 0
     if remoteAddress != None:
       self.host = self.remoteAddress
       self.toAddress = remoteAddress #Contact directly the remote andpoint
@@ -222,6 +223,7 @@ class Puncher(PuncherProtocol, IConnector, object):
     @return void :
     """
     self.requestor = 0
+    self.error = 0
 
     # Set remote configuration
     if "REQUESTOR-USER-ID" in self.avtypeList:

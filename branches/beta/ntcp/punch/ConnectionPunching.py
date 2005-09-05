@@ -337,6 +337,7 @@ class ConnectionPunching(Protocol, ClientFactory, object):
         
   def clientConnectionFailed(self, connector, reason):
     #print '%s'%reason
+##     print self.method,self.connected,  self.error
     if self.connected == 0 and not self.error:
       if self.method == 'sameLan':
         self._sameLan_clientConnectionFailed()
@@ -347,10 +348,10 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       elif self.method == 'p2pnat':
         self.p2pnat()
       elif self.method == 'stunt1':
-        print '%s'%reason
-        self.stunt += 1
-        if self.stunt == 1:
-          self.stunt1()
+        print 'ntcp: failed'
+##         self.stunt += 1
+##         if self.stunt == 1:
+##           self.stunt1()
         
     else:
       self.factory.clientConnectionFailed(connector, reason)

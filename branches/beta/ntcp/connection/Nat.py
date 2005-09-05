@@ -120,12 +120,9 @@ class NatManager:
     d = defer.Deferred()
     d2 = defer.Deferred()
 
-    print 'initial port:', localPort
     if localPort == 0:
       localPort = random.randrange(49152, 65535)
       
-    print 'selected port:', localPort
-
     # Set the private address too
     self.privatePort = localPort
     self.privateAddr = (self.privateIp, self.privatePort)

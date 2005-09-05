@@ -6,8 +6,8 @@ from twisted.internet import reactor
 
 from ntcp.NatConnectivity import NatConnectivity
 
-from ntcp.test.TcpFactory import TcpFactory   
-from ntcp.test.TcpFactory import TcpConnection
+from ntcp.test.TcpFactory_test import TcpFactory   
+from ntcp.test.TcpFactory_test import TcpConnection
 
 class Simulator(DatagramProtocol, object):
     """
