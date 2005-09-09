@@ -347,7 +347,7 @@ class NatConnectivity(NatManager, object):
 
         def discovery_succeed(publicAddress):
             self.publicAddr = publicAddress
-            print 'Address discovered:', publicAddress
+            #print 'Address discovered:', publicAddress
             if self.publicAddr != None:
                 d = defer.Deferred()
                 d = self._puncher.sndConnectionRequest(remoteUri, remoteAddress)
@@ -359,7 +359,7 @@ class NatConnectivity(NatManager, object):
         def registrationSucceed(result):
             
             print 'Registration to the SN Connection Broker has be done' 
-            print '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'  
+            print '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'  
             
             # Discovery external address
             d = self.publicAddrDiscovery(localPort)
@@ -368,6 +368,7 @@ class NatConnectivity(NatManager, object):
             
         # Registration to Connection Broker for incoming connection
         if myUri != None and not self._puncher.registered:
+            print '\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^' 
             d = self._puncher.sndRegistrationRequest(myUri)
             d.addCallback(registrationSucceed)
             d.addErrback(fail)

@@ -30,6 +30,7 @@ class _NatDiscover(stunt.StuntClient):
         self._Failed()
 
     def finishedStunt(self):
+        print '====================================================\n'
         if not self.d.called:
             self.d.callback(self.natType)
             

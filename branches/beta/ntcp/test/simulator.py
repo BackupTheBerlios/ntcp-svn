@@ -1,4 +1,5 @@
 import sys, random, time
+from sys import stdout, stdin
 
 from twisted.internet.protocol import Protocol, ClientFactory, DatagramProtocol
 import twisted.internet.defer as defer
@@ -43,12 +44,15 @@ class Simulator(DatagramProtocol, object):
             
         def registrationSucceed(result):
             print 'Registration to the SN Connection Broker has be done'
-            print '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+            print '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
 
         def discoverySucceed(result):
+                        
             #factory = TcpClientFactory()
             factory = TcpServer(reactor, self)
             if len(sys.argv) == 2:
+                print '\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+                
                 d = self.ntcp.listenTCP(factory=factory, myUri=self.uri).defer
                 d.addCallback(registrationSucceed)
                 d.addErrback(fail)
@@ -89,7 +93,6 @@ class Simulator(DatagramProtocol, object):
             
         def succeed(result):
             connector = result
-            print 'ccc', connector
             
         def conf_succeed(result):
             if result[0] != None and result[1] != None:
@@ -97,12 +100,41 @@ class Simulator(DatagramProtocol, object):
                 d = self.ntcp.connectTCP(remoteUri=self.remote, factory=factory, myUri=self.uri)
                 d.addCallback(succeed)
                 d.addErrback(fail)
-                          
-        d = self.ntcp.getP2PConfiguration(remoteUri=self.remote)
-        d.addCallback(conf_succeed)
-        d.addErrback(fail)
+            
+        def punching_succeed(address):
+            print '\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+            print 'Connection with peer established!'
+            print 'Press <ENTER> to contact peer directly for TCP connection:',
+            data=stdin.readline()            
+            
+            if address[0] != None and address[1] != None:
+                #factory = TcpClientFactory()
+                factory = TcpFactory(reactor, self)
+                host = address[0]
+                port = address[1]
+                # self.ntcp.connectTCP(remoteAddress=self.remote, factory=factory)
+                d = self.ntcp.connectTCP(host=host, port=port, factory=factory)
+                d.addCallback(succeed)
+                d.addErrback(fail)
         
+        print '\nDo you want to contact peer:'
+        print '\t1 - Through Connection Broker'
+        print '\t2 - Directly through UDP communication'
+        print '>> ',
+        data=stdin.readline()
 
+        if int(data) == 1:
+##             d = self.ntcp.getP2PConfiguration(remoteUri=self.remote)
+##             d.addCallback(conf_succeed)
+            factory = TcpFactory(reactor, self)
+            d = self.ntcp.connectTCP(remoteUri=self.remote, factory=factory, myUri=self.uri)
+            d.addCallback(succeed)
+            d.addErrback(fail)
+        else:
+            d = self.ntcp.holePunching(self.remote, self.uri)
+            d.addCallback(punching_succeed)
+            d.addErrback(fail)
+           
       
 class TcpConnection(Protocol):
     """

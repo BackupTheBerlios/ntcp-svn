@@ -69,6 +69,9 @@ class StuntClient(StuntProtocol, object):
     return 0
   
   def startDiscovery(self):
+    print ''
+    print '===================================================='
+    print '>> STUNT'
     self.log.debug('>> Test 1a')
     self.localPort = random.randrange(49152, 65535)
     self.test(self.serverAddress)
@@ -77,7 +80,9 @@ class StuntClient(StuntProtocol, object):
   def portDiscovery(self, port):
     self.localPort = port
     self.d = defer.Deferred()
-    self.log.debug('>> Test port discovery')
+    print ''
+    print '===================================================='
+    print '>> STUNT: Port discovery'
     self.state = '4'
     self.test(self.serverAddress)
     return self.d
@@ -93,7 +98,6 @@ class StuntClient(StuntProtocol, object):
   def sndMessage(self, attributes=()):
     self.tid = self.getRandomTID()
     self._pending[self.tid] = (time.time(), self.serverAddress)
-    self.log.debug('sndBindingRequest: message type: %s'%self.messageType)
     self.createMessage(attributes)
 
     return self.deferred
@@ -194,6 +198,8 @@ class StuntClient(StuntProtocol, object):
       self.finishedStunt()
 
   def handleStateDiscover(self):
+    print '====================================================\n'
+    print ''
     self._finishedPortDiscovery(self.resdict['externalAddress'])
       
 # ---------------------------------------------------------------
@@ -254,7 +260,6 @@ class StuntClient(StuntProtocol, object):
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind(localAddress)
     self.s = s
-    self.log.debug('connect to: %s:%d'%remoteAddress)
     s.connect(remoteAddress)
     #self.connectionMade()
     self._sendMessage(s)

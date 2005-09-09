@@ -26,11 +26,14 @@ class TcpConnection(Protocol):
         print self.simulator.remote,'>>',data
 
     def connectionMade(self):
+        print ''
+        print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
         print 'Connection Made...now you can send data...'
 
         print ' ',self.simulator.uri,'>> ',
         data=stdin.readline()
         while data != 'exit\n':
+            data = ''.join((data,'\r\n'))
             self.transport.write(data)
             print self.simulator.uri,'>> ',
             data=stdin.readline()
@@ -38,7 +41,7 @@ class TcpConnection(Protocol):
         
 ##         chat = Chat()
 ##         self.reactor.callInThread(chat.readWrite, self.transport, self.simulator)
-
+        
     def connectionLost(self, reason):
         print 'Lost connection.  Reason:', reason
 
@@ -57,6 +60,8 @@ class TcpServer(Protocol):
         print self.simulator.remote,'>>',data
 
     def connectionMade(self):
+        print ''
+        print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
         print 'Connection Made...now you can receive data...'
 
     def connectionLost(self, reason):

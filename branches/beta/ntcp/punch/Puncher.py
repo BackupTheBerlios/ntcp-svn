@@ -160,6 +160,7 @@ class Puncher(PuncherProtocol, IConnector, object):
     @return void :
     """
 
+    print '>> Send Connection Request'
     self.d_conn = defer.Deferred()
     self.state = 'connection'
     self.error = 0
@@ -210,8 +211,6 @@ class Puncher(PuncherProtocol, IConnector, object):
     self.remoteNatType = self.avtypeList["NAT-TYPE"]
 
     # Call the NAT traversal TCP method to try to connect
-##     self.connection = ConnectionPunching(punch=self)
-##     self.connection.natTraversal(factory=self.c_factory)
     self.getDedicatedConnector().natTraversal(factory=self.c_factory) 
 
   def rcvConnectionRequest(self):
@@ -222,6 +221,7 @@ class Puncher(PuncherProtocol, IConnector, object):
 
     @return void :
     """
+    print '>> Connection Request Received'
     self.requestor = 0
     self.error = 0
 
@@ -249,6 +249,7 @@ class Puncher(PuncherProtocol, IConnector, object):
       d.errback(failure)
       
     def discover_succeed(publicAddress):
+      
       listAttr = ()
       # Prepare the message's attributes
       # My conf
@@ -266,13 +267,10 @@ class Puncher(PuncherProtocol, IConnector, object):
       listAttr = listAttr + ((0x0006, self.getPortIpList(self.remotePrivateAddress)),)
       listAttr = listAttr + ((0x0007, self.remoteNatType),)
 
-      print 'send Connection Response to:', self.fromAddr
       self.messageType = "Connection Response"   
       self.sendMessage(self.fromAddr, listAttr)
       
       # Call the NAT traversal TCP method to try to connect
-##     self.connection = ConnectionPunching(punch=self)
-##     self.connection.natTraversal(factory=self.s_factory)
       self.getDedicatedConnector().natTraversal(factory=self.s_factory)
 
       return d
@@ -415,6 +413,9 @@ class Puncher(PuncherProtocol, IConnector, object):
     @param string uri : The remote node identifier (connection throught CB)
     @return void :
     """
+    print '\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+    print '>> Hole Punching..',
+    self.state = 'lookup'
     self.d_lookup = defer.Deferred()
     self.toAddress = self.cbAddress #Connection througth the CB
     self.uri = localUri
@@ -443,7 +444,8 @@ class Puncher(PuncherProtocol, IConnector, object):
 
     @return void :
     """
-    print 'Received Lookup Request'
+    print '\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+    print '>> Hole Punching..',
     # Set remote configuration
     if "REQUESTOR-USER-ID" in self.avtypeList:
       self.remoteUri = self.avtypeList["REQUESTOR-USER-ID"]    
@@ -461,7 +463,6 @@ class Puncher(PuncherProtocol, IConnector, object):
 
     @return void :
     """
-    print 'Received Lookup Response'
     # Set remote configuration
     self.remotePublicAddress = self.getAddress('PUBLIC-ADDRESSE')
     self.remotePrivateAddress = self.getAddress('PRIVATE-ADDRESSE')
@@ -472,14 +473,14 @@ class Puncher(PuncherProtocol, IConnector, object):
 
   def sndHolePunching(self):
     self.toAddress = self.remotePublicAddress #Hole punching to endpoint
-    print 'Sent Hole Punching'
         
     self.messageType = 'Hole Punching'
     self.tid = self.getRandomTID()
     self.sendMessage(self.toAddress)
 
   def rcvHolePunching(self):
-    print 'Hole punching: received message from:', self.fromAddr
+    print 'DONE'
+    print '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
     # Send an Hole Punching message
     self.sndHolePunching()
     try:
@@ -517,6 +518,8 @@ class Puncher(PuncherProtocol, IConnector, object):
         self.conf_d.callback('Unknown')
       else:
         self.conf_d.errback(failure.DefaultException('%d:%s'%(error, phrase)))
+    elif self.state == 'lookup':
+      self.d_lookup.errback(failure.DefaultException('%d:%s'%(error, phrase)))
     else:
       self.c_factory.clientConnectionFailed(self, '(%s: %s)'%(error, phrase))
 # --

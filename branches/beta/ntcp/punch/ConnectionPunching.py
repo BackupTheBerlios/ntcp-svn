@@ -1,4 +1,4 @@
-import struct, socket, time, logging, random, os
+import struct, socket, time, logging, random, os, sys
 
 from twisted.internet.protocol import Protocol, Factory, ClientFactory
 import twisted.internet.defer as defer
@@ -32,7 +32,7 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       try:
         if punch != None and punch.natObj:
           self.init_puncher_var(punch)
-      except: print 'except'
+      except: pass
 
   def init_puncher_var(self, punch):
     if punch != None:
@@ -94,15 +94,12 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       and this method could fail if the peers are behind
       different internal NATs.
       """
-      self.log.debug('Endpoints in the same LAN:')
-      self.log.debug('try to connect with private address')
+      print 'Endpoints in the same LAN.'
       if self.requestor:
           self.transport = None
-          print 'Same LAN: Try to connect...'
           self.peerConn = self.reactor.connectTCP(\
                   self.remotePrivateAddress[0], \
                   self.remotePrivateAddress[1], self)
-          self.log.debug('ppp:%s'%self.peerConn)
       else:
           # listen
           print 'Same LAN: listen on:', self.privateAddress[1]
@@ -180,8 +177,6 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       else:
         # Here I try with an initial client connection
         # that fail --> try to listen
-        print 'STUNT2:Contacted -> from:', self.privateAddress, \
-              'to:', self.remotePublicAddress[0], self.remotePrivateAddress[1]
         # self.transport = None
         self.peerConn = self.reactor.connectTCP(\
               self.remotePublicAddress[0], \
@@ -219,7 +214,8 @@ class ConnectionPunching(Protocol, ClientFactory, object):
           self.p2pnat()
     else:
       # listen
-      self.log.debug('Listen on %s:%d'%self.privateAddress)
+      print 'STUNT2:Listen on:', self.privateAddress, \
+            'for:', (self.remotePublicAddress[0], self.remotePrivateAddress[1])
       self.peerConn = self.reactor.listenTCP(\
               self.privateAddress[1], self)
       if self.method == 'stunt2':

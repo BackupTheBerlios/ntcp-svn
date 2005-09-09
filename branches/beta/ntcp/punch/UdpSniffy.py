@@ -12,7 +12,6 @@ class UDP_factory:
     """Sends the SYN number of my connect()ion to:
     - the connection broker for spoofing"""
 
-    print 'Addresses:', self.connector.publicAddress, self.connector.remotePublicAddress
 
     listAttr = ()
     self.SYN=int(syn)
@@ -22,7 +21,7 @@ class UDP_factory:
                             self.punch.getPortIpList(self.connector.remotePublicAddress)),)
     listAttr = listAttr + ((0x1001, self.SYN),)
 
-    print 'send Forcing TCP Request to:', self.connector.cbAddress, 'with SYN', self.SYN
+##     print 'send Forcing TCP Request to:', self.connector.cbAddress, 'with SYN', self.SYN
     self.punch.messageType = 'Forcing TCP Request'
     self.punch.tid = self.punch.getRandomTID()
     self.punch.sendMessage(self.connector.cbAddress, listAttr)

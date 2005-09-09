@@ -46,6 +46,12 @@ class Simulator(DatagramProtocol, object):
             print 'Registration to the SN Connection Broker has be done'
 
         def discoverySucceed(result):
+            
+            print '\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+            print 'STUNT Discovery finisched!'
+            print 'Press <ENTER> to register for Hole Punching:',
+            data=stdin.readline()
+            
             #factory = TcpClientFactory()
             factory = TcpServer(reactor, self)
             if len(sys.argv) == 2:

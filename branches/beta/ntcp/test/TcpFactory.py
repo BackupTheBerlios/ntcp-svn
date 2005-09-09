@@ -11,6 +11,8 @@ class TcpConnection(Protocol):
         print '>>',data
 
     def connectionMade(self):
+        print ''
+        print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
         print 'Connection Made...now you can send data...'
 
         print '>> ',
@@ -36,6 +38,8 @@ class TcpServer(Protocol):
         print '>>',data
 
     def connectionMade(self):
+        print ''
+        print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
         print 'Connection Made...now you can receive data...'
 
     def connectionLost(self, reason):
