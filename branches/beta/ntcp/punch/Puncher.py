@@ -164,7 +164,7 @@ class Puncher(PuncherProtocol, IConnector, object):
     self.state = 'connection'
     self.error = 0
     if remoteAddress != None:
-      self.host = self.remoteAddress
+      self.host = remoteAddress
       self.toAddress = remoteAddress #Contact directly the remote andpoint
     else:
       if remoteUri == None: 
@@ -407,19 +407,17 @@ class Puncher(PuncherProtocol, IConnector, object):
 # -- Configuration (end)
 
 # -- Lookup
-  def sndLookupRequest(self, remoteUri=None, remoteAddress=None):
+  def sndLookupRequest(self, remoteUri=None, localUri=None):
     """
     Send a connection request to discover and advise the remote user
     behind a NAT for a TCP connection.
-    If the remote address is supplied, the request is sended directly
-    to remote endpoint, otherwise the CB is contacted.
 
     @param string uri : The remote node identifier (connection throught CB)
-    @param Address remoteAddress : The remote endpoint's address (directly connection)
     @return void :
     """
-    d = defer.Deferred()
+    self.d_lookup = defer.Deferred()
     self.toAddress = self.cbAddress #Connection througth the CB
+    self.uri = localUri
     
     listAttr = ()
     self.publicAddr = (self.natObj.publicIp, 0)
@@ -436,7 +434,7 @@ class Puncher(PuncherProtocol, IConnector, object):
     self.messageType = 'Lookup Request'
     self.tid = self.getRandomTID()
     self.sendMessage(self.toAddress, listAttr)
-    return d
+    return self.d_lookup
 
   def rcvLookupRequest(self):
     """
@@ -474,7 +472,7 @@ class Puncher(PuncherProtocol, IConnector, object):
 
   def sndHolePunching(self):
     self.toAddress = self.remotePublicAddress #Hole punching to endpoint
-    print 'Received Hole Punching'
+    print 'Sent Hole Punching'
         
     self.messageType = 'Hole Punching'
     self.tid = self.getRandomTID()
@@ -482,6 +480,12 @@ class Puncher(PuncherProtocol, IConnector, object):
 
   def rcvHolePunching(self):
     print 'Hole punching: received message from:', self.fromAddr
+    # Send an Hole Punching message
+    self.sndHolePunching()
+    try:
+      self.d_lookup.callback(self.remotePublicAddress)
+    except:
+      pass
     
 # --
   def sendMessage(self, toAddr, attributes=()):

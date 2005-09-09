@@ -30,12 +30,10 @@ class _NatDiscover(stunt.StuntClient):
         self._Failed()
 
     def finishedStunt(self):
-        self.log.debug('NatDiscovery finished')
         if not self.d.called:
             self.d.callback(self.natType)
             
     def _finishedPortDiscovery(self, address):
-        self.log.debug('Port Discovery finished')
         if not self.d.called:
             self.d.callback(address)
 

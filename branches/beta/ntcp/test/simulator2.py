@@ -1,4 +1,5 @@
 import sys, random, time
+from sys import stdout, stdin
 
 from twisted.internet.protocol import Protocol, ClientFactory, DatagramProtocol
 import twisted.internet.defer as defer
@@ -43,7 +44,6 @@ class Simulator(DatagramProtocol, object):
             
         def registrationSucceed(result):
             print 'Registration to the SN Connection Broker has be done'
-            print '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
 
         def discoverySucceed(result):
             #factory = TcpClientFactory()
@@ -89,17 +89,25 @@ class Simulator(DatagramProtocol, object):
             
         def succeed(result):
             connector = result
-            print 'ccc', connector
             
-        def conf_succeed(result):
-            if result[0] != None and result[1] != None:
+        def punching_succeed(address):
+            print '\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+            print 'Connection with peer established!'
+            print 'Press <ENTER> to contact peer directly for TCP connection:',
+            data=stdin.readline()            
+            
+            if address[0] != None and address[1] != None:
+                #factory = TcpClientFactory()
                 factory = TcpFactory(reactor, self)
-                d = self.ntcp.connectTCP(remoteUri=self.remote, factory=factory, myUri=self.uri)
+                host = address[0]
+                port = address[1]
+                # self.ntcp.connectTCP(remoteAddress=self.remote, factory=factory)
+                d = self.ntcp.connectTCP(host=host, port=port, factory=factory)
                 d.addCallback(succeed)
                 d.addErrback(fail)
                           
-        d = self.ntcp.getP2PConfiguration(remoteUri=self.remote)
-        d.addCallback(conf_succeed)
+        d = self.ntcp.holePunching(self.remote, self.uri)
+        d.addCallback(punching_succeed)
         d.addErrback(fail)
         
 

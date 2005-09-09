@@ -260,7 +260,6 @@ class StuntClient(StuntProtocol, object):
     self._sendMessage(s)
 
   def _sendMessage(self, s):
-    self.log.debug('Send message')
     s.send(self.pkt)
     if self.state == '1a' or self.state == '1b' \
            or self.state == '2' or self.state == '3'\
@@ -304,7 +303,6 @@ class StuntClient(StuntProtocol, object):
 
   def synReceived(self, (s, addr)):
     self.closeSocket(s)
-    self.log.debug('synReceived')
     if addr != '127.0.0.1' and addr != self.localIp:
       self.log.debug('synReceived')
       self.receivedSYN = 1

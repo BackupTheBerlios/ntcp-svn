@@ -92,7 +92,6 @@ class StuntProtocol(Protocol):
     @param string message : The message to parse
     @return void :
     """
-    self.log.debug('Parse Message')
     self.avtypeList = {}
     # Header
     self.mt, self.pktlen, self.tid = struct.unpack('!hh16s', message[:20])
@@ -137,8 +136,6 @@ class StuntProtocol(Protocol):
 
     @return void :
     """
-    self.log.debug('Analyse Message')
-    self.log.debug('Received %04x message type'%self.mt)
     if self.mt == 0x0001:
       # Binding Request
       self.rcvBindingRequest()
@@ -153,7 +150,6 @@ class StuntProtocol(Protocol):
       
     elif self.mt == 0x0003:
       # Capture Request
-      print "received Capture Request"
       self.rcvCaptureRequest()
       
     elif self.mt == 0x0103:
@@ -175,7 +171,6 @@ class StuntProtocol(Protocol):
     """
     avpairs = ()
     # The message Type
-    self.log.debug('createMessage: message type: %s'%self.messageType)
     if self.messageType   == "Binding Request":
       self.mt = 0x0001
     elif self.messageType == "Binding Response":
@@ -239,7 +234,6 @@ class StuntProtocol(Protocol):
     @return void :
     """
     #self.createMessage(attributes)
-    self.log.debug('send message')
     self.transport.write(self.pkt)
 
   def getRandomTID(self):

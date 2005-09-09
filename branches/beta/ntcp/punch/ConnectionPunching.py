@@ -23,8 +23,6 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       self.connected = 0
       self.attempt = 0
       self.sameLanAttempt = 1
-      self.p2pnatAttempt = 1
-      self.stunt2Attempt = 1
       self.t = 5
       self.peerConn = None #  An object implementing IConnector.
       self.timeout = None
@@ -66,9 +64,6 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       self.factory = factory
     
     self.attempt = 0
-
-##     self.stunt1()
-##     return
   
     if self.publicAddress[0] == self.remotePublicAddress[0] \
            and self.sameLanAttempt:
@@ -163,11 +158,9 @@ class ConnectionPunching(Protocol, ClientFactory, object):
           pass
 
   def stunt2(self):
-      #self.log.debug('Try to connect with STUNT\#2 method')
-      #print 'Try to connect with STUNT2 method'
       if self.requestor:
         # Here I try just several client connection
-        print 'STUNT2:Requestor -> from:', self.privateAddress, \
+        print 'STUNT2:Connect -> from:', self.privateAddress, \
               'to:', self.remotePublicAddress
         
         self.transport = None
@@ -208,9 +201,6 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       self.stunt2()
           
   def _stunt2_clientConnectionFailed(self):
-    # If exist, stop timeout
-##     try: self.timeout.cancel()
-##     except: pass
       
     if self.requestor:
       if self.attempt < self.t * 100:
@@ -248,7 +238,6 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       if self.attempt < self.t * 10:
           # connect
           self.attempt = self.attempt + 1
-          #self.log.debug('Try to connect with P2PNAT method %d'%self.attempt)
           print 'P2PNAT: From:', self.privateAddress, \
                 'to:', self.remotePublicAddress
           delay = random.random()
@@ -268,20 +257,29 @@ class ConnectionPunching(Protocol, ClientFactory, object):
   def stunt1(self):
     """Try with spoofing"""
     self.method = 'stunt1'
-    import ntcp.punch.UdpSniffy as udp_sniffer
-    import ntcp.punch.sniffy as sniffer
+    try:
+      import ntcp.punch.UdpSniffy as udp_sniffer
+      import ntcp.punch.sniffy as sniffer
+    except:
+      self.clientConnectionFailed(self.punch, 'NTCP failed: Impacket library required')
+      return
+    
+    try:
+      # Start to listen for UDP communication
+      udp_obj = udp_sniffer.UDP_factory(self)
 
-    # Start to listen for UDP communication
-    udp_obj = udp_sniffer.UDP_factory(self)
-                                          
-    self.remotePublicAddress = (self.remotePublicAddress[0], self.remotePublicAddress[1]-1)
-    self.publicAddress = (self.publicAddress[0], self.publicAddress[1]-1)
-    self.privateAddress = (self.privateAddress[0], self.privateAddress[1]-1)
-    print 'STUNT1: from:', self.privateAddress, \
-              'to:', self.remotePublicAddress
-    # Start to sniff packets (run method in thread)
-    argv = ('', 'eth0', 'tcp port %d and ip dst host %s'%(self.privateAddress[1], self.remotePublicAddress[0]))
-    self.reactor.callInThread(sniffer.sniff, argv, udp_obj)
+      self.remotePublicAddress = (self.remotePublicAddress[0], self.remotePublicAddress[1]-1)
+      self.publicAddress = (self.publicAddress[0], self.publicAddress[1]-1)
+      self.privateAddress = (self.privateAddress[0], self.privateAddress[1]-1)
+      print 'STUNT1: from:', self.privateAddress, \
+                'to:', self.remotePublicAddress
+      # Start to sniff packets (run method in thread)
+      argv = ('', 'eth0', 'tcp port %d and ip dst host %s'%(self.privateAddress[1], self.remotePublicAddress[0]))
+      self.reactor.callInThread(sniffer.sniff, argv, udp_obj, self)
+    except:
+      self.clientConnectionFailed(self.punch, 'NTCP failed: impossible to travers the NATs. You probably have not administrator privileges')
+      return
+    
     time.sleep(1)
     self.reactor.connectTCP(\
                   self.remotePublicAddress[0], \
@@ -292,12 +290,12 @@ class ConnectionPunching(Protocol, ClientFactory, object):
 
 
 
-  def ntcp_fail(self):
-    print 'NTCP: failed to connect with:', self.remotePublicAddress
-    self.factory.clientConnectionFailed(self.punch, \
-                                        'NTCP: failed to connect with: %s:%d'%self.remotePublicAddress)
-##     print self
-##     self._super.d_conn.errback(failure.DefaultException('NTCP: failed to connect with: %s:%d'%self.remotePublicAddress))
+  def ntcp_fail(self, reason=None):
+    if reason == None:
+      self.factory.clientConnectionFailed(self.punch, \
+                                          'NTCP: failed to connect with: %s:%d'%self.remotePublicAddress)
+    else:
+      self.factory.clientConnectionFailed(self.punch, reason)
 
 # ----------------------------------------------------------
 
@@ -318,7 +316,7 @@ class ConnectionPunching(Protocol, ClientFactory, object):
     except:
       pass
     
-    self._super.d.callback(self._super.peerConn)
+    #self._super.d.callback(self._super.peerConn)
     
     self._super.protocol.transport = self.transport
     self._super.protocol.connectionMade()
@@ -331,13 +329,10 @@ class ConnectionPunching(Protocol, ClientFactory, object):
     self.factory.startedConnecting(connector)
     
   def buildProtocol(self, addr):
-    print 'build protocol'
     self.protocol = self.factory.buildProtocol(addr)
     return ConnectionPunching(self, _s=self)
         
   def clientConnectionFailed(self, connector, reason):
-    #print '%s'%reason
-##     print self.method,self.connected,  self.error
     if self.connected == 0 and not self.error:
       if self.method == 'sameLan':
         self._sameLan_clientConnectionFailed()
@@ -348,10 +343,9 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       elif self.method == 'p2pnat':
         self.p2pnat()
       elif self.method == 'stunt1':
-        print 'ntcp: failed'
-##         self.stunt += 1
-##         if self.stunt == 1:
-##           self.stunt1()
+        self.ntcp_fail()
+      else:
+        self.factory.clientConnectionFailed(connector, reason)
         
     else:
       self.factory.clientConnectionFailed(connector, reason)
