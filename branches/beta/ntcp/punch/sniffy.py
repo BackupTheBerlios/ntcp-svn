@@ -23,14 +23,16 @@ class DecoderThread(Thread):
         Thread.__init__(self)
 
     def run(self):
-        # Sniff ad infinitum.
-        # PacketHandler shall be invoked by pcap for every packet.
+        """Sniff ad infinitum.
+        PacketHandler shall be invoked by pcap for every packet.
+        """
         self.pcap.loop(1, self.packetHandler)
 
     def packetHandler(self, hdr, data):
-        # Use the ImpactDecoder to turn the rawpacket into a hierarchy
-        # of ImpactPacket instances.
-        # Display the packet in human-readable form.
+        """Use the ImpactDecoder to turn the rawpacket into a hierarchy
+        of ImpactPacket instances.
+        Display the packet in human-readable form.
+        """
         try:
             packet = self.decoder.decode(data)
             #print 'Try to send SYN...'
@@ -40,9 +42,11 @@ class DecoderThread(Thread):
             print "Unexpected error:", sys.exc_info()[0], sys.exc_info()[1]
 
 def getInterface():
-    # Grab a list of interfaces that pcap is able to listen on.
-    # The current user will be able to listen from all returned interfaces,
-    # using open_live to open them.
+    """
+    Grab a list of interfaces that pcap is able to listen on.
+    The current user will be able to listen from all returned interfaces,
+    using open_live to open them.
+    """
     ifs = findalldevs()
 
     if sys.platform == 'win32':
@@ -66,9 +70,14 @@ def getInterface():
 
 
 def sniff(argv, udp_obj, connector):
+    """
+    Starts to sniff for packet defined in argv filter
 
-    # Create the hole for UDP communication
-    #udp_obj.punchHole()
+    @param argv: the string with a filter
+    @param udp_obj: an udp objct to communicate with CB
+    @param connector: to call the client factory functions
+    """
+
     try:
         sys.argv = argv
         if len(sys.argv) < 3:

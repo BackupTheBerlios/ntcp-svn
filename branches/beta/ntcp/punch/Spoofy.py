@@ -13,7 +13,10 @@ from impacket import ImpactPacket
 
 
 class Spoofy:
-    """"""
+    """
+    If a spoofing request is received, waits for the two SYN numbers
+    and spoof the relative SYNACK packets
+    """
 
     def __init__(self, punch):
         self.punch = punch
@@ -38,7 +41,7 @@ class Spoofy:
 
 
 class Broker(Protocol):
-    """Broke the NAT firewall sending spoofed packet"""
+    """Broke the NAT firewall sending spoofed SYNACK packet"""
 
     def __init__(self):
         pass

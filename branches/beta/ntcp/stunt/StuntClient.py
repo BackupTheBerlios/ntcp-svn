@@ -17,7 +17,10 @@ CHANGE_IP = struct.pack('!i',4)
 CHANGE_BOTH = struct.pack('!i',6)
 
 class _NatType:
-  """The NAT handler"""
+  """
+  The NAT handler
+  A NAT object to save the NAT's information (used just in STUNT class)
+  """
   def __init__(self, type, useful=True, blocked=False, 
                _publicIp=None, _privateIp=None, _delta=0):
     
@@ -33,6 +36,10 @@ class _NatType:
     return '<NatType %s>'%(self.type)
 
 class StuntClient(StuntProtocol, object):
+  """
+  Implements the STUNT discovery procedure to discover
+  the NAT's configuration.  (see draft STUNT)
+  """
   
   log = logging.getLogger("ntcp")
 
@@ -69,15 +76,23 @@ class StuntClient(StuntProtocol, object):
     return 0
   
   def startDiscovery(self):
+    """
+    Starts the discovery method (test1 - see diagram above)
+    """
     print ''
     print '===================================================='
     print '>> STUNT'
     self.log.debug('>> Test 1a')
+    # Chose a port for discovery
     self.localPort = random.randrange(49152, 65535)
     self.test(self.serverAddress)
     return self.d
   
   def portDiscovery(self, port):
+    """
+    Starts the dicovery method to know the situation for a given port
+    just before a TCP connection (test 1 implemented)
+    """
     self.localPort = port
     self.d = defer.Deferred()
     print ''
@@ -88,19 +103,27 @@ class StuntClient(StuntProtocol, object):
     return self.d
   
   def sndBindingRequest(self):
+    """
+    Sends a Binding Request (see draft STUNT)
+    """
     self.messageType = 'Binding Request'
     self.sndMessage()
 
   def sndCaptureRequest(self, attributes=()):
+    """
+    Sends a Capture Request (see draft STUNT)
+    """
+    self.messageType = 'Binding Request'
     self.messageType = 'Capture Request'
     self.sndMessage(attributes)
     
   def sndMessage(self, attributes=()):
+    """
+    Adds a tid to packet and call the funtion to pack it
+    """
     self.tid = self.getRandomTID()
     self._pending[self.tid] = (time.time(), self.serverAddress)
     self.createMessage(attributes)
-
-    return self.deferred
 
   def finishedStunt(self):
     pass
@@ -133,12 +156,17 @@ class StuntClient(StuntProtocol, object):
       self.handleStateDiscover()
   
   def handleState1a(self):
+    """
+    Handle the response to test 1
+    """
     if self.resdict['externalAddress'] == (self.localIp, self.localPort):
+      # No NAT
       self.natType = _NatType('None', \
                               _publicIp=self.localIp, \
                               _privateIp=self.localIp)
       self.finishedStunt()
     else:
+      # Start Test1 second time
       self.log.debug('>> Test 1b')
       self.state = '1b'
       self.publicIp = self.resdict['externalAddress'][0]
@@ -151,7 +179,11 @@ class StuntClient(StuntProtocol, object):
       #-----------------------------------------------------------
 
   def handleState1b(self):
+    """
+    Handle the response to test 1 (second time)
+    """
     if self.resdict['externalAddress'] != self.previousExternalAddress:
+      # NAT Session Dependent
       self.delta = self.resdict['externalAddress'][1] - \
                    self.previousExternalAddress[1]
       self.natType = _NatType('SessionDependent', \
@@ -160,13 +192,18 @@ class StuntClient(StuntProtocol, object):
       #self.startFileringDiscovery()
       self.finishedStunt()
     else:
+      # Start Test 2
       self.log.debug('>> Test 2')
       self.state = '2'
       address = (self.serverAddress[0], self.resdict['_altStunAddress'][1])
       self.test(address)    
 
   def handleState2(self):
+    """
+    Handle the response to test 2
+    """
     if self.resdict['externalAddress'] != self.previousExternalAddress:
+      # NAT Address & Port Dependent
       self.delta = self.resdict['externalAddress'][1] - \
                    self.previousExternalAddress[1]
       self.natType = _NatType('AddressPortDependent', \
@@ -176,13 +213,18 @@ class StuntClient(StuntProtocol, object):
       #self.startFileringDiscovery()
       self.finishedStunt()
     else:
+      # Start Test 3
       self.log.debug('>> Test 3')
       self.state = '3'
       address = self.resdict['_altStunAddress']
       self.test(address)    
 
   def handleState3(self):
+    """
+    Handles the response to test 3
+    """
     if self.resdict['externalAddress'] != self.previousExternalAddress:
+      # NAT Address Dependent
       self.delta = self.resdict['externalAddress'][1] - self.previousExternalAddress[1]
       self.natType = _NatType('AddressDependent', \
                               _publicIp=publicIp, \
@@ -191,6 +233,7 @@ class StuntClient(StuntProtocol, object):
       #self.startFileringDiscovery()
       self.finishedStunt()
     else:
+      # NAT Independent
       self.natType = _NatType('Independent', \
                               _publicIp=self.publicIp, \
                               _privateIp=self.privateIp)
@@ -198,21 +241,35 @@ class StuntClient(StuntProtocol, object):
       self.finishedStunt()
 
   def handleStateDiscover(self):
+    """
+    Handles the responde to address discovery for successive TCP connection
+    """
     print '====================================================\n'
     print ''
-    self._finishedPortDiscovery(self.resdict['externalAddress'])
+    self.finishedPortDiscovery(self.resdict['externalAddress'])
       
 # ---------------------------------------------------------------
 
 # ---------------------------------------------------------------
-# TEST (1, 2, 3) in STUNT protocol: Endpoint Filtering Behaviour 
+# TEST (1, 2, 3) in STUNT protocol: Endpoint Filtering Behaviour
+# This section is be created but not sufficently tested.
+# It could be usefull for future improvements
 # ---------------------------------------------------------------
 
   def startFileringDiscovery(self):
+    
+    self.factory = Factory()
+    self.factory.protocol = TcpServer
+    self.listen = 0
+    
     attributes = ()
     self.localPort = random.randrange(7000, 7100)
+    #self.listenPort = random.randrange(7000, 7100)
+    self.listenPort = self.localPort
     self.log.debug('>> Filter: Test 2')
-    attributes = attributes + ((0x0003, CHANGE_BOTH),)
+    attributes = attributes + ((0x0002, self.getPortIpList((self.publicIp,\
+                                                           self.listenPort))),)
+##     attributes = attributes + ((0x0003, CHANGE_BOTH),)
     self.state = 'f2' # It doesn't try test 1
     self.filterTest(self.serverAddress, attributes)
   
@@ -252,73 +309,85 @@ class StuntClient(StuntProtocol, object):
 # ---------------------------------------------------------------
       
 # ---------------------------------------------------------------
+# In this section we have rewrite the function to menage a TCP connection
+# This allows a better utilisation of the socket options (ttl, REUSE ADDRESS, timeout, ...)
 # ---------------------------------------------------------------
-
+  
   def connect(self, remoteAddress, localAddress):
+    """
+    Create and bind a socket.
+    Connect to STUNT server
+    """
     #create an INET, STREAMing socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # Sets socket option to allow a fast reuse of the bound address
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    # Bind socket
     s.bind(localAddress)
     self.s = s
+    # connect to STUNT server
     s.connect(remoteAddress)
     #self.connectionMade()
     self._sendMessage(s)
 
   def _sendMessage(self, s):
+    """
+    Sends a message on TCP connection
+    """
     s.send(self.pkt)
+    
     if self.state == '1a' or self.state == '1b' \
            or self.state == '2' or self.state == '3'\
            or self.state == '4': 
       self.recvMessage(s)
-    if self.state == 'f1' or self.state == 'f2' or self.state == 'f3':
-      d = threads.deferToThread(self.listen, s)
-      d.addCallback(self.synReceived)
-      d.addErrback(self.error)
-      d.setTimeout(5, self.synNotReceived, s)
       
-      #self.reactor.callLater(5, self.synNotReceived)
-
-      return d
-
+    if self.state == 'f1' or self.state == 'f2' or self.state == 'f3':
+      # For endpoint filtering behavior
+      if not self.listen:
+        self.listen += 1
+        self.closeSocket(s)
+        self.reactor.listenTCP(self.listenPort, self.factory)
+        self.reactor.callLater(5, self.synNotReceived)
+      
   def recvMessage(self, s):
+    """
+    Wait for a response message from STUNT server
+    """
     data = s.recv(65535)
     self.closeSocket(s)
     self.dataReceived(data)
 
-  def listen(self, s):
-    #self.reactor.callLater(5, self.timeout, s)
-    #self.reactor.callInThread(self.timeout, s)
-##     self.s = s
-##     d = threads.deferToThread(self.timeout)
-##     d.addCallback(self.synNotReceived)
-    #self.closeSocket(s)
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    s.bind((self.localIp, self.localPort))
-    s.listen(1)
-    conn, addr = s.accept()
-    conn.close()
-    self.closeSocket(s)
 
-    return (conn, addr)
         
   def closeSocket(self, s):
-    s.shutdown(2)
-    s.close
+    """
+    Close definitively a socket
+    """
+    try:
+      s.shutdown(2)
+      s.close
+    except: pass
 
   def synReceived(self, (s, addr)):
+    """
+    Tests incoming SYN packet
+    """
+    print 'synReceived'
     self.closeSocket(s)
     if addr != '127.0.0.1' and addr != self.localIp:
       self.log.debug('synReceived')
       self.receivedSYN = 1
       self.rcvCaptureResponse()
     
-  def synNotReceived(self, args, sock):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    s.connect((self.localIp, self.localPort))
-    self.closeSocket(s)
-    self.closeSocket(sock)
+  def synNotReceived(self):
+    print 'Syn not received'
+    self.transport.loseConnection()
+    
+##     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+##     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+##     s.connect((self.localIp, self.localPort))
+##     #self.closeSocket(s)
+##     self.closeSocket(sock)
     
     self.log.debug('synNotReceived')
     self.receivedSYN = 0
@@ -327,7 +396,35 @@ class StuntClient(StuntProtocol, object):
 
   def error(self, reason):
     pass
+  
 # ---------------------------------------------------------------
+class TcpServer(Protocol):
+    """
+    All the Twisted functions for a TCP connection (c/s) 
+    """
+        
+    def dataReceived(self, data):
+        print '>>',data
+
+    def connectionMade(self):
+        print 'Connection Made...now you can receive data...'
+
+    def connectionLost(self, reason):
+        print 'Lost connection.  Reason:', reason
+
+    def startedConnecting(self, connector):
+        pass
+    
+    def buildProtocol(self, addr):
+        return self
+        
+    def clientConnectionLost(self, connector, reason):
+        print 'Lost connection.  Reason:', reason
+        
+    def clientConnectionFailed(self, connector, reason):
+        print 'Connection failed. Reason:', reason
+    
+
 # ---------------------------------------------------------------
 
 

@@ -40,7 +40,7 @@ class Puncher(PuncherProtocol, IConnector, object):
     the hole punching protocol in the endpoint side
 
     @param reactor: the application's reactor
-    @param ntcp.connection.NatConnectivity natObj: the object with NAT information
+    @param natObj: the  ntcp.connection.NatConnectivity object with NAT information
     @param udpListener: an UDP listener (default None - if None a new one is created)
     """
     super(Puncher, self).__init__()
@@ -66,6 +66,8 @@ class Puncher(PuncherProtocol, IConnector, object):
     self.s_factory = None
     self.dedicatedConnector = ()
     self.numConnector = 0
+    self.holePunchingSent = 0
+    self.ka_interval = 20
     
     # CB address
     hostname, port = self.p2pConfig.get(\
@@ -97,7 +99,7 @@ class Puncher(PuncherProtocol, IConnector, object):
     """
     Sends a registration request to the Connection Broker
 
-    @param string uri : The identifier for registration
+    @param uri : The (string) identifier for registration
     @return void :
     """
     listAttr = ()
@@ -134,12 +136,10 @@ class Puncher(PuncherProtocol, IConnector, object):
 
   def rcvKeepAliveResponse(self):
     """A message from CB broker is received to keep the NAT hole active"""
-    #self.log.debug('Received keep alive response...I go to sleep for 20s')
-    self.reactor.callLater(20, self.sndKeepAliveRequest)
+    self.reactor.callLater(ka_interval, self.sndKeepAliveRequest)
 
   def sndKeepAliveRequest(self):
     """Sends the keep alive message"""
-    #self.log.debug('I am awake... I send a keep alive msg!')
     listAttr = ()
     # Prepare the message's attributes
     listAttr = listAttr + ((0x0001, self.uri),)
@@ -155,8 +155,8 @@ class Puncher(PuncherProtocol, IConnector, object):
     If the remote address is supplied, the request is sent directly
     to remote endpoint, otherwise the CB is contacted.
 
-    @param string uri : The remote node identifier (connection throught CB)
-    @param Address remoteAddress : The remote endpoint's address (directly connection)
+    @param uri : The remote node identifier (for connection throught CB)
+    @param remoteAddress : The remote endpoint's address (for directly connection)
     @return void :
     """
 
@@ -237,7 +237,8 @@ class Puncher(PuncherProtocol, IConnector, object):
 
   def sndConnectionResponse(self):
     """
-    Sends a Connection Response Message to the address
+    Discover a globally valid address and
+    sends a Connection Response Message to the address
     that the Connection Request is received on .
     
     @return void 
@@ -275,6 +276,7 @@ class Puncher(PuncherProtocol, IConnector, object):
 
       return d
 
+    # Start the external address discovery procedure
     d = self.natObj.publicAddrDiscovery()
     d.addCallback(discover_succeed)
     d.addErrback(discovery_fail)
@@ -408,9 +410,10 @@ class Puncher(PuncherProtocol, IConnector, object):
   def sndLookupRequest(self, remoteUri=None, localUri=None):
     """
     Send a connection request to discover and advise the remote user
-    behind a NAT for a TCP connection.
+    behind a NAT of a TCP connection intention.
 
-    @param string uri : The remote node identifier (connection throught CB)
+    @param uri : The remote node identifier (connection throught CB)
+    @param lacalUri: The local identifier
     @return void :
     """
     print '\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
@@ -439,8 +442,8 @@ class Puncher(PuncherProtocol, IConnector, object):
 
   def rcvLookupRequest(self):
     """
-    A connection response is received (from CB or endpoint)
-    Now can try to connect
+    A lookup request is received (from CB or endpoint)
+    Sends an UDP message for hole punching
 
     @return void :
     """
@@ -458,8 +461,8 @@ class Puncher(PuncherProtocol, IConnector, object):
     
   def rcvLookupResponse(self):
     """
-    A connection response is received (from CB or endpoint)
-    Now can try to connect
+    A lookup response is received (from CB or endpoint)
+    Sends an UDP message for hole punching 
 
     @return void :
     """
@@ -472,6 +475,12 @@ class Puncher(PuncherProtocol, IConnector, object):
     self.sndHolePunching()
 
   def sndHolePunching(self):
+    """
+    Sends an UDP message for hole punching 
+
+    @return void :
+    """
+    
     self.toAddress = self.remotePublicAddress #Hole punching to endpoint
         
     self.messageType = 'Hole Punching'
@@ -479,10 +488,18 @@ class Puncher(PuncherProtocol, IConnector, object):
     self.sendMessage(self.toAddress)
 
   def rcvHolePunching(self):
+    """
+    An UDP message for hole punching is received
+    UDP Hole made!!!
+
+    @return void :
+    """
     print 'DONE'
     print '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
     # Send an Hole Punching message
-    self.sndHolePunching()
+    if not self.holePunchingSent:
+      self.sndHolePunching()
+      self.holePunchingSent = 1
     try:
       self.d_lookup.callback(self.remotePublicAddress)
     except:
@@ -532,15 +549,35 @@ class Puncher(PuncherProtocol, IConnector, object):
         
   
   def setServerFactory(self, factory):
+    """
+    Sets the Factory for Server side
+
+    @param factory: a twisted.internet.protocol.ServerFactory instance 
+    """
     self.s_factory = factory
     return
   
   def getServerFactory(self):
+    """
+    Gets the Server side Factory 
+
+    @return factory: a twisted.internet.protocol.ServerFactory instance 
+    """
     return self.s_factory
 
   def setClientFactory(self, factory):
+    """
+    Sets the Factory for Client side
+
+    @param factory: a twisted.internet.protocol.ServerFactory instance 
+    """
     self.c_factory = factory
     return
 
   def getClientFactory(self):
+    """
+    Gets the Client side Factory 
+
+    @return factory: a twisted.internet.protocol.ServerFactory instance 
+    """
     return self.c_factory

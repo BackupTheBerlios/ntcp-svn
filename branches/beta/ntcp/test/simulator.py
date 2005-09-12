@@ -24,9 +24,9 @@ class Simulator(DatagramProtocol, object):
     
     def testDiscoveryNat(self):
         """
-        Discover the NAT presence, type and mapping with STUN/STUNT mudule.
+        Discover the NAT presence, type and mapping with STUNT mudule.
         Register to the Super Node Connection Broker.
-        Start an TCP communication with the other endpoint.
+        Tries to establish a TCP connection with the other endpoint.
         """
        
         d = defer.Deferred()
@@ -51,12 +51,14 @@ class Simulator(DatagramProtocol, object):
             #factory = TcpClientFactory()
             factory = TcpServer(reactor, self)
             if len(sys.argv) == 2:
+                # Just listen for incominc connection request
                 print '\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
                 
                 d = self.ntcp.listenTCP(factory=factory, myUri=self.uri).defer
                 d.addCallback(registrationSucceed)
                 d.addErrback(fail)
             elif len(sys.argv) > 2:
+                # Try to connect
                 self.testConnection()
                 
 # ------------------------------------------------------------------
@@ -74,11 +76,13 @@ class Simulator(DatagramProtocol, object):
 ##         print 'Hole punching port: %d'%punchPort
 ##         # Start to discover the public network address
 ##         self.ntcp = NatConnectivity(reactor, listener)
-# ------------------------------------------------------------------  
+# ------------------------------------------------------------------
+
+        # Start the STUNT discovery procedure
         self.ntcp = NatConnectivity(reactor)
-        d = self.ntcp.natDiscovery(0)
+        d = self.ntcp.natDiscovery()
         # -----------------------------------------------------------  
-        # run the nat discovery procedure in a non-bloking mode (0)
+        # to run the nat discovery procedure in a non-bloking mode (0)
         #ntcp.natDiscovery(0)
         # -----------------------------------------------------------
         d.addCallback(discoverySucceed)
@@ -97,22 +101,24 @@ class Simulator(DatagramProtocol, object):
         def conf_succeed(result):
             if result[0] != None and result[1] != None:
                 factory = TcpFactory(reactor, self)
+                # Try to connect using the Connection Broker giving it the remote Uri
                 d = self.ntcp.connectTCP(remoteUri=self.remote, factory=factory, myUri=self.uri)
                 d.addCallback(succeed)
                 d.addErrback(fail)
             
         def punching_succeed(address):
-            print '\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+            print ''
             print 'Connection with peer established!'
             print 'Press <ENTER> to contact peer directly for TCP connection:',
             data=stdin.readline()            
             
             if address[0] != None and address[1] != None:
+                # You can use your factory
                 #factory = TcpClientFactory()
                 factory = TcpFactory(reactor, self)
                 host = address[0]
                 port = address[1]
-                # self.ntcp.connectTCP(remoteAddress=self.remote, factory=factory)
+                # Contact directly the remote endpoint
                 d = self.ntcp.connectTCP(host=host, port=port, factory=factory)
                 d.addCallback(succeed)
                 d.addErrback(fail)
@@ -124,13 +130,14 @@ class Simulator(DatagramProtocol, object):
         data=stdin.readline()
 
         if int(data) == 1:
-##             d = self.ntcp.getP2PConfiguration(remoteUri=self.remote)
-##             d.addCallback(conf_succeed)
+            # TCP connection trhough Connection Broker
             factory = TcpFactory(reactor, self)
             d = self.ntcp.connectTCP(remoteUri=self.remote, factory=factory, myUri=self.uri)
             d.addCallback(succeed)
             d.addErrback(fail)
         else:
+            # Directly TCP connection
+            # Make an UDP hole before
             d = self.ntcp.holePunching(self.remote, self.uri)
             d.addCallback(punching_succeed)
             d.addErrback(fail)

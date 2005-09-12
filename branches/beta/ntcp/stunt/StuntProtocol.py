@@ -72,7 +72,6 @@ class StuntProtocol(Protocol):
     Listen for incoming message
 
     @param string message : The message received
-    @param Address fromAddr : The remote address
     @return void :
     """
     
@@ -107,13 +106,16 @@ class StuntProtocol(Protocol):
         remainder = remainder[4+avlen:]
         if avtype in ('MAPPED-ADDRESS',
                       'CHANGED-ADDRESS',
-                      'SOURCE-ADDRESS'):
+                      'SOURCE-ADDRESS',
+                      'RESPONSE-ADDRESS'):
           dummy,family,port,addr = struct.unpack('!ccH4s', val)
           addr = socket.inet_ntoa(addr)
           if avtype == 'MAPPED-ADDRESS':
             self.resdict['externalAddress'] = (addr, port)
           elif avtype == 'CHANGED-ADDRESS':
             self.resdict['_altStunAddress'] = (addr, port)
+          elif avtype == 'RESPONSE-ADDRESS':
+            self.resdict['toAddress'] = (addr, port)
           elif address[0] != addr:
             # Someone is rewriting packets on the way back. AAARGH.
             self.log.msg('WARNING: packets are being rewritten %r != %r'%
@@ -165,8 +167,7 @@ class StuntProtocol(Protocol):
     """
     Creates the message to send
 
-    @param Address dstAddr : The remote endpoint address
-    @param dictionary attributes : The attributes to make the message content
+    @param attributes : The attributes to make the message content
     @return void :
     """
     avpairs = ()
@@ -237,6 +238,9 @@ class StuntProtocol(Protocol):
     self.transport.write(self.pkt)
 
   def getRandomTID(self):
+    """
+    Gets a random Transmission ID
+    """
     # It's not necessary to have a particularly strong TID here
     import random
     tid = [ chr(random.randint(0,255)) for x in range(16) ]
@@ -246,6 +250,17 @@ class StuntProtocol(Protocol):
   def getPortIpList(self, address):
     """Return a well formatted string with the address"""
     return '%5d%s' % (address[1], socket.inet_aton(address[0]))
+  
+  def getAddress(self, key):
+    """
+    Gets the unpacked address in the message for the given key
+
+    @param key: Message Attributes value
+    @return address: the (ip, port) tuple in the message
+    """
+    dummy,family,port,ip = struct.unpack( \
+                    '!ccH4s', self.avtypeList[key])
+    return (socket.inet_ntoa(ip), port)
 
   def rcvErrorResponse(self):
     print "STUN got an error response:"

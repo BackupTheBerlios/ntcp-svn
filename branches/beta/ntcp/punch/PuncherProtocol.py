@@ -69,8 +69,8 @@ class PuncherProtocol(DatagramProtocol):
     """
     Listen for incoming message
 
-    @param string message : The message received
-    @param Address fromAddr : The remote address
+    @param message : The message received
+    @param fromAddr : The remote address (ip, port)
     @return void :
     """
     self.fromAddr = fromAddr
@@ -81,7 +81,7 @@ class PuncherProtocol(DatagramProtocol):
     """
     Parses the message received
 
-    @param string message : The message to parse
+    @param message : The message to parse
     @return void :
     """
     self.avtypeList = {}
@@ -159,7 +159,6 @@ class PuncherProtocol(DatagramProtocol):
     """
     Creates the message to send
 
-    @param Address dstAddr : The remote endpoint address
     @param dictionary attributes : The attributes to make the message content
     @return void :
     """
@@ -256,6 +255,12 @@ class PuncherProtocol(DatagramProtocol):
     self.transport.write(self.pkt, toAddr)
 
   def getAddress(self, key):
+    """
+    Gets the unpacked address in the message for the given key
+
+    @param key: Message Attributes value
+    @return address: the (ip, port) tuple in the message
+    """
     dummy,family,port,ip = struct.unpack( \
                     '!ccH4s', self.avtypeList[key])
     return (socket.inet_ntoa(ip), port)

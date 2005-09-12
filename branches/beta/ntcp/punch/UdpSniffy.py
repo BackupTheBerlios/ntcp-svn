@@ -21,7 +21,6 @@ class UDP_factory:
                             self.punch.getPortIpList(self.connector.remotePublicAddress)),)
     listAttr = listAttr + ((0x1001, self.SYN),)
 
-##     print 'send Forcing TCP Request to:', self.connector.cbAddress, 'with SYN', self.SYN
     self.punch.messageType = 'Forcing TCP Request'
     self.punch.tid = self.punch.getRandomTID()
     self.punch.sendMessage(self.connector.cbAddress, listAttr)

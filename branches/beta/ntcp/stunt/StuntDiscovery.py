@@ -8,6 +8,9 @@ stun_section = {
 }
 
 class _NatDiscover(stunt.StuntClient):
+    """
+    A class for a simpler use of STUNT protocol
+    """
     
     log = logging.getLogger("ntcp")
     
@@ -16,12 +19,18 @@ class _NatDiscover(stunt.StuntClient):
         self.reactor = reactor
 
     def Run(self):
+        """
+        Start the discovery method
+        """
         self.d = defer.Deferred()
         #self.reactor.callLater(0, self.startDiscovery)
         self.d = self.startDiscovery()
         return self.d
 
     def _Failed(self):
+        """
+        Discovery method failed
+        """
         self.d.errback(Exception("no response from servers %s" % self.servers))
 
     def Timeout(self):
@@ -30,16 +39,33 @@ class _NatDiscover(stunt.StuntClient):
         self._Failed()
 
     def finishedStunt(self):
+        """
+        The discovery procedure is finished.
+        Launches a Defer callback
+        """
         print '====================================================\n'
         if not self.d.called:
             self.d.callback(self.natType)
             
-    def _finishedPortDiscovery(self, address):
+    def finishedPortDiscovery(self, address):
+        """
+        The port discovery procedure for immediate TCP connection
+        Launches a callback.
+
+        @param address: the discovered address
+        """
         if not self.d.called:
             self.d.callback(address)
 
 
 def NatDiscovery(reactor, succeed=None):
+    """
+    Start the discovery procedure for NAT discovery.
+    Calls the STUNT implementaion
+
+    @param reactor: The application's twisted.internet.reactor
+    @param succed: a function to call if we are in non-bloking mode
+    """
     d = defer.Deferred()
     discovery = _NatDiscover(reactor)
 
@@ -52,6 +78,14 @@ def NatDiscovery(reactor, succeed=None):
         succeed(discovery.natType)
 
 def AddressDiscover(reactor, port):
+    """
+    Start the discovery procedure for global address discovery.
+    Calls the STUNT implementaion and discover the global
+    address mapping for the given port
+
+    @param reactor: The application's twisted.internet.reactor
+    @param port: the local port to bind on
+    """
     d = defer.Deferred()
     discovery = _NatDiscover(reactor)
 

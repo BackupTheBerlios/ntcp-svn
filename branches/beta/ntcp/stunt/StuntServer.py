@@ -26,20 +26,32 @@ class StuntServer(StuntProtocol, object):
 
 
   def connectionMade(self):
+    """
+    Connection with client has be established
+    """
     self.clientAddress = (self.transport.getPeer().host, self.transport.getPeer().port)
     self.log.debug('Stunt: connection received by: %s:%d'%self.clientAddress)
 
   def connectionLost(self, reason):
+    """
+    Connection with client lost
+    """
     self.log.debug('Lost connection.  Reason:%s'%reason)
 
   def rcvBindingRequest(self):
+    """
+    Binding request received from a client
+    """
     self.sndBindingResponse()
 
-  
   def sndBindingResponse(self):
+    """
+    Sends a binding response to binding request
+    """
     self.messageType = 'Binding Response'
     
     listAttr = ()
+    # Put client public address in the message
     listAttr = listAttr + ((0x0001, self.getPortIpList(self.clientAddress)),)
     listAttr = listAttr + ((0x0005, self.getPortIpList(self.otherStuntAddress)),)
     self.createMessage(listAttr)
@@ -47,16 +59,22 @@ class StuntServer(StuntProtocol, object):
     self.transport.loseConnection()
 
   def rcvCaptureRequest(self):
+    """
+    Capture request received from a client
+    """
     # Send a SYN packet from different address
     print "received Capture Request"
     avtype = 'CHANGE-REQUEST'
-    change = (struct.unpack('!i', self.avtypeList[avtype]))[0]
-    print "Change:", change
+    
+    #change = (struct.unpack('!i', self.avtypeList[avtype]))[0]
+    #toAddr = self.getAddress('RESPONSE-ADDRESS')
+    print avtype
       
  
 factory = Factory()
 factory.protocol = StuntServer
 
+# Listen on two different addresses and two ports
 port1 =  int(p2pConfig.get('stunt', 'stuntPort'))
 port2 =  int(p2pConfig.get('stunt', 'otherStuntPort'))
 reactor.listenTCP(port1, factory)

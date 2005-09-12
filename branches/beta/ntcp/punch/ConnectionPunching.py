@@ -9,7 +9,7 @@ from twisted.internet import threads
 class ConnectionPunching(Protocol, ClientFactory, object):
   """
   This class chooses, in function of the NAT information,
-  the methode to use for the connection and implements it.
+  the method to use for the connection and implements it.
   If the connection established the twisted methods
   are called to menage the TCP connection
   """
@@ -35,6 +35,11 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       except: pass
 
   def init_puncher_var(self, punch):
+    """
+    Initialise all the variables from puncher object
+
+    @param punch: the ntcp.punch.Puncher object
+    """
     if punch != None:
       self.punch = punch
       self.reactor = punch.reactor
@@ -62,25 +67,38 @@ class ConnectionPunching(Protocol, ClientFactory, object):
     """
     if factory != None:
       self.factory = factory
-    
+      
     self.attempt = 0
-  
+    
     if self.publicAddress[0] == self.remotePublicAddress[0] \
            and self.sameLanAttempt:
-        # The two endpoints are in the same LAN
-        # but there can be several NATs
-        self.method = 'sameLan'
-        self.sameLan()
+      # The two endpoints are in the same LAN
+      # but there can be several NATs
+      self.method = 'sameLan'
+      self.sameLan()
     elif self.natType == 'None' or self.remoteNatType == 'None':
-        self.oneNat()            
+      # One peers is not behind a NAT
+      self.oneNat()            
     else:
-        self.method = 'stunt2'
-        self.stunt2()
+      # Call the STUNT2 method implementation
+      self.method = 'stunt2'
+      self.stunt2()
 
   def setFactory(self, factory):
-      self.factory = factory
+    """
+    Sets the Factory
+    
+    @param factory: a twisted.internet.protocol.Factory instance 
+    """
+    self.factory = factory
+    
   def getFactory(self):
-      return self.factory
+    """
+    Gets the Factory 
+
+    @return factory: a twisted.internet.protocol.Factory instance 
+    """
+    return self.factory
   
 # ----------------------------------------------------------
 # Methods implementation
@@ -126,6 +144,9 @@ class ConnectionPunching(Protocol, ClientFactory, object):
 
   def oneNat(self):
       """
+      One peers is not behind a NAT
+      The user not NAT'ed starts a TCP server
+      The other starts a client connection
       """
       #self.log.debug('One endpoint is not NATed')
       print 'One endpoint is not NATed'
@@ -142,6 +163,10 @@ class ConnectionPunching(Protocol, ClientFactory, object):
               self.privateAddress[1], self)
            
   def _oneNat_clientConnectionFailed(self):
+    """
+    The connection with one NAT failed.
+    Try the NAT traversal methods
+    """
       if self.natType != 'None':
           if self.attempt <= 3:
               # connect
@@ -155,6 +180,9 @@ class ConnectionPunching(Protocol, ClientFactory, object):
           pass
 
   def stunt2(self):
+    """
+    STUNT 2 implementation.
+    """
       if self.requestor:
         # Here I try just several client connection
         print 'STUNT2:Connect -> from:', self.privateAddress, \
@@ -186,6 +214,9 @@ class ConnectionPunching(Protocol, ClientFactory, object):
               bindAddress = self.privateAddress)
     
   def stunt2_inv(self):
+    """
+    STUNT 2 implementation: flip the roles
+    """
       self.method = 'stunt2_inv' # Fail: call the next method
       self.timeout = None
       if self.requestor:
@@ -196,6 +227,10 @@ class ConnectionPunching(Protocol, ClientFactory, object):
       self.stunt2()
           
   def _stunt2_clientConnectionFailed(self):
+    """
+    STUNT 2 implementation failed.
+    Try several times
+    """
       
     if self.requestor:
       if self.attempt < self.t * 100:
@@ -228,6 +263,10 @@ class ConnectionPunching(Protocol, ClientFactory, object):
     self.attempt = self.t * 10000
       
   def p2pnat(self):
+    """
+    P2PNAT implementation.
+    This method try to establish a simultaneous TCP connection
+    """
       try: self.peerConn.loseConnection()
       except: pass
       self.method = 'p2pnat' # Fail: call the next method
@@ -251,7 +290,10 @@ class ConnectionPunching(Protocol, ClientFactory, object):
         self.stunt1()
 
   def stunt1(self):
-    """Try with spoofing"""
+    """
+    STUNT 1 implementation:
+    This method try to establish a connection using spoofing
+    """
     self.method = 'stunt1'
     try:
       import ntcp.punch.UdpSniffy as udp_sniffer
@@ -287,6 +329,9 @@ class ConnectionPunching(Protocol, ClientFactory, object):
 
 
   def ntcp_fail(self, reason=None):
+    """
+    All the methods have failed
+    """
     if reason == None:
       self.factory.clientConnectionFailed(self.punch, \
                                           'NTCP: failed to connect with: %s:%d'%self.remotePublicAddress)
@@ -329,6 +374,10 @@ class ConnectionPunching(Protocol, ClientFactory, object):
     return ConnectionPunching(self, _s=self)
         
   def clientConnectionFailed(self, connector, reason):
+    """
+    Try several methods before to call
+    the real clientConnectionFailed function
+    """
     if self.connected == 0 and not self.error:
       if self.method == 'sameLan':
         self._sameLan_clientConnectionFailed()

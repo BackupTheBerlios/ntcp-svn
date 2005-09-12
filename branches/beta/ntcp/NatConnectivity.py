@@ -31,12 +31,19 @@ NatTypeDec = {
    }
 
 class NtcpFactory:
+    """
+    Just to privide some methods to wrap^twisted methods
+    """
     def __init__(self, d):
         self.defer = d
     def stopListening(self):
         pass
 
 class Nat:
+  """
+  The NAT handler
+  A NAT object to save the NAT's information
+  """
   def __init__(self, type, delta=None, publicAddress=None, privateAddress=None):
     self.type = NatTypeDec[type]
     self.delta = delta
@@ -77,7 +84,7 @@ class NatManager:
     d2 = defer.Deferred()
    
     def succeed(natConfig):
-      """The STUN/STUNT discovery has be done."""
+      """The STUNT discovery has be done."""
       self.setNatConf(natConfig)
       self.printNatConf()
       d2.callback((self.publicIp, 0))
@@ -180,7 +187,8 @@ class NatManager:
     self.publicAddr = (natConfig.publicIp, 0)
     self.privateAddr = (natConfig.privateIp, 0)
     
-    self.localNat = Nat(NatTypeCod[self.type], self.delta, self.publicAddr, self.privateAddr)
+    self.localNat = Nat(NatTypeCod[self.type], self.delta, \
+                        self.publicAddr, self.privateAddr)
 
     # Upload the NAT configuration link in puncher
     self._puncher.setNatObj(self)
@@ -189,6 +197,10 @@ class NatManager:
     """
     Sets the remote NAT's configuration
 
+    @param type: the remote NAT type 
+    @param delta: the remote NAT delta binding 
+    @param publicAddress: the remote public address
+    @param privateAddress: the remote private address
     @return void :
     """
     self.remoteNat = Nat(type, delta, publicAddress, privateAddress)
@@ -232,6 +244,11 @@ class NatConnectivity(NatManager, object):
     
     def holePunching(self, uri, myUri):
         """
+        Starts the hole punching procedure to punch a hole
+        for UDP communication with peer identified by URI
+
+        @param uri: the remote peer to contact
+        @param myUri: personal uri 
         """
         return self._puncher.sndLookupRequest(remoteUri=uri, localUri=myUri)
 
@@ -427,9 +444,15 @@ class NatConnectivity(NatManager, object):
             d.addCallback(discoverySucceed)
             d.addErrback(fail)
         else:
+            # We know already the NAT configuration
             discoverySucceed(None)
 
         return d
 
     def getlocalNatConf(self):
+        """
+        Gets the NAT objet with the NAT's configuration
+
+        @return localNat: an ntcp.NatConnectivity.Nat object
+        """
         return self.localNat

@@ -51,6 +51,8 @@ class SNConnectionBroker (PuncherProtocol, object):
     """
     Reply to a registration request
 
+    @param publAddr: the private address tuple (host, port)
+    @param privAddr: the public address tuple (host, port)
     @return void :
     """
     listAttr = ()
@@ -61,6 +63,7 @@ class SNConnectionBroker (PuncherProtocol, object):
     self.sendMessage(publAddr, listAttr)
 
   def rcvKeepAliveRequest(self):
+    """A message from a user is received to keep the NAT hole active"""
     userId = self.avtypeList['USER-ID']
     self.peersTable[userId] = (self.peersTable[userId][:3] + (time.time(),))
     self.sndKeepAliveResponse()
@@ -126,7 +129,7 @@ class SNConnectionBroker (PuncherProtocol, object):
     
   def sndConnectionResponse(self):
     """
-    Sends a lookup response to the puncher.
+    Sends a connection response to the to the user
     
     @return void :
     """ 
@@ -211,8 +214,8 @@ class SNConnectionBroker (PuncherProtocol, object):
 
   def rcvLookupRequest(self):
     """
-    A connection response is received (from CB or endpoint)
-    Now can try to connect
+    A lookup request for UDP hole punching is received
+    Starts hole punching mechanisl
 
     @return void :
     """
@@ -234,13 +237,10 @@ class SNConnectionBroker (PuncherProtocol, object):
     
   def sndLookupRequest(self, peerInfo):
     """
-    Send a connection request to discover and advise the remote user
-    behind a NAT for a TCP connection.
-    If the remote address is supplied, the request is sended directly
-    to remote endpoint, otherwise the CB is contacted.
+    Send a lookup request to advise a remote user
+    behind a NAT of UDP hole punchingattempt by another user.
 
-    @param string uri : The remote node identifier (connection throught CB)
-    @param Address remoteAddress : The remote endpoint's address (directly connection)
+    @param peerInfo : the remote endpoint's information
     @return void :
     """
     toAddr = peerInfo[1] # the peer's address
@@ -259,8 +259,8 @@ class SNConnectionBroker (PuncherProtocol, object):
     
   def sndLookupResponse(self, peerInfo):
     """
-    A connection response is received (from CB or endpoint)
-    Now can try to connect
+    A lookup response is received (from CB or endpoint)from a user
+    Forward it to the initial demandant
 
     @return void :
     """
@@ -273,14 +273,7 @@ class SNConnectionBroker (PuncherProtocol, object):
     #addr = self.getAddress('PRIVATE-ADDRESSE')
     addr = peerInfo[2]
     listAttr = listAttr + ((0x0003, self.getPortIpList(addr)),)
-    listAttr = listAttr + ((0x0004, peerInfo[3]),)
-##     # Requestor conf
-##     listAttr = listAttr + ((0x1005, self.avtypeList['REQUESTOR-USER-ID']),)
-##     addr = self.getAddress('REQUESTOR-PUBLIC-ADDRESSE')
-##     listAttr = listAttr + ((0x0005, self.getPortIpList(addr)),)
-##     addr = self.getAddress('REQUESTOR-PRIVATE-ADDRESSE')
-##     listAttr = listAttr + ((0x0006, self.getPortIpList(addr)),)
-##     listAttr = listAttr + ((0x0007, self.avtypeList['REQUESTOR-NAT-TYPE']),)  
+    listAttr = listAttr + ((0x0004, peerInfo[3]),) 
     
 
     self.messageType = "Lookup Response"    
@@ -290,6 +283,10 @@ class SNConnectionBroker (PuncherProtocol, object):
 
 # --- Forcing Tcp Request
   def rcvForcingTcpRequest(self):
+    """
+    A request of spoofing is received.
+    Create a spoofing object to spoof message
+    """
     from ntcp.punch.Spoofy import Spoofy
 
     spoofy = Spoofy(self)
@@ -316,19 +313,20 @@ class SNConnectionBroker (PuncherProtocol, object):
 
   def refreshTable(self):
     """
-    Refresh the peerTable
+    Refresh the peerTable every 'timeout' seconds
     """
+    timeout = 60
     deleted = 0
     dead_list = ()
     for peer in self.peersTable:
-      if (time.time() - self.peersTable[peer][3]) > 60:
+      if (time.time() - self.peersTable[peer][3]) > timeout:
         dead_list += (peer,) 
         deleted = 1
     for peer in dead_list:
         del self.peersTable[peer]
     if deleted:
       self.printActiveConnection()
-    reactor.callLater(60, self.refreshTable)
+    reactor.callLater(timeout, self.refreshTable)
   
   def printActiveConnection(self):
     """
@@ -347,5 +345,6 @@ class SNConnectionBroker (PuncherProtocol, object):
       print '*-----------------------------------------------------------------------*'
     except:
       pass
+    
 reactor.listenUDP(6060, SNConnectionBroker())
 reactor.run()
