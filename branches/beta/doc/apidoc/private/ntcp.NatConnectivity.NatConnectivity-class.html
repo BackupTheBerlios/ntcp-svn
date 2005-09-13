@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ntcp.NatConnectivity.NatConnectivity</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        <a href="ntcp-module.html">Package&nbsp;ntcp</a> ::
+        <a href="ntcp.NatConnectivity-module.html">Module&nbsp;NatConnectivity</a> ::
+        Class&nbsp;NatConnectivity
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[show&nbsp;private&nbsp;|&nbsp;<a href="../public/ntcp.NatConnectivity.NatConnectivity-class.html">hide&nbsp;private</a>]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="ntcp.NatConnectivity.NatConnectivity-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Type NatConnectivity</h2>
+
+<pre class="base-tree">
+<a href="ntcp.NatConnectivity.NatManager-class.html"><code>NatManager</code></a> --+
+             |
+    <a href="__builtin__.object-class.html"><code>object</code></a> --+
+             |
+            <b>NatConnectivity</b>
+</pre><br />
+
+<hr/>
+
+Interface with the application. Discover NAT information (type and 
+mapping) and force a connection through NATs with the Super Node 
+Connection Broker's help or by a directly UDP connection with the remote 
+endpoint.
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="__init__"></a><span class="summary-sig"><span class="summary-sig-name">__init__</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>reactor</span>,
+          <span class=summary-sig-arg>udpListener</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.NatConnectivity.NatConnectivity-class.html#connectTCP" class="summary-sig-name"><code>connectTCP</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>host</span>,
+          <span class=summary-sig-arg>port</span>,
+          <span class=summary-sig-arg>remoteUri</span>,
+          <span class=summary-sig-arg>factory</span>,
+          <span class=summary-sig-arg>timeout</span>,
+          <span class=summary-sig-arg>bindAddress</span>,
+          <span class=summary-sig-arg>myUri</span>)</span></code>
+<br />
+Force a connection with another user through NATs
+helped by the ConnectionBroker.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.NatConnectivity.NatConnectivity-class.html#datagramReceived" class="summary-sig-name"><code>datagramReceived</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>message</span>,
+          <span class=summary-sig-arg>fromAddr</span>)</span></code>
+<br />
+A link to the internal datagramReceived function</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.NatConnectivity.NatConnectivity-class.html#getFactory" class="summary-sig-name"><code>getFactory</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Gets the TCP factory</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.NatConnectivity.NatConnectivity-class.html#getlocalNatConf" class="summary-sig-name"><code>getlocalNatConf</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Gets the NAT objet with the NAT's configuration</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.NatConnectivity.NatConnectivity-class.html#getP2PConfiguration" class="summary-sig-name"><code>getP2PConfiguration</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>host</span>,
+          <span class=summary-sig-arg>port</span>,
+          <span class=summary-sig-arg>remoteUri</span>)</span></code>
+<br />
+Gets the local and remote NAT type.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.NatConnectivity.NatConnectivity-class.html#holePunching" class="summary-sig-name"><code>holePunching</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>uri</span>,
+          <span class=summary-sig-arg>myUri</span>)</span></code>
+<br />
+Starts the hole punching procedure to punch a hole for UDP 
+communication with peer identified by URI</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.NatConnectivity.NatConnectivity-class.html#listenTCP" class="summary-sig-name"><code>listenTCP</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>port</span>,
+          <span class=summary-sig-arg>factory</span>,
+          <span class=summary-sig-arg>backlog</span>,
+          <span class=summary-sig-arg>interface</span>,
+          <span class=summary-sig-arg>myUri</span>)</span></code>
+<br />
+Make a registration to CB and listen for incoming connection 
+request</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.NatConnectivity.NatConnectivity-class.html#natDiscovery" class="summary-sig-name"><code>natDiscovery</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>bloking</span>)</span></code>
+<br />
+Discover NAT presence and information about.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.NatConnectivity.NatConnectivity-class.html#setServerFactory" class="summary-sig-name"><code>setServerFactory</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>factory</span>)</span></code>
+<br />
+Sets a factory for TCP connection &#64;param factory - a 
+twisted.internet.protocol.*Factory instance</td></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="ntcp.NatConnectivity.NatManager-class.html"><code>NatManager</code></a>:</b>
+      <a href="ntcp.NatConnectivity.NatManager-class.html#printNatConf"><code>printNatConf</code></a>, 
+      <a href="ntcp.NatConnectivity.NatManager-class.html#publicAddrDiscovery"><code>publicAddrDiscovery</code></a>, 
+      <a href="ntcp.NatConnectivity.NatManager-class.html#setNatConf"><code>setNatConf</code></a>, 
+      <a href="ntcp.NatConnectivity.NatManager-class.html#setRemoteNatConf"><code>setRemoteNatConf</code></a>, 
+      <a href="../private/ntcp.NatConnectivity.NatManager-class.html#_natDiscoveryDefer"><code>_natDiscoveryDefer</code></a>, 
+      <a href="../private/ntcp.NatConnectivity.NatManager-class.html#_natDiscoveryThread"><code>_natDiscoveryThread</code></a>
+      <br />
+    <b>Inherited from <a href="__builtin__.object-class.html"><code>object</code></a>:</b>
+      <a href="__builtin__.object-class.html#__delattr__"><code>__delattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__getattribute__"><code>__getattribute__</code></a>, 
+      <a href="__builtin__.object-class.html#__hash__"><code>__hash__</code></a>, 
+      <a href="__builtin__.object-class.html#__new__"><code>__new__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce__"><code>__reduce__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce_ex__"><code>__reduce_ex__</code></a>, 
+      <a href="__builtin__.object-class.html#__repr__"><code>__repr__</code></a>, 
+      <a href="__builtin__.object-class.html#__setattr__"><code>__setattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__str__"><code>__str__</code></a>
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF CLASS VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Class Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>Logger</code></font></td>
+<td><b><a href="ntcp.NatConnectivity.NatConnectivity-class.html#log"><code>log</code></a></b> = <span title="&lt;logging.Logger instance at 0xf6c957ec&gt;"><code>&lt;logging.Logger&nbsp;instance&nbsp;at&nbsp;0xf6c957ec&gt;            </code>
+</span></td></tr>
+</table><br />
+
+
+<!-- =========== START OF METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Method Details</th></tr>
+</table>
+
+<a name="connectTCP"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">connectTCP</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>host</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>port</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>remoteUri</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>factory</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>timeout</span>=<span class=sig-default>30</span>,
+          <span class=sig-arg>bindAddress</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>myUri</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+<pre class="literalblock">
+Force a connection with another user through NATs
+helped by the ConnectionBroker.
+It needs at least one between (host, port) and 'remoteUri'
+
+&#64;param host: a host ip address, default None
+&#64;param port: a port number, the UDP remote port (it's mandatory if host is present)
+&#64;param remoteUri : The remote endpoint's uri, default None
+&#64;param factory: a twisted.internet.protocol.ClientFactory instance 
+&#64;param timeout: number of seconds to wait before assuming the connection has failed.  (not implemented)
+&#64;param bindAddress: a (host, port) tuple of local address to bind to, or None.
+&#64;param myUri : The uri for future incoming connection request
+
+&#64;return :  An object implementing IConnector.
+This connector will call various callbacks on the factory
+when a connection is made,failed, or lost
+- see ClientFactory docs for details.
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="datagramReceived"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">datagramReceived</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>message</span>,
+          <span class=sig-arg>fromAddr</span>)</span>
+  </h3>
+  A link to the internal datagramReceived function
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getFactory"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getFactory</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Gets the TCP factory
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+        factory - a twisted.internet.protocol.ServerFactory 
+        instance
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getlocalNatConf"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getlocalNatConf</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Gets the NAT objet with the NAT's configuration
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getP2PConfiguration"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getP2PConfiguration</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>host</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>port</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>remoteUri</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+  Gets the local and remote NAT type. It requires at least one between 
+  parameters (host, port) and remoteUri
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>host</b></code> -
+         a host name, default None
+      <dd><code><b>port</b></code> -
+         a port number, the UDP remote port (it's mandatory if host is 
+        present)
+      <dd><code><b>remoteUri</b></code> -
+         The remote endpoint's uri, default None
+      </dd>
+    </dl>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+        defer the callback result is (local NAT type, remote NAT 
+        type)
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="holePunching"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">holePunching</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>uri</span>,
+          <span class=sig-arg>myUri</span>)</span>
+  </h3>
+  Starts the hole punching procedure to punch a hole for UDP 
+  communication with peer identified by URI
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>uri</b></code> -
+         the remote peer to contact
+      <dd><code><b>myUri</b></code> -
+         personal uri
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="listenTCP"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">listenTCP</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>port</span>=<span class=sig-default>0</span>,
+          <span class=sig-arg>factory</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>backlog</span>=<span class=sig-default>5</span>,
+          <span class=sig-arg>interface</span>=<span class=sig-default>''</span>,
+          <span class=sig-arg>myUri</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+  Make a registration to CB and listen for incoming connection 
+  request
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>port</b></code> -
+         a port number on which to listen, default to 0 (any) (only 
+        default implemented)
+      <dd><code><b>factory</b></code> -
+         a twisted.internet.protocol.ServerFactory instance
+      <dd><code><b>backlog</b></code> -
+         size of the listen queue (not implemented)
+      <dd><code><b>interface</b></code> -
+         the hostname to bind to, defaults to '' (all) (not 
+        implemented)
+      <dd><code><b>myUri</b></code> -
+         the user's URI for registration to Connection Broker return: 
+        void
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="natDiscovery"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">natDiscovery</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>bloking</span>=<span class=sig-default>1</span>)</span>
+  </h3>
+  Discover NAT presence and information about.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>bloking</b></code> -
+         if 0 makes NAT discovery in non bloking mode (default 1)
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="setServerFactory"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">setServerFactory</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>factory</span>)</span>
+  </h3>
+  Sets a factory for TCP connection &#64;param factory - a 
+  twisted.internet.protocol.*Factory instance
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF CLASS VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Class Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="log"></a>
+<h3>log</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>Logger</code>
+
+      </dd>
+<span title="&lt;logging.Logger instance at 0xf6c957ec&gt;">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+&lt;logging.Logger instance at 0xf6c957ec&gt;                                </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on Tue Sep 13 15:14:12 2005</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

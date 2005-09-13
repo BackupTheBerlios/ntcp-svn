@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ntcp.stunt.StuntProtocol</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        <a href="ntcp-module.html">Package&nbsp;ntcp</a> ::
+        <a href="ntcp.stunt-module.html">Package&nbsp;stunt</a> ::
+        Module&nbsp;StuntProtocol
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[show&nbsp;private&nbsp;|&nbsp;<a href="../public/ntcp.stunt.StuntProtocol-module.html">hide&nbsp;private</a>]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="ntcp.stunt.StuntProtocol-module.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF MODULE DESCRIPTION =========== -->
+<h2 class="module">Module ntcp.stunt.StuntProtocol</h2>
+
+
+<!-- =========== START OF CLASSES =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Classes</th></tr>
+<tr><td width="15%">
+  <b><a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html"><code>StuntProtocol</code></a></b></td>
+  <td>&nbsp;</td></tr>
+</table><br />
+
+
+<!-- =========== START OF VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>str</code></font></td>
+<td><b><a href="ntcp.stunt.StuntProtocol-module.html#CHANGE_BOTH"><code>CHANGE_BOTH</code></a></b> = <span title="'\x00\x00\x00\x06'"><code><span class="variable-quote">'</span>\x00\x00\x00\x06<span class="variable-quote">'</span>                         </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>str</code></font></td>
+<td><b><a href="ntcp.stunt.StuntProtocol-module.html#CHANGE_IP"><code>CHANGE_IP</code></a></b> = <span title="'\x00\x00\x00\x04'"><code><span class="variable-quote">'</span>\x00\x00\x00\x04<span class="variable-quote">'</span>                           </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>str</code></font></td>
+<td><b><a href="ntcp.stunt.StuntProtocol-module.html#CHANGE_NONE"><code>CHANGE_NONE</code></a></b> = <span title="'\x00\x00\x00\x00'"><code><span class="variable-quote">'</span>\x00\x00\x00\x00<span class="variable-quote">'</span>                         </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>str</code></font></td>
+<td><b><a href="ntcp.stunt.StuntProtocol-module.html#CHANGE_PORT"><code>CHANGE_PORT</code></a></b> = <span title="'\x00\x00\x00\x02'"><code><span class="variable-quote">'</span>\x00\x00\x00\x02<span class="variable-quote">'</span>                         </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>dict</code></font></td>
+<td><b><a href="ntcp.stunt.StuntProtocol-module.html#ErrorCodes"><code>ErrorCodes</code></a></b> = <span title="{400: 'Bad Request', 500: 'Server Error', 420: 'Unknown attribute', 600: 'Global Failure', 431: 'Integrity Check Failure'}"><code>{400:&nbsp;'Bad&nbsp;Request',&nbsp;500:&nbsp;'Server&nbsp;Error',&nbsp;4<span class="variable-ellipsis">...</span></code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>dict</code></font></td>
+<td><b><a href="ntcp.stunt.StuntProtocol-module.html#MsgAttributes"><code>MsgAttributes</code></a></b> = <span title="{256: 'PACKET-REQUEST', 1: 'MAPPED-ADDRESS', 2: 'RESPONSE-ADDRESS', 3: 'CHANGE-REQUEST', 4: 'SOURCE-ADDRESS', 5: 'CHANGED-ADDRESS', 6: 'USERNAME', 7: 'PASSWORD', 8: 'MESSAGE-INTEGRITY', 9: 'ERROR-CODE', 10: 'UNKNOWN-ATTRIBUTES', 11: 'REFLECTED-FROM', 257: 'CAPTURE-TIMEOUTS', 258: 'CAPTURED-PACKET'}"><code>{256:&nbsp;'PACKET-REQUEST',&nbsp;1:&nbsp;'MAPPED-ADDRE<span class="variable-ellipsis">...</span></code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>dict</code></font></td>
+<td><b><a href="ntcp.stunt.StuntProtocol-module.html#MsgTypes"><code>MsgTypes</code></a></b> = <span title="{1: 'Binding Request', 2: 'Shared Secret Request', 3: 'Capture Request', 257: 'Binding Response', 275: 'Capture Error Response', 291: 'Capture Acknowledge Response', 258: 'Shared Secret Response', 273: 'Binding Error Response', 274: 'Shared Secret Error Response', 259: 'Capture Response'}"><code>{1:&nbsp;'Binding&nbsp;Request',&nbsp;2:&nbsp;'Shared&nbsp;Secret&nbsp;Requ<span class="variable-ellipsis">...</span></code>
+</span></td></tr>
+</table><br />
+
+
+<!-- =========== START OF VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="CHANGE_BOTH"></a>
+<h3>CHANGE_BOTH</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>str</code>
+
+      </dd>
+<span title="'\x00\x00\x00\x06'">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+<span class="variable-quote">'</span>\x00\x00\x00\x06<span class="variable-quote">'</span>                                                     </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="CHANGE_IP"></a>
+<h3>CHANGE_IP</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>str</code>
+
+      </dd>
+<span title="'\x00\x00\x00\x04'">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+<span class="variable-quote">'</span>\x00\x00\x00\x04<span class="variable-quote">'</span>                                                     </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="CHANGE_NONE"></a>
+<h3>CHANGE_NONE</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>str</code>
+
+      </dd>
+<span title="'\x00\x00\x00\x00'">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+<span class="variable-quote">'</span>\x00\x00\x00\x00<span class="variable-quote">'</span>                                                     </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="CHANGE_PORT"></a>
+<h3>CHANGE_PORT</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>str</code>
+
+      </dd>
+<span title="'\x00\x00\x00\x02'">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+<span class="variable-quote">'</span>\x00\x00\x00\x02<span class="variable-quote">'</span>                                                     </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="ErrorCodes"></a>
+<h3>ErrorCodes</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>dict</code>
+
+      </dd>
+<span title="{400: 'Bad Request', 500: 'Server Error', 420: 'Unknown attribute', 600: 'Global Failure', 431: 'Integrity Check Failure'}">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+{400: 'Bad Request',
+ 420: 'Unknown attribute',
+ 431: 'Integrity Check Failure',
+ 500: 'Server Error',
+ 600: 'Global Failure'}                                                </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="MsgAttributes"></a>
+<h3>MsgAttributes</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>dict</code>
+
+      </dd>
+<span title="{256: 'PACKET-REQUEST', 1: 'MAPPED-ADDRESS', 2: 'RESPONSE-ADDRESS', 3: 'CHANGE-REQUEST', 4: 'SOURCE-ADDRESS', 5: 'CHANGED-ADDRESS', 6: 'USERNAME', 7: 'PASSWORD', 8: 'MESSAGE-INTEGRITY', 9: 'ERROR-CODE', 10: 'UNKNOWN-ATTRIBUTES', 11: 'REFLECTED-FROM', 257: 'CAPTURE-TIMEOUTS', 258: 'CAPTURED-PACKET'}">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+{1: 'MAPPED-ADDRESS',
+ 2: 'RESPONSE-ADDRESS',
+ 3: 'CHANGE-REQUEST',
+ 4: 'SOURCE-ADDRESS',
+ 5: 'CHANGED-ADDRESS',
+ 6: 'USERNAME',
+ 7: 'PASSWORD',
+ 8: 'MESSAGE-INTEGRITY',
+<span class="variable-ellipsis">...</span>                                                                    </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="MsgTypes"></a>
+<h3>MsgTypes</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>dict</code>
+
+      </dd>
+<span title="{1: 'Binding Request', 2: 'Shared Secret Request', 3: 'Capture Request', 257: 'Binding Response', 275: 'Capture Error Response', 291: 'Capture Acknowledge Response', 258: 'Shared Secret Response', 273: 'Binding Error Response', 274: 'Shared Secret Error Response', 259: 'Capture Response'}">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+{1: 'Binding Request',
+ 2: 'Shared Secret Request',
+ 3: 'Capture Request',
+ 257: 'Binding Response',
+ 258: 'Shared Secret Response',
+ 259: 'Capture Response',
+ 273: 'Binding Error Response',
+ 274: 'Shared Secret Error Response',
+<span class="variable-ellipsis">...</span>                                                                    </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on Tue Sep 13 15:14:12 2005</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

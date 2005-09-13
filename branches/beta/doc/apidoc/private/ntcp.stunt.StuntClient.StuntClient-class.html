@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ntcp.stunt.StuntClient.StuntClient</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        <a href="ntcp-module.html">Package&nbsp;ntcp</a> ::
+        <a href="ntcp.stunt-module.html">Package&nbsp;stunt</a> ::
+        <a href="ntcp.stunt.StuntClient-module.html">Module&nbsp;StuntClient</a> ::
+        Class&nbsp;StuntClient
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[show&nbsp;private&nbsp;|&nbsp;<a href="../public/ntcp.stunt.StuntClient.StuntClient-class.html">hide&nbsp;private</a>]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="ntcp.stunt.StuntClient.StuntClient-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Type StuntClient</h2>
+
+<pre class="base-tree">
+              <a href="__builtin__.object-class.html"><code>object</code></a> --+
+                       |
+<a href="../private/twisted.internet.protocol.BaseProtocol-class.html"><code>BaseProtocol</code></a> --+       |
+               |       |
+        <a href="twisted.internet.protocol.Protocol-class.html"><code>Protocol</code></a> --+   |
+                   |   |
+       <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html"><code>StuntProtocol</code></a> --+
+                       |
+                      <b>StuntClient</b>
+</pre><br />
+
+<dl><dt><b>Known Subclasses:</b></dt>
+<dd>
+    <a href="../private/ntcp.stunt.StuntDiscovery._NatDiscover-class.html"><code>_NatDiscover</code></a></dd></dl>
+
+<hr/>
+
+Implements the STUNT discovery procedure to discover the NAT's 
+configuration. (see draft STUNT)
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="__init__"></a><span class="summary-sig"><span class="summary-sig-name">__init__</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>servers</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#closeSocket" class="summary-sig-name"><code>closeSocket</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>s</span>)</span></code>
+<br />
+Close definitively a socket</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#connect" class="summary-sig-name"><code>connect</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>remoteAddress</span>,
+          <span class=summary-sig-arg>localAddress</span>)</span></code>
+<br />
+Create and bind a socket.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#connectionMade" class="summary-sig-name"><code>connectionMade</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Called when a connection is made.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="error"></a><span class="summary-sig"><span class="summary-sig-name">error</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>reason</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#filterTest" class="summary-sig-name"><code>filterTest</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>remoteAddress</span>,
+          <span class=summary-sig-arg>attributes</span>)</span></code>
+<br />
+Test 1 in STUNT</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="finishedStunt"></a><span class="summary-sig"><span class="summary-sig-name">finishedStunt</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="handleFState2"></a><span class="summary-sig"><span class="summary-sig-name">handleFState2</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="handleFState3"></a><span class="summary-sig"><span class="summary-sig-name">handleFState3</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#handleState1a" class="summary-sig-name"><code>handleState1a</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Handle the response to test 1</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#handleState1b" class="summary-sig-name"><code>handleState1b</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Handle the response to test 1 (second time)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#handleState2" class="summary-sig-name"><code>handleState2</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Handle the response to test 2</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#handleState3" class="summary-sig-name"><code>handleState3</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Handles the response to test 3</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#handleStateDiscover" class="summary-sig-name"><code>handleStateDiscover</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Handles the responde to address discovery for successive TCP 
+connection</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#parseIfClient" class="summary-sig-name"><code>parseIfClient</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Control if the response is in the pending request</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#portDiscovery" class="summary-sig-name"><code>portDiscovery</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>port</span>)</span></code>
+<br />
+Starts the dicovery method to know the situation for a given port just 
+before a TCP connection (test 1 implemented)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="rcvBindingResponse"></a><span class="summary-sig"><span class="summary-sig-name">rcvBindingResponse</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="rcvCaptureResponse"></a><span class="summary-sig"><span class="summary-sig-name">rcvCaptureResponse</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#recvMessage" class="summary-sig-name"><code>recvMessage</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>s</span>)</span></code>
+<br />
+Wait for a response message from STUNT server</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#sndBindingRequest" class="summary-sig-name"><code>sndBindingRequest</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Sends a Binding Request (see draft STUNT)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#sndCaptureRequest" class="summary-sig-name"><code>sndCaptureRequest</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>attributes</span>)</span></code>
+<br />
+Sends a Capture Request (see draft STUNT)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#sndMessage" class="summary-sig-name"><code>sndMessage</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>attributes</span>)</span></code>
+<br />
+Adds a tid to packet and call the funtion to pack it</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#startDiscovery" class="summary-sig-name"><code>startDiscovery</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Starts the discovery method (test1 - see diagram above)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="startFileringDiscovery"></a><span class="summary-sig"><span class="summary-sig-name">startFileringDiscovery</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="synNotReceived"></a><span class="summary-sig"><span class="summary-sig-name">synNotReceived</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#synReceived" class="summary-sig-name"><code>synReceived</code></a>(<span class=summary-sig-arg>self</span>,
+          (<span class=summary-sig-arg>s</span>,
+           <span class=summary-sig-arg>addr</span>))</span></code>
+<br />
+Tests incoming SYN packet</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.stunt.StuntClient.StuntClient-class.html#test" class="summary-sig-name"><code>test</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>remoteAddress</span>)</span></code>
+<br />
+Test 1 in STUNT</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="_resolveStuntServers"></a><span class="summary-sig"><span class="summary-sig-name">_resolveStuntServers</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="../private/ntcp.stunt.StuntClient.StuntClient-class.html#_sendMessage" class="summary-sig-name"><code>_sendMessage</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>s</span>)</span></code>
+<br />
+Sends a message on TCP connection</td></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html"><code>StuntProtocol</code></a>:</b>
+      <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#analyseMessage"><code>analyseMessage</code></a>, 
+      <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#connectionLost"><code>connectionLost</code></a>, 
+      <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#createMessage"><code>createMessage</code></a>, 
+      <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#dataReceived"><code>dataReceived</code></a>, 
+      <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#getAddress"><code>getAddress</code></a>, 
+      <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#getPortIpList"><code>getPortIpList</code></a>, 
+      <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#getRandomTID"><code>getRandomTID</code></a>, 
+      <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#parseMessage"><code>parseMessage</code></a>, 
+      <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#rcvErrorResponse"><code>rcvErrorResponse</code></a>, 
+      <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#sendMessage"><code>sendMessage</code></a>, 
+      <a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#sendPack"><code>sendPack</code></a>
+      <br />
+    <b>Inherited from <a href="../private/twisted.internet.protocol.BaseProtocol-class.html"><code>BaseProtocol</code></a>:</b>
+      <a href="../private/twisted.internet.protocol.BaseProtocol-class.html#makeConnection"><code>makeConnection</code></a>
+      <br />
+    <b>Inherited from <a href="__builtin__.object-class.html"><code>object</code></a>:</b>
+      <a href="__builtin__.object-class.html#__delattr__"><code>__delattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__getattribute__"><code>__getattribute__</code></a>, 
+      <a href="__builtin__.object-class.html#__hash__"><code>__hash__</code></a>, 
+      <a href="__builtin__.object-class.html#__new__"><code>__new__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce__"><code>__reduce__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce_ex__"><code>__reduce_ex__</code></a>, 
+      <a href="__builtin__.object-class.html#__repr__"><code>__repr__</code></a>, 
+      <a href="__builtin__.object-class.html#__setattr__"><code>__setattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__str__"><code>__str__</code></a>
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF CLASS VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Class Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>int</code></font></td>
+<td><b><a href="ntcp.stunt.StuntClient.StuntClient-class.html#delta"><code>delta</code></a></b> = <span title="0">0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>Logger</code></font></td>
+<td><b><a href="ntcp.stunt.StuntClient.StuntClient-class.html#log"><code>log</code></a></b> = <span title="&lt;logging.Logger instance at 0xf6c957ec&gt;"><code>&lt;logging.Logger&nbsp;instance&nbsp;at&nbsp;0xf6c957ec&gt;            </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>NoneType</code></font></td>
+<td><b><a href="ntcp.stunt.StuntClient.StuntClient-class.html#privateIp"><code>privateIp</code></a></b> = <span title="None">None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>NoneType</code></font></td>
+<td><b><a href="ntcp.stunt.StuntClient.StuntClient-class.html#publicIp"><code>publicIp</code></a></b> = <span title="None">None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="twisted.internet.protocol.Protocol-class.html"><code>Protocol</code></a>:</b>
+      <a href="twisted.internet.protocol.Protocol-class.html#__implemented__"><code>__implemented__</code></a>, 
+      <a href="twisted.internet.protocol.Protocol-class.html#__implements__"><code>__implements__</code></a>, 
+      <a href="twisted.internet.protocol.Protocol-class.html#__provides__"><code>__provides__</code></a>
+      <br />
+    <b>Inherited from <a href="../private/twisted.internet.protocol.BaseProtocol-class.html"><code>BaseProtocol</code></a>:</b>
+      <a href="../private/twisted.internet.protocol.BaseProtocol-class.html#__providedBy__"><code>__providedBy__</code></a>, 
+      <a href="../private/twisted.internet.protocol.BaseProtocol-class.html#connected"><code>connected</code></a>, 
+      <a href="../private/twisted.internet.protocol.BaseProtocol-class.html#transport"><code>transport</code></a>
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Method Details</th></tr>
+</table>
+
+<a name="closeSocket"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">closeSocket</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>s</span>)</span>
+  </h3>
+  Close definitively a socket
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="connect"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">connect</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>remoteAddress</span>,
+          <span class=sig-arg>localAddress</span>)</span>
+  </h3>
+  Create and bind a socket. Connect to STUNT server
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="connectionMade"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">connectionMade</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  <p>Called when a connection is made.</p>
+  This may be considered the initializer of the protocol, because it 
+  is called when the connection is completed. For clients, this is called 
+  once the connection to the server has been established; for servers, 
+  this is called after an accept() call stops blocking and a socket has 
+  been received. If you need to send any greeting or initial message, do 
+  it here.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#connectionMade"><code>ntcp.stunt.StuntProtocol.StuntProtocol.connectionMade</code></a> <i>(inherited documentation)</i>
+</dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="filterTest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">filterTest</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>remoteAddress</span>,
+          <span class=sig-arg>attributes</span>=<span class=sig-default>()</span>)</span>
+  </h3>
+  Test 1 in STUNT
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="handleState1a"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">handleState1a</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Handle the response to test 1
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="handleState1b"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">handleState1b</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Handle the response to test 1 (second time)
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="handleState2"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">handleState2</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Handle the response to test 2
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="handleState3"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">handleState3</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Handles the response to test 3
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="handleStateDiscover"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">handleStateDiscover</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Handles the responde to address discovery for successive TCP 
+  connection
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="parseIfClient"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">parseIfClient</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Control if the response is in the pending request
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="ntcp.stunt.StuntProtocol.StuntProtocol-class.html#parseIfClient"><code>ntcp.stunt.StuntProtocol.StuntProtocol.parseIfClient</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="portDiscovery"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">portDiscovery</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>port</span>)</span>
+  </h3>
+  Starts the dicovery method to know the situation for a given port 
+  just before a TCP connection (test 1 implemented)
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="recvMessage"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">recvMessage</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>s</span>)</span>
+  </h3>
+  Wait for a response message from STUNT server
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndBindingRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndBindingRequest</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Sends a Binding Request (see draft STUNT)
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndCaptureRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndCaptureRequest</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>attributes</span>=<span class=sig-default>()</span>)</span>
+  </h3>
+  Sends a Capture Request (see draft STUNT)
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndMessage"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndMessage</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>attributes</span>=<span class=sig-default>()</span>)</span>
+  </h3>
+  Adds a tid to packet and call the funtion to pack it
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="startDiscovery"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">startDiscovery</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Starts the discovery method (test1 - see diagram above)
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="synReceived"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">synReceived</span>(<span class=sig-arg>self</span>,
+          (<span class=sig-arg>s</span>,
+           <span class=sig-arg>addr</span>))</span>
+  </h3>
+  Tests incoming SYN packet
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="test"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">test</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>remoteAddress</span>)</span>
+  </h3>
+  Test 1 in STUNT
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="_sendMessage"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">_sendMessage</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>s</span>)</span>
+  </h3>
+  Sends a message on TCP connection
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF CLASS VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Class Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="delta"></a>
+<h3>delta</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>int</code>
+
+      </dd>
+<span title="0">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="log"></a>
+<h3>log</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>Logger</code>
+
+      </dd>
+<span title="&lt;logging.Logger instance at 0xf6c957ec&gt;">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+&lt;logging.Logger instance at 0xf6c957ec&gt;                                </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="privateIp"></a>
+<h3>privateIp</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>NoneType</code>
+
+      </dd>
+<span title="None">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="publicIp"></a>
+<h3>publicIp</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>NoneType</code>
+
+      </dd>
+<span title="None">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on Tue Sep 13 15:14:12 2005</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

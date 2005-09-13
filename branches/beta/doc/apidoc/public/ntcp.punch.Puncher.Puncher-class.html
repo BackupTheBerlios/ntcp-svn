@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ntcp.punch.Puncher.Puncher</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        <a href="ntcp-module.html">Package&nbsp;ntcp</a> ::
+        <a href="ntcp.punch-module.html">Package&nbsp;punch</a> ::
+        <a href="ntcp.punch.Puncher-module.html">Module&nbsp;Puncher</a> ::
+        Class&nbsp;Puncher
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="../private/ntcp.punch.Puncher.Puncher-class.html">show&nbsp;private</a>&nbsp;|&nbsp;hide&nbsp;private]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="ntcp.punch.Puncher.Puncher-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Type Puncher</h2>
+
+<pre class="base-tree">
+                      <a href="ntcp.connection.Connector.IConnector-class.html"><code>IConnector</code></a> --+
+                                   |
+                          <a href="__builtin__.object-class.html"><code>object</code></a> --+
+                                   |
+<a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html"><code>AbstractDatagramProtocol</code></a> --+       |
+                           |       |
+            <a href="twisted.internet.protocol.DatagramProtocol-class.html"><code>DatagramProtocol</code></a> --+   |
+                               |   |
+                 <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html"><code>PuncherProtocol</code></a> --+
+                                   |
+                                  <b>Puncher</b>
+</pre><br />
+
+<hr/>
+
+Communicates with the Super Node Connection Broker to registre himself 
+and to establish a connection with a peer behiend a NAT :version: 0.2 
+:author: Luca Gaballo
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#__init__" class="summary-sig-name"><code>__init__</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>reactor</span>,
+          <span class=summary-sig-arg>natObj</span>,
+          <span class=summary-sig-arg>udpListener</span>)</span></code>
+<br />
+Initialises the puncher object to implement the hole punching protocol 
+in the endpoint side</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#getClientFactory" class="summary-sig-name"><code>getClientFactory</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Gets the Client side Factory</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="getDedicatedConnector"></a><span class="summary-sig"><span class="summary-sig-name">getDedicatedConnector</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#getServerFactory" class="summary-sig-name"><code>getServerFactory</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Gets the Server side Factory</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#rcvConfigurationRequest" class="summary-sig-name"><code>rcvConfigurationRequest</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A remote user wants to know my configuration (if I am NAT'ed or not) 
+We reply to the request</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#rcvConfigurationResponse" class="summary-sig-name"><code>rcvConfigurationResponse</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A configuration response is received (from CB or endpoint)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#rcvConnectionRequest" class="summary-sig-name"><code>rcvConnectionRequest</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A remote user wants to establish a connection.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#rcvConnectionResponse" class="summary-sig-name"><code>rcvConnectionResponse</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A connection response is received (from CB or endpoint) Now can try to 
+connect</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#rcvErrorResponse" class="summary-sig-name"><code>rcvErrorResponse</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+If an Error Response is received, analises it</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#rcvHolePunching" class="summary-sig-name"><code>rcvHolePunching</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+An UDP message for hole punching is received UDP Hole made!!!</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#rcvKeepAliveResponse" class="summary-sig-name"><code>rcvKeepAliveResponse</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A message from CB broker is received to keep the NAT hole active</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#rcvLookupRequest" class="summary-sig-name"><code>rcvLookupRequest</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A lookup request is received (from CB or endpoint) Sends an UDP 
+message for hole punching</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#rcvLookupResponse" class="summary-sig-name"><code>rcvLookupResponse</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A lookup response is received (from CB or endpoint) Sends an UDP 
+message for hole punching</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#rcvRegistrationResponse" class="summary-sig-name"><code>rcvRegistrationResponse</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A Connection Broker's registration response is received.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#sendMessage" class="summary-sig-name"><code>sendMessage</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>toAddr</span>,
+          <span class=summary-sig-arg>attributes</span>)</span></code>
+<br />
+Packs the message and sends it</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#setClientFactory" class="summary-sig-name"><code>setClientFactory</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>factory</span>)</span></code>
+<br />
+Sets the Factory for Client side</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#setNatObj" class="summary-sig-name"><code>setNatObj</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>natObj</span>)</span></code>
+<br />
+Sets the NAT configuration</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#setServerFactory" class="summary-sig-name"><code>setServerFactory</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>factory</span>)</span></code>
+<br />
+Sets the Factory for Server side</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#sndConfigurationRequest" class="summary-sig-name"><code>sndConfigurationRequest</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>remoteUri</span>,
+          <span class=summary-sig-arg>remoteAddress</span>)</span></code>
+<br />
+Send a configuration request to discover if the remote user is behind 
+a NAT.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#sndConfigurationResponse" class="summary-sig-name"><code>sndConfigurationResponse</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Sends a configuration Response Message to the address that the 
+Connection Request is received on .</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#sndConnectionRequest" class="summary-sig-name"><code>sndConnectionRequest</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>remoteUri</span>,
+          <span class=summary-sig-arg>remoteAddress</span>)</span></code>
+<br />
+Send a connection request to discover and advise the remote user 
+behind a NAT for a TCP connection.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#sndConnectionResponse" class="summary-sig-name"><code>sndConnectionResponse</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Discover a globally valid address and sends a Connection Response 
+Message to the address that the Connection Request is received on .</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#sndHolePunching" class="summary-sig-name"><code>sndHolePunching</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Sends an UDP message for hole punching</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#sndKeepAliveRequest" class="summary-sig-name"><code>sndKeepAliveRequest</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Sends the keep alive message</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#sndLookupRequest" class="summary-sig-name"><code>sndLookupRequest</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>remoteUri</span>,
+          <span class=summary-sig-arg>localUri</span>)</span></code>
+<br />
+Send a connection request to discover and advise the remote user 
+behind a NAT of a TCP connection intention.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#sndRegistrationRequest" class="summary-sig-name"><code>sndRegistrationRequest</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>uri</span>)</span></code>
+<br />
+Sends a registration request to the Connection Broker</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.Puncher.Puncher-class.html#startListen" class="summary-sig-name"><code>startListen</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Start to listen on a UDP port</td></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html"><code>PuncherProtocol</code></a>:</b>
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#analyseMessage"><code>analyseMessage</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#createMessage"><code>createMessage</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#datagramReceived"><code>datagramReceived</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#getAddress"><code>getAddress</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#getErrorCode"><code>getErrorCode</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#getListUnkAttr"><code>getListUnkAttr</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#getPortIpList"><code>getPortIpList</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#getRandomTID"><code>getRandomTID</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#parseMessage"><code>parseMessage</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#sendPack"><code>sendPack</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#sndErrorResponse"><code>sndErrorResponse</code></a>
+      <br />
+    <b>Inherited from <a href="twisted.internet.protocol.DatagramProtocol-class.html"><code>DatagramProtocol</code></a>:</b>
+      <a href="twisted.internet.protocol.DatagramProtocol-class.html#connectionRefused"><code>connectionRefused</code></a>
+      <br />
+    <b>Inherited from <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html"><code>AbstractDatagramProtocol</code></a>:</b>
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#__getstate__"><code>__getstate__</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#doStart"><code>doStart</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#doStop"><code>doStop</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#makeConnection"><code>makeConnection</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#startProtocol"><code>startProtocol</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#stopProtocol"><code>stopProtocol</code></a>
+      <br />
+    <b>Inherited from <a href="ntcp.connection.Connector.IConnector-class.html"><code>IConnector</code></a>:</b>
+      <a href="ntcp.connection.Connector.IConnector-class.html#connect"><code>connect</code></a>, 
+      <a href="ntcp.connection.Connector.IConnector-class.html#disconnect"><code>disconnect</code></a>, 
+      <a href="ntcp.connection.Connector.IConnector-class.html#getDestination"><code>getDestination</code></a>, 
+      <a href="ntcp.connection.Connector.IConnector-class.html#stopConnecting"><code>stopConnecting</code></a>
+      <br />
+    <b>Inherited from <a href="__builtin__.object-class.html"><code>object</code></a>:</b>
+      <a href="__builtin__.object-class.html#__delattr__"><code>__delattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__getattribute__"><code>__getattribute__</code></a>, 
+      <a href="__builtin__.object-class.html#__hash__"><code>__hash__</code></a>, 
+      <a href="__builtin__.object-class.html#__new__"><code>__new__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce__"><code>__reduce__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce_ex__"><code>__reduce_ex__</code></a>, 
+      <a href="__builtin__.object-class.html#__repr__"><code>__repr__</code></a>, 
+      <a href="__builtin__.object-class.html#__setattr__"><code>__setattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__str__"><code>__str__</code></a>
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF CLASS VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Class Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>Logger</code></font></td>
+<td><b><a href="ntcp.punch.Puncher.Puncher-class.html#log"><code>log</code></a></b> = <span title="&lt;logging.Logger instance at 0xf6c957ec&gt;"><code>&lt;logging.Logger&nbsp;instance&nbsp;at&nbsp;0xf6c957ec&gt;            </code>
+</span></td></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html"><code>AbstractDatagramProtocol</code></a>:</b>
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#noisy"><code>noisy</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#numPorts"><code>numPorts</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#transport"><code>transport</code></a>
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Method Details</th></tr>
+</table>
+
+<a name="__init__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__init__</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>reactor</span>,
+          <span class=sig-arg>natObj</span>,
+          <span class=sig-arg>udpListener</span>=<span class=sig-default>None</span>)</span>
+    <br /><i>(Constructor)</i>
+  </h3>
+  Initialises the puncher object to implement the hole punching 
+  protocol in the endpoint side
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>reactor</b></code> -
+         the application's reactor
+      <dd><code><b>natObj</b></code> -
+         the ntcp.connection.NatConnectivity object with NAT 
+        information
+      <dd><code><b>udpListener</b></code> -
+         an UDP listener (default None - if None a new one is 
+        created)
+      </dd>
+    </dl>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#__init__"><code>ntcp.punch.PuncherProtocol.PuncherProtocol.__init__</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getClientFactory"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getClientFactory</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Gets the Client side Factory
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getServerFactory"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getServerFactory</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Gets the Server side Factory
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvConfigurationRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvConfigurationRequest</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A remote user wants to know my configuration (if I am NAT'ed or not) 
+  We reply to the request
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvConfigurationResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvConfigurationResponse</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A configuration response is received (from CB or endpoint)
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvConnectionRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvConnectionRequest</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A remote user wants to establish a connection. We reply to the 
+  request and try to connect to the requestor endpoint
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvConnectionResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvConnectionResponse</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A connection response is received (from CB or endpoint) Now can try 
+  to connect
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvErrorResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvErrorResponse</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  If an Error Response is received, analises it
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#rcvErrorResponse"><code>ntcp.punch.PuncherProtocol.PuncherProtocol.rcvErrorResponse</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvHolePunching"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvHolePunching</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  An UDP message for hole punching is received UDP Hole made!!!
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvKeepAliveResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvKeepAliveResponse</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A message from CB broker is received to keep the NAT hole active
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvLookupRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvLookupRequest</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A lookup request is received (from CB or endpoint) Sends an UDP 
+  message for hole punching
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvLookupResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvLookupResponse</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A lookup response is received (from CB or endpoint) Sends an UDP 
+  message for hole punching
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvRegistrationResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvRegistrationResponse</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A Connection Broker's registration response is received. Start the 
+  'keep alive' mecanism to keep the NAT hole up
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sendMessage"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sendMessage</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>toAddr</span>,
+          <span class=sig-arg>attributes</span>=<span class=sig-default>()</span>)</span>
+  </h3>
+  Packs the message and sends it
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>toAddr</b></code> -
+         the destination address
+      <dd><code><b>attributes</b></code> -
+         the message's attriubutes
+      </dd>
+    </dl>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#sendMessage"><code>ntcp.punch.PuncherProtocol.PuncherProtocol.sendMessage</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="setClientFactory"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">setClientFactory</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>factory</span>)</span>
+  </h3>
+  Sets the Factory for Client side
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>factory</b></code> -
+         a twisted.internet.protocol.ServerFactory instance
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="setNatObj"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">setNatObj</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>natObj</span>)</span>
+  </h3>
+  Sets the NAT configuration
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="setServerFactory"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">setServerFactory</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>factory</span>)</span>
+  </h3>
+  Sets the Factory for Server side
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>factory</b></code> -
+         a twisted.internet.protocol.ServerFactory instance
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndConfigurationRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndConfigurationRequest</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>remoteUri</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>remoteAddress</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+  Send a configuration request to discover if the remote user is 
+  behind a NAT. If the remote address is supplied, the request is sent 
+  directly to remote endpoint, otherwise the CB is contacted.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>remoteAddress</b></code> -
+         The remote endpoint's address (directly connection)
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndConfigurationResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndConfigurationResponse</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  <p>Sends a configuration Response Message to the address that the 
+  Connection Request is received on .</p>
+  &#64;return void
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndConnectionRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndConnectionRequest</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>remoteUri</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>remoteAddress</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+  Send a connection request to discover and advise the remote user 
+  behind a NAT for a TCP connection. If the remote address is supplied, 
+  the request is sent directly to remote endpoint, otherwise the CB is 
+  contacted.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>remoteAddress</b></code> -
+         The remote endpoint's address (for directly connection)
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndConnectionResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndConnectionResponse</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  <p>Discover a globally valid address and sends a Connection Response 
+  Message to the address that the Connection Request is received on .</p>
+  &#64;return void
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndHolePunching"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndHolePunching</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Sends an UDP message for hole punching
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndKeepAliveRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndKeepAliveRequest</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Sends the keep alive message
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndLookupRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndLookupRequest</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>remoteUri</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>localUri</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+  Send a connection request to discover and advise the remote user 
+  behind a NAT of a TCP connection intention.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndRegistrationRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndRegistrationRequest</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>uri</span>)</span>
+  </h3>
+  Sends a registration request to the Connection Broker
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>uri</b></code> -
+         The (string) identifier for registration
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="startListen"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">startListen</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Start to listen on a UDP port
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF CLASS VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Class Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="log"></a>
+<h3>log</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>Logger</code>
+
+      </dd>
+<span title="&lt;logging.Logger instance at 0xf6c957ec&gt;">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+&lt;logging.Logger instance at 0xf6c957ec&gt;                                </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on Tue Sep 13 15:14:12 2005</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

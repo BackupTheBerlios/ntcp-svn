@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ntcp.punch.ConnectionPunching.ConnectionPunching</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        <a href="ntcp-module.html">Package&nbsp;ntcp</a> ::
+        <a href="ntcp.punch-module.html">Package&nbsp;punch</a> ::
+        <a href="ntcp.punch.ConnectionPunching-module.html">Module&nbsp;ConnectionPunching</a> ::
+        Class&nbsp;ConnectionPunching
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[show&nbsp;private&nbsp;|&nbsp;<a href="../public/ntcp.punch.ConnectionPunching.ConnectionPunching-class.html">hide&nbsp;private</a>]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Type ConnectionPunching</h2>
+
+<pre class="base-tree">
+     <a href="twisted.internet.protocol.Factory-class.html"><code>Factory</code></a> --+    
+               |    
+   <a href="twisted.internet.protocol.ClientFactory-class.html"><code>ClientFactory</code></a> --+
+                   |
+          <a href="__builtin__.object-class.html"><code>object</code></a> --+
+                   |
+<a href="../private/twisted.internet.protocol.BaseProtocol-class.html"><code>BaseProtocol</code></a> --+   |
+               |   |
+        <a href="twisted.internet.protocol.Protocol-class.html"><code>Protocol</code></a> --+
+                   |
+                  <b>ConnectionPunching</b>
+</pre><br />
+
+<hr/>
+
+This class chooses, in function of the NAT information, the method to 
+use for the connection and implements it. If the connection established 
+the twisted methods are called to menage the TCP connection
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="__init__"></a><span class="summary-sig"><span class="summary-sig-name">__init__</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>punch</span>,
+          <span class=summary-sig-arg>_s</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#buildProtocol" class="summary-sig-name"><code>buildProtocol</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>addr</span>)</span></code>
+<br />
+Create an instance of a subclass of Protocol.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#clientConnectionFailed" class="summary-sig-name"><code>clientConnectionFailed</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>connector</span>,
+          <span class=summary-sig-arg>reason</span>)</span></code>
+<br />
+Try several methods before to call the real clientConnectionFailed 
+function</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="connectionLost"></a><span class="summary-sig"><span class="summary-sig-name">connectionLost</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>reason</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#connectionMade" class="summary-sig-name"><code>connectionMade</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Called when a connection is made.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#dataReceived" class="summary-sig-name"><code>dataReceived</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>data</span>)</span></code>
+<br />
+Called whenever data is received.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#getFactory" class="summary-sig-name"><code>getFactory</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Gets the Factory</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#init_puncher_var" class="summary-sig-name"><code>init_puncher_var</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>punch</span>)</span></code>
+<br />
+Initialise all the variables from puncher object</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#natTraversal" class="summary-sig-name"><code>natTraversal</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>factory</span>)</span></code>
+<br />
+Chooses the right method for NAT traversal TCP</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#ntcp_fail" class="summary-sig-name"><code>ntcp_fail</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>reason</span>)</span></code>
+<br />
+All the methods have failed</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#oneNat" class="summary-sig-name"><code>oneNat</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+One peers is not behind a NAT The user not NAT'ed starts a TCP server 
+The other starts a client connection</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#p2pnat" class="summary-sig-name"><code>p2pnat</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+P2PNAT implementation.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#sameLan" class="summary-sig-name"><code>sameLan</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+This method is called when the peers are in the same LAN.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#setFactory" class="summary-sig-name"><code>setFactory</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>factory</span>)</span></code>
+<br />
+Sets the Factory</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#startedConnecting" class="summary-sig-name"><code>startedConnecting</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>connector</span>)</span></code>
+<br />
+Called when a connection has been started.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="stopConnect"></a><span class="summary-sig"><span class="summary-sig-name">stopConnect</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#stunt1" class="summary-sig-name"><code>stunt1</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+STUNT 1 implementation: This method try to establish a connection 
+using spoofing</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#stunt2" class="summary-sig-name"><code>stunt2</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+STUNT 2 implementation.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#stunt2_inv" class="summary-sig-name"><code>stunt2_inv</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+STUNT 2 implementation: flip the roles</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="../private/ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#_oneNat_clientConnectionFailed" class="summary-sig-name"><code>_oneNat_clientConnectionFailed</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+The connection with one NAT failed.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="_sameLan_clientConnectionFailed"></a><span class="summary-sig"><span class="summary-sig-name">_sameLan_clientConnectionFailed</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="../private/ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#_stunt2_clientConnectionFailed" class="summary-sig-name"><code>_stunt2_clientConnectionFailed</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+STUNT 2 implementation failed.</td></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="../private/twisted.internet.protocol.BaseProtocol-class.html"><code>BaseProtocol</code></a>:</b>
+      <a href="../private/twisted.internet.protocol.BaseProtocol-class.html#makeConnection"><code>makeConnection</code></a>
+      <br />
+    <b>Inherited from <a href="twisted.internet.protocol.ClientFactory-class.html"><code>ClientFactory</code></a>:</b>
+      <a href="twisted.internet.protocol.ClientFactory-class.html#clientConnectionLost"><code>clientConnectionLost</code></a>
+      <br />
+    <b>Inherited from <a href="twisted.internet.protocol.Factory-class.html"><code>Factory</code></a>:</b>
+      <a href="twisted.internet.protocol.Factory-class.html#doStart"><code>doStart</code></a>, 
+      <a href="twisted.internet.protocol.Factory-class.html#doStop"><code>doStop</code></a>, 
+      <a href="twisted.internet.protocol.Factory-class.html#startFactory"><code>startFactory</code></a>, 
+      <a href="twisted.internet.protocol.Factory-class.html#stopFactory"><code>stopFactory</code></a>
+      <br />
+    <b>Inherited from <a href="__builtin__.object-class.html"><code>object</code></a>:</b>
+      <a href="__builtin__.object-class.html#__delattr__"><code>__delattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__getattribute__"><code>__getattribute__</code></a>, 
+      <a href="__builtin__.object-class.html#__hash__"><code>__hash__</code></a>, 
+      <a href="__builtin__.object-class.html#__new__"><code>__new__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce__"><code>__reduce__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce_ex__"><code>__reduce_ex__</code></a>, 
+      <a href="__builtin__.object-class.html#__repr__"><code>__repr__</code></a>, 
+      <a href="__builtin__.object-class.html#__setattr__"><code>__setattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__str__"><code>__str__</code></a>
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF CLASS VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Class Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>Logger</code></font></td>
+<td><b><a href="ntcp.punch.ConnectionPunching.ConnectionPunching-class.html#log"><code>log</code></a></b> = <span title="&lt;logging.Logger instance at 0xf6c957ec&gt;"><code>&lt;logging.Logger&nbsp;instance&nbsp;at&nbsp;0xf6c957ec&gt;            </code>
+</span></td></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="twisted.internet.protocol.Protocol-class.html"><code>Protocol</code></a>:</b>
+      <a href="twisted.internet.protocol.Protocol-class.html#__implemented__"><code>__implemented__</code></a>, 
+      <a href="twisted.internet.protocol.Protocol-class.html#__implements__"><code>__implements__</code></a>, 
+      <a href="twisted.internet.protocol.Protocol-class.html#__provides__"><code>__provides__</code></a>
+      <br />
+    <b>Inherited from <a href="../private/twisted.internet.protocol.BaseProtocol-class.html"><code>BaseProtocol</code></a>:</b>
+      <a href="../private/twisted.internet.protocol.BaseProtocol-class.html#__providedBy__"><code>__providedBy__</code></a>, 
+      <a href="../private/twisted.internet.protocol.BaseProtocol-class.html#connected"><code>connected</code></a>, 
+      <a href="../private/twisted.internet.protocol.BaseProtocol-class.html#transport"><code>transport</code></a>
+      <br />
+    <b>Inherited from <a href="twisted.internet.protocol.Factory-class.html"><code>Factory</code></a>:</b>
+      <a href="twisted.internet.protocol.Factory-class.html#noisy"><code>noisy</code></a>, 
+      <a href="twisted.internet.protocol.Factory-class.html#numPorts"><code>numPorts</code></a>, 
+      <a href="twisted.internet.protocol.Factory-class.html#protocol"><code>protocol</code></a>
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Method Details</th></tr>
+</table>
+
+<a name="buildProtocol"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">buildProtocol</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>addr</span>)</span>
+  </h3>
+  <p>Create an instance of a subclass of Protocol.</p>
+  <p>The returned instance will handle input on an incoming server 
+  connection, and an attribute &quot;factory&quot; pointing to the 
+  creating factory.</p>
+  Override this method to alter how Protocol instances get 
+  created.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>addr</b></code> -
+         an object implementing 
+        <code>twisted.internet.interfaces.IAddress</code>
+      </dd>
+    </dl>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="twisted.internet.protocol.Factory-class.html#buildProtocol"><code>twisted.internet.protocol.Factory.buildProtocol</code></a> <i>(inherited documentation)</i>
+</dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="clientConnectionFailed"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">clientConnectionFailed</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>connector</span>,
+          <span class=sig-arg>reason</span>)</span>
+  </h3>
+  Try several methods before to call the real clientConnectionFailed 
+  function
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="twisted.internet.protocol.ClientFactory-class.html#clientConnectionFailed"><code>twisted.internet.protocol.ClientFactory.clientConnectionFailed</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="connectionMade"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">connectionMade</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  <p>Called when a connection is made.</p>
+  This may be considered the initializer of the protocol, because it 
+  is called when the connection is completed. For clients, this is called 
+  once the connection to the server has been established; for servers, 
+  this is called after an accept() call stops blocking and a socket has 
+  been received. If you need to send any greeting or initial message, do 
+  it here.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="../private/twisted.internet.protocol.BaseProtocol-class.html#connectionMade"><code>twisted.internet.protocol.BaseProtocol.connectionMade</code></a> <i>(inherited documentation)</i>
+</dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="dataReceived"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">dataReceived</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>data</span>)</span>
+  </h3>
+  <p>Called whenever data is received.</p>
+  Use this method to translate to a higher-level message. Usually, 
+  some callback will be made upon the receipt of each complete protocol 
+  message.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>data</b></code> -
+         a string of indeterminate length. Please keep in mind that you 
+        will probably need to buffer some data, as partial (or multiple) 
+        protocol messages may be received! I recommend that unit tests 
+        for protocols call through to this method with differing chunk 
+        sizes, down to one byte at a time.
+      </dd>
+    </dl>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="twisted.internet.protocol.Protocol-class.html#dataReceived"><code>twisted.internet.protocol.Protocol.dataReceived</code></a> <i>(inherited documentation)</i>
+</dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getFactory"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getFactory</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Gets the Factory
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="init_puncher_var"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">init_puncher_var</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>punch</span>)</span>
+  </h3>
+  Initialise all the variables from puncher object
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>punch</b></code> -
+         the ntcp.punch.Puncher object
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="natTraversal"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">natTraversal</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>factory</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+  Chooses the right method for NAT traversal TCP
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="ntcp_fail"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">ntcp_fail</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>reason</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+  All the methods have failed
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="oneNat"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">oneNat</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  One peers is not behind a NAT The user not NAT'ed starts a TCP 
+  server The other starts a client connection
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="p2pnat"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">p2pnat</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  P2PNAT implementation. This method try to establish a simultaneous 
+  TCP connection
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sameLan"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sameLan</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  This method is called when the peers are in the same LAN. Multiple 
+  layers of NATs can be present in the same LAN and this method could 
+  fail if the peers are behind different internal NATs.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="setFactory"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">setFactory</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>factory</span>)</span>
+  </h3>
+  Sets the Factory
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>factory</b></code> -
+         a twisted.internet.protocol.Factory instance
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="startedConnecting"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">startedConnecting</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>connector</span>)</span>
+  </h3>
+  <p>Called when a connection has been started.</p>
+  You can call connector.stopConnecting() to stop the connection 
+  attempt.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>connector</b></code> -
+         a Connector object.
+      </dd>
+    </dl>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="twisted.internet.protocol.ClientFactory-class.html#startedConnecting"><code>twisted.internet.protocol.ClientFactory.startedConnecting</code></a> <i>(inherited documentation)</i>
+</dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="stunt1"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">stunt1</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  STUNT 1 implementation: This method try to establish a connection 
+  using spoofing
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="stunt2"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">stunt2</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  STUNT 2 implementation.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="stunt2_inv"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">stunt2_inv</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  STUNT 2 implementation: flip the roles
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="_oneNat_clientConnectionFailed"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">_oneNat_clientConnectionFailed</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  The connection with one NAT failed. Try the NAT traversal 
+  methods
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="_stunt2_clientConnectionFailed"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">_stunt2_clientConnectionFailed</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  STUNT 2 implementation failed. Try several times
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF CLASS VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Class Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="log"></a>
+<h3>log</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>Logger</code>
+
+      </dd>
+<span title="&lt;logging.Logger instance at 0xf6c957ec&gt;">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+&lt;logging.Logger instance at 0xf6c957ec&gt;                                </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on Tue Sep 13 15:14:12 2005</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

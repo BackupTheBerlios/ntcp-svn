@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ntcp.punch.SNConnectionBroker.SNConnectionBroker</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        <a href="ntcp-module.html">Package&nbsp;ntcp</a> ::
+        <a href="ntcp.punch-module.html">Package&nbsp;punch</a> ::
+        <a href="ntcp.punch.SNConnectionBroker-module.html">Module&nbsp;SNConnectionBroker</a> ::
+        Class&nbsp;SNConnectionBroker
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="../private/ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html">show&nbsp;private</a>&nbsp;|&nbsp;hide&nbsp;private]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Type SNConnectionBroker</h2>
+
+<pre class="base-tree">
+                          <a href="__builtin__.object-class.html"><code>object</code></a> --+
+                                   |
+<a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html"><code>AbstractDatagramProtocol</code></a> --+       |
+                           |       |
+            <a href="twisted.internet.protocol.DatagramProtocol-class.html"><code>DatagramProtocol</code></a> --+   |
+                               |   |
+                 <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html"><code>PuncherProtocol</code></a> --+
+                                   |
+                                  <b>SNConnectionBroker</b>
+</pre><br />
+
+<hr/>
+
+<p>The Super Node Connection Broker. Helps a user to establish a 
+connection with another peer that is behind a NAT.</p>
+:version: 0.2 :author: Luca Gaballo
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="__init__"></a><span class="summary-sig"><span class="summary-sig-name">__init__</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#getPeerInfo" class="summary-sig-name"><code>getPeerInfo</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>key</span>)</span></code>
+<br />
+Return the client's infos: search by key.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#printActiveConnection" class="summary-sig-name"><code>printActiveConnection</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Prints the active user registrations</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#rcvConfigurationRequest" class="summary-sig-name"><code>rcvConfigurationRequest</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A Configuration request is received.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#rcvConnectionRequest" class="summary-sig-name"><code>rcvConnectionRequest</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A lookup request is received.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#rcvConnectionResponse" class="summary-sig-name"><code>rcvConnectionResponse</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Sends a Connection Request Message to the remote endpoint.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#rcvForcingTcpRequest" class="summary-sig-name"><code>rcvForcingTcpRequest</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A request of spoofing is received.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#rcvKeepAliveRequest" class="summary-sig-name"><code>rcvKeepAliveRequest</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A message from a user is received to keep the NAT hole active</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#rcvLookupRequest" class="summary-sig-name"><code>rcvLookupRequest</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A lookup request for UDP hole punching is received Starts hole 
+punching mechanisl</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#rcvRegistrationRequest" class="summary-sig-name"><code>rcvRegistrationRequest</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+A Registration Request is received.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#refreshTable" class="summary-sig-name"><code>refreshTable</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Refresh the peerTable every 'timeout' seconds</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#registrePeer" class="summary-sig-name"><code>registrePeer</code></a>(<span class=summary-sig-arg>self</span>,
+          (<span class=summary-sig-arg>userId</span>,
+           <span class=summary-sig-arg>publicIP</span>,
+           <span class=summary-sig-arg>privateIp</span>,
+           <span class=summary-sig-arg>natInfo</span>))</span></code>
+<br />
+Records the customer in the customer table</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#sndConfigurationResponse" class="summary-sig-name"><code>sndConfigurationResponse</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>peerInfo</span>)</span></code>
+<br />
+Sends a Configuration Response Message to the remote endpoint.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#sndConnectionRequest" class="summary-sig-name"><code>sndConnectionRequest</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>peerInfo</span>)</span></code>
+<br />
+Sends a Connection Request Message to the remote endpoint.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#sndConnectionResponse" class="summary-sig-name"><code>sndConnectionResponse</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Sends a connection response to the to the user</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#sndKeepAliveResponse" class="summary-sig-name"><code>sndKeepAliveResponse</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+Sends the keep alive message</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#sndLookupRequest" class="summary-sig-name"><code>sndLookupRequest</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>peerInfo</span>)</span></code>
+<br />
+Send a lookup request to advise a remote user behind a NAT of UDP hole 
+punchingattempt by another user.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#sndLookupResponse" class="summary-sig-name"><code>sndLookupResponse</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>peerInfo</span>)</span></code>
+<br />
+A lookup response is received (from CB or endpoint)from a user Forward 
+it to the initial demandant</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#sndRegistrationResponse" class="summary-sig-name"><code>sndRegistrationResponse</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>publAddr</span>,
+          <span class=summary-sig-arg>privAddr</span>)</span></code>
+<br />
+Reply to a registration request</td></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html"><code>PuncherProtocol</code></a>:</b>
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#analyseMessage"><code>analyseMessage</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#createMessage"><code>createMessage</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#datagramReceived"><code>datagramReceived</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#getAddress"><code>getAddress</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#getErrorCode"><code>getErrorCode</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#getListUnkAttr"><code>getListUnkAttr</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#getPortIpList"><code>getPortIpList</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#getRandomTID"><code>getRandomTID</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#parseMessage"><code>parseMessage</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#rcvErrorResponse"><code>rcvErrorResponse</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#sendMessage"><code>sendMessage</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#sendPack"><code>sendPack</code></a>, 
+      <a href="ntcp.punch.PuncherProtocol.PuncherProtocol-class.html#sndErrorResponse"><code>sndErrorResponse</code></a>
+      <br />
+    <b>Inherited from <a href="twisted.internet.protocol.DatagramProtocol-class.html"><code>DatagramProtocol</code></a>:</b>
+      <a href="twisted.internet.protocol.DatagramProtocol-class.html#connectionRefused"><code>connectionRefused</code></a>
+      <br />
+    <b>Inherited from <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html"><code>AbstractDatagramProtocol</code></a>:</b>
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#__getstate__"><code>__getstate__</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#doStart"><code>doStart</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#doStop"><code>doStop</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#makeConnection"><code>makeConnection</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#startProtocol"><code>startProtocol</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#stopProtocol"><code>stopProtocol</code></a>
+      <br />
+    <b>Inherited from <a href="__builtin__.object-class.html"><code>object</code></a>:</b>
+      <a href="__builtin__.object-class.html#__delattr__"><code>__delattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__getattribute__"><code>__getattribute__</code></a>, 
+      <a href="__builtin__.object-class.html#__hash__"><code>__hash__</code></a>, 
+      <a href="__builtin__.object-class.html#__new__"><code>__new__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce__"><code>__reduce__</code></a>, 
+      <a href="__builtin__.object-class.html#__reduce_ex__"><code>__reduce_ex__</code></a>, 
+      <a href="__builtin__.object-class.html#__repr__"><code>__repr__</code></a>, 
+      <a href="__builtin__.object-class.html#__setattr__"><code>__setattr__</code></a>, 
+      <a href="__builtin__.object-class.html#__str__"><code>__str__</code></a>
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF CLASS VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Class Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>Logger</code></font></td>
+<td><b><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#log"><code>log</code></a></b> = <span title="&lt;logging.Logger instance at 0xf6b9746c&gt;"><code>&lt;logging.Logger&nbsp;instance&nbsp;at&nbsp;0xf6b9746c&gt;            </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>dict</code></font></td>
+<td><b><a href="ntcp.punch.SNConnectionBroker.SNConnectionBroker-class.html#peersTable"><code>peersTable</code></a></b> = <span title="{}"><code>{}                                          </code>
+</span></td></tr>
+  <tr><td colspan="2">
+    <b>Inherited from <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html"><code>AbstractDatagramProtocol</code></a>:</b>
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#noisy"><code>noisy</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#numPorts"><code>numPorts</code></a>, 
+      <a href="twisted.internet.protocol.AbstractDatagramProtocol-class.html#transport"><code>transport</code></a>
+    </td></tr>
+</table><br />
+
+
+<!-- =========== START OF METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Method Details</th></tr>
+</table>
+
+<a name="getPeerInfo"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getPeerInfo</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>key</span>)</span>
+  </h3>
+  Return the client's infos: search by key. (id, public address, 
+  private address, NAT type)
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>key</b></code> -
+         the user's uri (the key for the users' table)
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="printActiveConnection"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">printActiveConnection</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Prints the active user registrations
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvConfigurationRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvConfigurationRequest</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A Configuration request is received.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvConnectionRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvConnectionRequest</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A lookup request is received.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvConnectionResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvConnectionResponse</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Sends a Connection Request Message to the remote endpoint.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvForcingTcpRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvForcingTcpRequest</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A request of spoofing is received. Create a spoofing object to spoof 
+  message
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvKeepAliveRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvKeepAliveRequest</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A message from a user is received to keep the NAT hole active
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvLookupRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvLookupRequest</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A lookup request for UDP hole punching is received Starts hole 
+  punching mechanisl
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rcvRegistrationRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rcvRegistrationRequest</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  A Registration Request is received.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="refreshTable"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">refreshTable</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Refresh the peerTable every 'timeout' seconds
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="registrePeer"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">registrePeer</span>(<span class=sig-arg>self</span>,
+          (<span class=sig-arg>userId</span>,
+           <span class=sig-arg>publicIP</span>,
+           <span class=sig-arg>privateIp</span>,
+           <span class=sig-arg>natInfo</span>))</span>
+  </h3>
+  Records the customer in the customer table
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndConfigurationResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndConfigurationResponse</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>peerInfo</span>)</span>
+  </h3>
+  Sends a Configuration Response Message to the remote endpoint.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>peerInfo</b></code> -
+         the remote endpoint's information &#64;return void
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndConnectionRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndConnectionRequest</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>peerInfo</span>)</span>
+  </h3>
+  Sends a Connection Request Message to the remote endpoint.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>peerInfo</b></code> -
+         the remote endpoint's information &#64;return void
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndConnectionResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndConnectionResponse</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Sends a connection response to the to the user
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndKeepAliveResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndKeepAliveResponse</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  Sends the keep alive message
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndLookupRequest"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndLookupRequest</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>peerInfo</span>)</span>
+  </h3>
+  Send a lookup request to advise a remote user behind a NAT of UDP 
+  hole punchingattempt by another user.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>peerInfo</b></code> -
+         the remote endpoint's information
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndLookupResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndLookupResponse</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>peerInfo</span>)</span>
+  </h3>
+  A lookup response is received (from CB or endpoint)from a user 
+  Forward it to the initial demandant
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="sndRegistrationResponse"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">sndRegistrationResponse</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>publAddr</span>,
+          <span class=sig-arg>privAddr</span>)</span>
+  </h3>
+  Reply to a registration request
+  <dl><dt></dt><dd>
+    <dl><dt><b>Parameters:</b></dt>
+      <dd><code><b>publAddr</b></code> -
+         the private address tuple (host, port)
+      <dd><code><b>privAddr</b></code> -
+         the public address tuple (host, port)
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF CLASS VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Class Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="log"></a>
+<h3>log</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>Logger</code>
+
+      </dd>
+<span title="&lt;logging.Logger instance at 0xf6b9746c&gt;">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+&lt;logging.Logger instance at 0xf6b9746c&gt;                                </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="peersTable"></a>
+<h3>peersTable</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>dict</code>
+
+      </dd>
+<span title="{}">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+{}                                                                     </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="ntcp-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          ntcp
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on Tue Sep 13 15:14:12 2005</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>
