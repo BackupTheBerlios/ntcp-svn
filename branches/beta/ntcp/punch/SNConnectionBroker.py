@@ -65,8 +65,9 @@ class SNConnectionBroker (PuncherProtocol, object):
   def rcvKeepAliveRequest(self):
     """A message from a user is received to keep the NAT hole active"""
     userId = self.avtypeList['USER-ID']
-    self.peersTable[userId] = (self.peersTable[userId][:3] + (time.time(),))
-    self.sndKeepAliveResponse()
+    if userId in self.peersTable:
+      self.peersTable[userId] = (self.peersTable[userId][:3] + (time.time(),))
+      self.sndKeepAliveResponse()
 
   def sndKeepAliveResponse(self):
     """Sends the keep alive message"""

@@ -136,7 +136,7 @@ class Puncher(PuncherProtocol, IConnector, object):
 
   def rcvKeepAliveResponse(self):
     """A message from CB broker is received to keep the NAT hole active"""
-    self.reactor.callLater(ka_interval, self.sndKeepAliveRequest)
+    self.reactor.callLater(self.ka_interval, self.sndKeepAliveRequest)
 
   def sndKeepAliveRequest(self):
     """Sends the keep alive message"""

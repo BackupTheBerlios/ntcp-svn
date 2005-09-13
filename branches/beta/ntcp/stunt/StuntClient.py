@@ -174,8 +174,8 @@ class StuntClient(StuntProtocol, object):
       time.sleep(1)
 
       #-----------------------------------------------------------
-      #self.test(self.serverAddress) # ==> commented for the test
-      self.handleState1b()           # ==> for the test (comment it!!!)
+      self.test(self.serverAddress) # ==> commented for the test
+      #self.handleState1b()           # ==> for the test (comment it!!!)
       #-----------------------------------------------------------
 
   def handleState1b(self):

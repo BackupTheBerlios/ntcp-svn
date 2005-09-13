@@ -167,22 +167,22 @@ class ConnectionPunching(Protocol, ClientFactory, object):
     The connection with one NAT failed.
     Try the NAT traversal methods
     """
-      if self.natType != 'None':
-          if self.attempt <= 3:
-              # connect
-              time.sleep(self.attempt)
-              self.attempt = self.attempt + 1
-              self.oneNat()
-          else:
-              self.stunt2()
+    if self.natType != 'None':
+      if self.attempt <= 3:
+        # connect
+        time.sleep(self.attempt)
+        self.attempt = self.attempt + 1
+        self.oneNat()
       else:
-          # listen
-          pass
+        self.stunt2()
+    else:
+      # listen
+      pass
 
   def stunt2(self):
-    """
-    STUNT 2 implementation.
-    """
+      """
+      STUNT 2 implementation.
+      """
       if self.requestor:
         # Here I try just several client connection
         print 'STUNT2:Connect -> from:', self.privateAddress, \
@@ -214,9 +214,9 @@ class ConnectionPunching(Protocol, ClientFactory, object):
               bindAddress = self.privateAddress)
     
   def stunt2_inv(self):
-    """
-    STUNT 2 implementation: flip the roles
-    """
+      """
+      STUNT 2 implementation: flip the roles
+      """
       self.method = 'stunt2_inv' # Fail: call the next method
       self.timeout = None
       if self.requestor:
@@ -263,10 +263,10 @@ class ConnectionPunching(Protocol, ClientFactory, object):
     self.attempt = self.t * 10000
       
   def p2pnat(self):
-    """
-    P2PNAT implementation.
-    This method try to establish a simultaneous TCP connection
-    """
+      """
+      P2PNAT implementation.
+      This method try to establish a simultaneous TCP connection
+      """
       try: self.peerConn.loseConnection()
       except: pass
       self.method = 'p2pnat' # Fail: call the next method
